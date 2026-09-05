@@ -1,5 +1,30 @@
-# Vue 3 + TypeScript + Vite
+# QA Track - Web Frontend
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+The main user interface for the QA Track Test Management system.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+## Tech Stack
+
+- **Framework**: [Vue 3](https://vuejs.org/)
+- **Build Tool**: [Vite](https://vitejs.dev/)
+- **Styling**: Tailwind CSS v4
+- **State Management**: Pinia
+- **Routing**: Vue Router
+
+## Getting Started
+
+From this directory, you can start the local development server:
+
+```bash
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build locally
+npm run preview
+```
+
+## Architecture
+
+This frontend is configured to consume the backend API and utilizes a modern Neobrutalism design system configured via Tailwind CSS. Components are built using the Vue 3 `<script setup>` syntax for better performance and developer experience.
