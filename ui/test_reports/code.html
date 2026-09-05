@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<style>
+  @layer base { 
+    html, body { margin: 0; padding: 0; background-color: #fdfbf7; color: #0f172a; } 
+    body { overscroll-behavior: none; } 
+    main > :first-child { margin-top: 0 !important; } 
+    main > :last-child { margin-bottom: 0 !important; } 
+  }
+  ::-webkit-scrollbar { display: none; }
+</style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "secondary-container": "#316bf3",
+          "surface-container-low": "#ffffff",
+          "tertiary": "#000000",
+          "surface-container": "#f8fafc",
+          "secondary": "#0051d5",
+          "primary-fixed": "#dae2fd",
+          "background": "#fdfbf7",
+          "surface-container-highest": "#cbd5e1",
+          "surface-dim": "#dcd9db",
+          "on-primary-container": "#131b2e",
+          "surface-tint": "#565e74",
+          "error-container": "#ffdad6",
+          "on-background": "#0f172a",
+          "surface-container-high": "#e2e8f0",
+          "on-tertiary-container": "#009668",
+          "surface-variant": "#e4e2e4",
+          "primary-container": "#dae2fd",
+          "on-primary-fixed": "#131b2e",
+          "tertiary-fixed": "#6ffbbe",
+          "on-surface-variant": "#334155",
+          "inverse-primary": "#bec6e0",
+          "error": "#ef4444",
+          "surface-container-lowest": "#ffffff",
+          "secondary-fixed-dim": "#b4c5ff",
+          "on-tertiary": "#ffffff",
+          "on-secondary-container": "#fefcff",
+          "on-error": "#ffffff",
+          "primary-fixed-dim": "#bec6e0",
+          "on-error-container": "#93000a",
+          "tertiary-fixed-dim": "#4edea3",
+          "on-secondary-fixed-variant": "#003ea8",
+          "inverse-surface": "#303032",
+          "inverse-on-surface": "#f3f0f2",
+          "on-primary-fixed-variant": "#3f465c",
+          "on-tertiary-fixed": "#002113",
+          "on-surface": "#0f172a",
+          "primary": "#000000",
+          "on-secondary": "#ffffff",
+          "outline-variant": "#cbd5e1",
+          "outline": "#000000",
+          "surface-bright": "#ffffff",
+          "on-primary": "#ffffff",
+          "surface": "#fdfbf7",
+          "tertiary-container": "#002113",
+          "secondary-fixed": "#dbe1ff",
+          "on-secondary-fixed": "#00174b",
+          "on-tertiary-fixed-variant": "#005236"
+        },
+        borderRadius: {
+          DEFAULT: "0.25rem",
+          lg: "0.5rem",
+          xl: "0.75rem",
+          full: "9999px"
+        },
+        spacing: {
+          "space-sm": "12px",
+          "space-xl": "32px",
+          "space-lg": "24px",
+          "space-xs": "8px",
+          "grid-gutter": "24px",
+          "sidebar-width": "260px",
+          "space-xxs": "4px",
+          "space-md": "16px",
+          "space-xxl": "48px"
+        },
+        fontFamily: {
+          display: ["\"Geist, Inter, system-ui, sans-serif\""],
+          title: ["\"Geist, Inter, system-ui, sans-serif\""],
+          body: ["\"Geist, Inter, system-ui, sans-serif\""],
+          label: ["\"Geist, Inter, system-ui, sans-serif\""],
+          headline: ["\"Geist, Inter, system-ui, sans-serif\""],
+          "label-sm": ["JetBrains Mono"],
+          "body-md": ["Inter"],
+          "headline-lg": ["Geist"],
+          "headline-md": ["Geist"],
+          "headline-sm": ["Geist"],
+          "body-lg": ["Inter"],
+          "label-md": ["JetBrains Mono"],
+          "body-sm": ["Inter"]
+        },
+        fontSize: {
+          display: ["36px", { lineHeight: "40px", letterSpacing: "-0.025em", fontWeight: "800" }],
+          title: ["20px", { lineHeight: "28px", fontWeight: "700" }],
+          body: ["14px", { lineHeight: "20px", fontWeight: "500" }],
+          label: ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "700" }],
+          headline: ["24px", { lineHeight: "32px", letterSpacing: "0.025em", fontWeight: "700" }]
+        }
+      }
+    }
+  };
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;family=Geist:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+</head>
+<body class="bg-background font-body-md text-on-surface">
+<aside class="fixed left-0 top-0 h-full w-[250px] bg-white border-r-2 border-black z-50 flex flex-col shadow-[4px_0_0_0_#000]">
+<div class="h-16 px-space-lg flex items-center gap-3 border-b-2 border-black">
+<img alt="Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1V4toIPvkiz1fDxYpx8ITFsVypQyP1GkA17qwn2ChPB1wS4MQTVUdTVtJIb0Loit90p5U8uuMzz-bAGH7yhuJwsDV8EezYUK4b1a_ELqO02jHAJ1TuwMtYpTTwrYq1Rgl_2Q98rFPGi6WrXwWyOzVQzb1jETYnuGplVsKgdjPfLAXSdSa3vXeDgVCA6o4NWA-SVGk5h2390bVhRKpKf2OczjAAZbbZabRiJ619_1AeUeym4PaXPYelgGTw"/>
+<span class="font-headline-sm text-on-surface font-bold">QATrack</span>
+</div>
+<nav class="flex-1 px-space-md py-space-md space-y-2 overflow-y-auto">
+<a class="flex items-center gap-3 px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container border border-transparent hover:border-black transition-all" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span>Dashboard</a>
+<a class="flex items-center gap-3 px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container border border-transparent hover:border-black transition-all" data-path="projects" href="#"><span class="material-symbols-outlined text-[20px]">folder</span>Projects</a>
+<a class="flex items-center gap-3 px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container border border-transparent hover:border-black transition-all" data-path="requirements" href="#"><span class="material-symbols-outlined text-[20px]">assignment</span>Requirements</a>
+<a class="flex items-center gap-3 px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container border border-transparent hover:border-black transition-all" data-path="test-scenarios" href="#"><span class="material-symbols-outlined text-[20px]">account_tree</span>Test Scenarios</a>
+<a class="flex items-center gap-3 px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container border border-transparent hover:border-black transition-all" data-path="test-cases" href="#"><span class="material-symbols-outlined text-[20px]">checklist</span>Test Cases</a>
+<a class="flex items-center gap-3 px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container border border-transparent hover:border-black transition-all" data-path="test-executions" href="#"><span class="material-symbols-outlined text-[20px]">play_arrow</span>Test Executions</a>
+<a class="flex items-center gap-3 px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container border border-transparent hover:border-black transition-all" data-path="automation" href="#"><span class="material-symbols-outlined text-[20px]">smart_toy</span>Automation</a>
+<a class="flex items-center gap-3 px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container border border-transparent hover:border-black transition-all" data-path="bugs" href="#"><span class="material-symbols-outlined text-[20px]">bug_report</span>Bugs</a>
+<a aria-current="page" class="flex items-center gap-3 px-space-md py-space-sm rounded-lg bg-primary text-on-primary font-bold border-2 border-black shadow-[3px_3px_0px_0px_#000] transition-all" data-path="reports" href="#"><span class="material-symbols-outlined text-[20px]">bar_chart</span>Reports</a>
+<a class="flex items-center gap-3 px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container border border-transparent hover:border-black transition-all" data-path="rtm" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span>RTM</a>
+<a class="flex items-center gap-3 px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container border border-transparent hover:border-black transition-all" data-path="settings" href="#"><span class="material-symbols-outlined text-[20px]">settings</span>Settings</a>
+</nav>
+</aside>
+<div class="pl-[250px]">
+<header class="fixed top-0 left-[250px] right-0 h-16 bg-white/90 backdrop-blur-md z-40 flex items-center justify-between px-space-lg border-b-2 border-black">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-2 px-space-sm py-1 bg-surface-container rounded-lg border-2 border-black text-label-md shadow-[2px_2px_0px_0px_#000]">
+<span class="text-on-surface-variant font-semibold">Project:</span>
+<span class="font-bold text-on-surface">E-Commerce Platform</span>
+</div>
+<div class="flex items-center gap-2 px-space-sm py-1 bg-primary-fixed rounded-lg border-2 border-black text-label-md shadow-[2px_2px_0px_0px_#000]">
+<span class="text-on-primary-fixed font-semibold">Env:</span>
+<span class="font-bold text-primary">QA</span>
+</div>
+</div>
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-3 px-space-md py-1.5 bg-surface-container rounded-lg text-on-surface-variant w-64 border-2 border-black shadow-[2px_2px_0px_0px_#000]">
+<span class="material-symbols-outlined text-[18px]">search</span>
+<span class="text-body-sm flex-1 font-medium">Search...</span>
+<span class="text-label-sm px-1.5 py-0.5 bg-white rounded border border-black text-on-surface">Ctrl K</span>
+</div>
+<button class="relative p-2 bg-white text-on-surface rounded-lg border-2 border-black shadow-[2px_2px_0px_0px_#000] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1px_1px_0px_0px_#000] transition-all">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<div class="w-9 h-9 rounded-lg bg-primary border-2 border-black shadow-[2px_2px_0px_0px_#000] flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-[18px]">person</span>
+</div>
+</div>
+</header>
+<main class="relative pt-16 bg-background min-h-screen">
+<div class="flex flex-col w-full p-space-lg space-y-space-xl">
+<!-- Top Section: Title & Global Actions -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2 py-0.5 bg-primary text-on-primary border border-black rounded text-label-sm font-bold uppercase tracking-wider shadow-[2px_2px_0px_0px_#000]">Analytics &amp; Compliance</span>
+<span class="text-on-surface-variant">/</span>
+<span class="text-label-sm font-bold text-on-surface bg-surface-container px-2 py-0.5 border border-black rounded">Release v2.4.0</span>
+</div>
+<h1 class="font-headline-lg font-bold text-on-surface mt-2">Executive Test &amp; Quality Report</h1>
+</div>
+<div class="flex items-center gap-space-sm flex-wrap">
+<button class="flex items-center gap-2 px-space-md py-2 bg-white hover:bg-surface-container text-on-surface rounded-lg text-body-sm font-bold border-2 border-black shadow-[3px_3px_0px_0px_#000] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1px_1px_0px_0px_#000] transition-all">
+<span class="material-symbols-outlined text-[18px]">share</span>
+            Share Report
+          </button>
+<button class="flex items-center gap-2 px-space-md py-2 bg-white hover:bg-surface-container text-on-surface rounded-lg text-body-sm font-bold border-2 border-black shadow-[3px_3px_0px_0px_#000] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1px_1px_0px_0px_#000] transition-all">
+<span class="material-symbols-outlined text-[18px]">description</span>
+            Export PDF
+          </button>
+<button class="flex items-center gap-2 px-space-md py-2 bg-primary text-on-primary hover:bg-zinc-800 rounded-lg text-body-sm font-bold border-2 border-black shadow-[3px_3px_0px_0px_#000] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1px_1px_0px_0px_#000] transition-all">
+<span class="material-symbols-outlined text-[18px]">table_view</span>
+            Export Excel
+          </button>
+</div>
+</div>
+<!-- Filter Bar -->
+<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-space-sm bg-white p-space-md rounded-xl border-2 border-black shadow-[4px_4px_0px_0px_#000]">
+<div class="flex flex-col gap-1">
+<label class="text-label-sm font-bold text-on-surface">Project</label>
+<select class="bg-surface-container text-on-surface px-space-sm py-2 rounded-lg text-body-sm border-2 border-black font-semibold outline-none shadow-[2px_2px_0px_0px_#000]">
+<option>E-Commerce Platform</option>
+<option>Mobile App (iOS/Android)</option>
+<option>Payment Gateway API</option>
+</select>
+</div>
+<div class="flex flex-col gap-1">
+<label class="text-label-sm font-bold text-on-surface">Sprint</label>
+<select class="bg-surface-container text-on-surface px-space-sm py-2 rounded-lg text-body-sm border-2 border-black font-semibold outline-none shadow-[2px_2px_0px_0px_#000]">
+<option>Sprint 42 (Current)</option>
+<option>Sprint 41</option>
+<option>Sprint 40</option>
+</select>
+</div>
+<div class="flex flex-col gap-1">
+<label class="text-label-sm font-bold text-on-surface">Release</label>
+<select class="bg-surface-container text-on-surface px-space-sm py-2 rounded-lg text-body-sm border-2 border-black font-semibold outline-none shadow-[2px_2px_0px_0px_#000]">
+<option>v2.4.0-RC3</option>
+<option>v2.3.1-RELEASE</option>
+<option>v2.3.0-RELEASE</option>
+</select>
+</div>
+<div class="flex flex-col gap-1">
+<label class="text-label-sm font-bold text-on-surface">Environment</label>
+<select class="bg-surface-container text-on-surface px-space-sm py-2 rounded-lg text-body-sm border-2 border-black font-semibold outline-none shadow-[2px_2px_0px_0px_#000]">
+<option>Staging (AWS-US-East)</option>
+<option>QA Integration</option>
+<option>Production Mirror</option>
+</select>
+</div>
+<div class="flex flex-col gap-1">
+<label class="text-label-sm font-bold text-on-surface">Date Range</label>
+<select class="bg-surface-container text-on-surface px-space-sm py-2 rounded-lg text-body-sm border-2 border-black font-semibold outline-none shadow-[2px_2px_0px_0px_#000]">
+<option>Last 14 Days</option>
+<option>Last 30 Days</option>
+<option>Current Sprint Cycle</option>
+</select>
+</div>
+<div class="flex flex-col justify-end">
+<button class="w-full bg-primary text-on-primary hover:bg-zinc-800 font-bold py-2.5 rounded-lg text-body-sm border-2 border-black shadow-[2px_2px_0px_0px_#000] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[16px]">refresh</span>
+            Apply Filters
+          </button>
+</div>
+</div>
+<!-- Release Readiness Scorecard (Hero Section) -->
+<div class="bg-white rounded-2xl p-space-lg border-2 border-black shadow-[6px_6px_0px_0px_#000] relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-space-xl">
+<div class="flex flex-col space-y-space-md max-w-xl">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="px-3 py-1 bg-emerald-300 text-black border-2 border-black rounded-lg text-label-sm font-bold uppercase flex items-center gap-1.5 shadow-[2px_2px_0px_0px_#000]">
+<span class="w-2 h-2 rounded-full bg-black animate-pulse"></span>
+              Ready for Production
+            </span>
+<span class="text-label-sm font-bold text-on-surface-variant bg-surface-container px-2.5 py-1 rounded-lg border border-black">Evaluation Time: Today, 04:32 UTC</span>
+</div>
+<div>
+<h2 class="font-headline-md font-bold text-on-surface mb-2">Release Readiness Scorecard</h2>
+<p class="text-body-md text-on-surface-variant font-medium">All primary quality gates have been satisfied. Test coverage exceeds the 90% threshold with zero critical security defects pending.</p>
+</div>
+<div class="grid grid-cols-3 gap-space-md pt-2">
+<div class="bg-surface-container p-space-md rounded-xl border-2 border-black shadow-[3px_3px_0px_0px_#000]">
+<span class="text-label-sm font-bold text-on-surface-variant block mb-1">Test Coverage</span>
+<div class="text-headline-sm font-bold text-on-surface flex items-center gap-2">
+                94.2%
+                <span class="text-emerald-700 bg-emerald-200 px-1.5 py-0.5 rounded border border-black text-label-sm">+2.4%</span>
+</div>
+</div>
+<div class="bg-surface-container p-space-md rounded-xl border-2 border-black shadow-[3px_3px_0px_0px_#000]">
+<span class="text-label-sm font-bold text-on-surface-variant block mb-1">Pass Rate</span>
+<div class="text-headline-sm font-bold text-on-surface flex items-center gap-2">
+                91.8%
+                <span class="text-emerald-700 bg-emerald-200 px-1.5 py-0.5 rounded border border-black text-label-sm">+0.5%</span>
+</div>
+</div>
+<div class="bg-surface-container p-space-md rounded-xl border-2 border-black shadow-[3px_3px_0px_0px_#000]">
+<span class="text-label-sm font-bold text-on-surface-variant block mb-1">Open Blockers</span>
+<div class="text-headline-sm font-bold text-on-surface flex items-center gap-2">
+                0
+                <span class="text-emerald-700 bg-emerald-200 px-1.5 py-0.5 rounded border border-black text-label-sm">Resolved</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Big Score Gauge Visual -->
+<div class="flex flex-col items-center justify-center p-space-lg bg-surface-container rounded-2xl border-2 border-black shadow-[4px_4px_0px_0px_#000] min-w-[280px]">
+<div class="relative w-40 h-40 flex items-center justify-center">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+<circle class="text-surface-container-highest" cx="50" cy="50" fill="none" r="40" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-primary" cx="50" cy="50" fill="none" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="20.09" stroke-linecap="round" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+<span class="text-[36px] font-headline-lg font-bold text-on-surface tracking-tight">92%</span>
+<span class="text-label-sm font-bold text-on-surface-variant uppercase">Readiness Index</span>
+</div>
+</div>
+<div class="flex items-center gap-4 mt-space-md text-label-sm font-bold text-on-surface">
+<span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-black border border-black"></span> Target: 85%</span>
+<span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-400 border border-black"></span> Status: Optimal</span>
+</div>
+</div>
+</div>
+<!-- Section 1: Test Execution Summary -->
+<div class="flex flex-col space-y-space-md">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-sm font-bold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">pie_chart</span>
+            Test Execution Summary
+          </h3>
+<div class="text-body-sm font-bold text-on-surface bg-white px-3 py-1 rounded-lg border-2 border-black shadow-[2px_2px_0px_0px_#000]">Total Executed: 1,420 test cases</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-space-md">
+<!-- Pass Rate Card -->
+<div class="bg-white rounded-xl p-space-lg border-2 border-black shadow-[4px_4px_0px_0px_#000] flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="text-label-sm font-bold text-on-surface-variant uppercase">Pass Rate</span>
+<span class="px-2.5 py-0.5 bg-emerald-200 text-emerald-900 border-2 border-black rounded font-bold text-label-sm shadow-[1px_1px_0px_0px_#000]">91.8%</span>
+</div>
+<div class="my-4">
+<div class="text-[32px] font-headline-lg font-bold text-on-surface">1,304</div>
+<div class="text-body-sm text-on-surface-variant font-medium">Passed test scripts</div>
+</div>
+<div class="w-full bg-surface-container h-3 rounded-full border-2 border-black overflow-hidden p-0.5">
+<div class="bg-emerald-400 h-full rounded-full border-r border-black" style="width: 91.8%;"></div>
+</div>
+</div>
+<!-- Failure Rate Card -->
+<div class="bg-white rounded-xl p-space-lg border-2 border-black shadow-[4px_4px_0px_0px_#000] flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="text-label-sm font-bold text-on-surface-variant uppercase">Failure Rate</span>
+<span class="px-2.5 py-0.5 bg-rose-200 text-rose-900 border-2 border-black rounded font-bold text-label-sm shadow-[1px_1px_0px_0px_#000]">5.2%</span>
+</div>
+<div class="my-4">
+<div class="text-[32px] font-headline-lg font-bold text-on-surface">74</div>
+<div class="text-body-sm text-on-surface-variant font-medium">Failed test scripts</div>
+</div>
+<div class="w-full bg-surface-container h-3 rounded-full border-2 border-black overflow-hidden p-0.5">
+<div class="bg-rose-400 h-full rounded-full border-r border-black" style="width: 5.2%;"></div>
+</div>
+</div>
+<!-- Blocked Rate Card -->
+<div class="bg-white rounded-xl p-space-lg border-2 border-black shadow-[4px_4px_0px_0px_#000] flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="text-label-sm font-bold text-on-surface-variant uppercase">Blocked Rate</span>
+<span class="px-2.5 py-0.5 bg-amber-200 text-amber-900 border-2 border-black rounded font-bold text-label-sm shadow-[1px_1px_0px_0px_#000]">3.0%</span>
+</div>
+<div class="my-4">
+<div class="text-[32px] font-headline-lg font-bold text-on-surface">42</div>
+<div class="text-body-sm text-on-surface-variant font-medium">Blocked test scripts</div>
+</div>
+<div class="w-full bg-surface-container h-3 rounded-full border-2 border-black overflow-hidden p-0.5">
+<div class="bg-amber-400 h-full rounded-full border-r border-black" style="width: 3%;"></div>
+</div>
+</div>
+<!-- Execution Progress -->
+<div class="bg-white rounded-xl p-space-lg border-2 border-black shadow-[4px_4px_0px_0px_#000] flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="text-label-sm font-bold text-on-surface-variant uppercase">Execution Velocity</span>
+<span class="px-2.5 py-0.5 bg-primary text-on-primary border-2 border-black rounded font-bold text-label-sm shadow-[1px_1px_0px_0px_#000]">100% Complete</span>
+</div>
+<div class="my-4">
+<div class="text-[32px] font-headline-lg font-bold text-on-surface">1,420 / 1,420</div>
+<div class="text-body-sm text-on-surface-variant font-medium">Executed across 14 suites</div>
+</div>
+<div class="w-full bg-surface-container h-3 rounded-full border-2 border-black overflow-hidden p-0.5">
+<div class="bg-primary h-full rounded-full border-r border-black" style="width: 100%;"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 2: Defect Summary Charts -->
+<div class="flex flex-col space-y-space-md">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-sm font-bold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">bug_report</span>
+            Defect Summary &amp; Distribution
+          </h3>
+<div class="text-body-sm font-bold text-on-surface bg-white px-3 py-1 rounded-lg border-2 border-black shadow-[2px_2px_0px_0px_#000]">Total Open Defects: 18</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-space-md">
+<!-- Bugs by Severity -->
+<div class="bg-white rounded-xl p-space-lg border-2 border-black shadow-[4px_4px_0px_0px_#000] flex flex-col justify-between">
+<div class="mb-4">
+<h4 class="font-headline-sm font-bold text-on-surface">Bugs by Severity</h4>
+<p class="text-body-sm text-on-surface-variant font-medium">Distribution across priority spectrum</p>
+</div>
+<div class="space-y-space-md my-auto">
+<div>
+<div class="flex justify-between text-body-sm mb-1 font-semibold">
+<span class="text-on-surface flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-rose-500 border border-black"></span> Critical</span>
+<span class="font-label-sm text-on-surface">0 (0%)</span>
+</div>
+<div class="w-full bg-surface-container h-2.5 rounded-full border-2 border-black overflow-hidden p-0.5">
+<div class="bg-rose-500 h-full rounded-full" style="width: 0%;"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-body-sm mb-1 font-semibold">
+<span class="text-on-surface flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-amber-500 border border-black"></span> High</span>
+<span class="font-label-sm text-on-surface">3 (16.6%)</span>
+</div>
+<div class="w-full bg-surface-container h-2.5 rounded-full border-2 border-black overflow-hidden p-0.5">
+<div class="bg-amber-500 h-full rounded-full border-r border-black" style="width: 16.6%;"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-body-sm mb-1 font-semibold">
+<span class="text-on-surface flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-blue-500 border border-black"></span> Medium</span>
+<span class="font-label-sm text-on-surface">10 (55.5%)</span>
+</div>
+<div class="w-full bg-surface-container h-2.5 rounded-full border-2 border-black overflow-hidden p-0.5">
+<div class="bg-blue-500 h-full rounded-full border-r border-black" style="width: 55.5%;"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-body-sm mb-1 font-semibold">
+<span class="text-on-surface flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 border border-black"></span> Low</span>
+<span class="font-label-sm text-on-surface">5 (27.9%)</span>
+</div>
+<div class="w-full bg-surface-container h-2.5 rounded-full border-2 border-black overflow-hidden p-0.5">
+<div class="bg-emerald-500 h-full rounded-full border-r border-black" style="width: 27.9%;"></div>
+</div>
+</div>
+</div>
+<div class="mt-4 pt-4 border-t-2 border-black flex justify-between text-label-sm font-bold text-on-surface">
+<span>SLA Compliance: 98%</span>
+<span>Avg Resolution: 14 hrs</span>
+</div>
+</div>
+<!-- Bugs by Status -->
+<div class="bg-white rounded-xl p-space-lg border-2 border-black shadow-[4px_4px_0px_0px_#000] flex flex-col justify-between">
+<div class="mb-4">
+<h4 class="font-headline-sm font-bold text-on-surface">Bugs by Status</h4>
+<p class="text-body-sm text-on-surface-variant font-medium">Workflow lifecycle tracking</p>
+</div>
+<div class="space-y-space-md my-auto">
+<div>
+<div class="flex justify-between text-body-sm mb-1 font-semibold">
+<span class="text-on-surface">New / Triaged</span>
+<span class="font-label-sm text-on-surface">4</span>
+</div>
+<div class="w-full bg-surface-container h-2.5 rounded-full border-2 border-black overflow-hidden p-0.5">
+<div class="bg-primary-container h-full rounded-full border-r border-black" style="width: 22%;"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-body-sm mb-1 font-semibold">
+<span class="text-on-surface">In Progress</span>
+<span class="font-label-sm text-on-surface">7</span>
+</div>
+<div class="w-full bg-surface-container h-2.5 rounded-full border-2 border-black overflow-hidden p-0.5">
+<div class="bg-blue-400 h-full rounded-full border-r border-black" style="width: 38.8%;"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-body-sm mb-1 font-semibold">
+<span class="text-on-surface">Ready for Retest</span>
+<span class="font-label-sm text-on-surface">5</span>
+</div>
+<div class="w-full bg-surface-container h-2.5 rounded-full border-2 border-black overflow-hidden p-0.5">
+<div class="bg-amber-400 h-full rounded-full border-r border-black" style="width: 27.7%;"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-body-sm mb-1 font-semibold">
+<span class="text-on-surface">Closed (Verified)</span>
+<span class="font-label-sm text-on-surface">48 (Historical)</span>
+</div>
+<div class="w-full bg-surface-container h-2.5 rounded-full border-2 border-black overflow-hidden p-0.5">
+<div class="bg-emerald-400 h-full rounded-full border-r border-black" style="width: 100%;"></div>
+</div>
+</div>
+</div>
+<div class="mt-4 pt-4 border-t-2 border-black flex justify-between text-label-sm font-bold text-on-surface">
+<span>Reopen Rate: 2.1%</span>
+<span>Target: &lt;5%</span>
+</div>
+</div>
+<!-- Bugs by Module -->
+<div class="bg-white rounded-xl p-space-lg border-2 border-black shadow-[4px_4px_0px_0px_#000] flex flex-col justify-between">
+<div class="mb-4">
+<h4 class="font-headline-sm font-bold text-on-surface">Bugs by Module</h4>
+<p class="text-body-sm text-on-surface-variant font-medium">Component failure clustering</p>
+</div>
+<div class="space-y-space-md my-auto">
+<div>
+<div class="flex justify-between text-body-sm mb-1 font-semibold">
+<span class="text-on-surface">Checkout &amp; Payments</span>
+<span class="font-label-sm text-on-surface">7 bugs</span>
+</div>
+<div class="w-full bg-surface-container h-2.5 rounded-full border-2 border-black overflow-hidden p-0.5">
+<div class="bg-rose-400 h-full rounded-full border-r border-black" style="width: 40%;"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-body-sm mb-1 font-semibold">
+<span class="text-on-surface">User Authentication</span>
+<span class="font-label-sm text-on-surface">4 bugs</span>
+</div>
+<div class="w-full bg-surface-container h-2.5 rounded-full border-2 border-black overflow-hidden p-0.5">
+<div class="bg-amber-400 h-full rounded-full border-r border-black" style="width: 22%;"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-body-sm mb-1 font-semibold">
+<span class="text-on-surface">Catalog &amp; Search</span>
+<span class="font-label-sm text-on-surface">5 bugs</span>
+</div>
+<div class="w-full bg-surface-container h-2.5 rounded-full border-2 border-black overflow-hidden p-0.5">
+<div class="bg-blue-400 h-full rounded-full border-r border-black" style="width: 28%;"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-body-sm mb-1 font-semibold">
+<span class="text-on-surface">User Profile &amp; Settings</span>
+<span class="font-label-sm text-on-surface">2 bugs</span>
+</div>
+<div class="w-full bg-surface-container h-2.5 rounded-full border-2 border-black overflow-hidden p-0.5">
+<div class="bg-emerald-400 h-full rounded-full border-r border-black" style="width: 10%;"></div>
+</div>
+</div>
+</div>
+<div class="mt-4 pt-4 border-t-2 border-black flex justify-between text-label-sm font-bold text-on-surface">
+<span>Highest Risk: Checkout</span>
+<span>Add'l Review Req.</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 3: Automation Coverage Trends -->
+<div class="bg-white rounded-xl p-space-lg border-2 border-black shadow-[4px_4px_0px_0px_#000] flex flex-col space-y-space-md">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm">
+<div>
+<h3 class="font-headline-sm font-bold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">smart_toy</span>
+              Automation Coverage &amp; Execution Trends
+            </h3>
+<p class="text-body-sm text-on-surface-variant font-medium">Regression suite performance over the last 5 release cycles</p>
+</div>
+<div class="flex items-center gap-space-sm bg-surface-container px-3 py-1.5 rounded-lg border-2 border-black shadow-[2px_2px_0px_0px_#000]">
+<span class="flex items-center gap-2 text-body-sm font-bold text-on-surface">
+<span class="w-3 h-3 rounded-full bg-black border border-black"></span> Automated
+            </span>
+<span class="flex items-center gap-2 text-body-sm font-bold text-on-surface-variant">
+<span class="w-3 h-3 rounded-full bg-surface-container-highest border border-black"></span> Manual
+            </span>
+</div>
+</div>
+<!-- Simulated Chart Bar Row -->
+<div class="grid grid-cols-1 md:grid-cols-5 gap-space-md pt-4">
+<div class="bg-surface-container p-space-md rounded-xl border-2 border-black shadow-[3px_3px_0px_0px_#000] flex flex-col justify-between space-y-space-md">
+<div class="flex justify-between items-center">
+<span class="text-label-sm font-bold text-on-surface-variant">v2.0.0</span>
+<span class="text-label-sm font-bold text-on-surface bg-white px-1.5 py-0.5 rounded border border-black">62% Auto</span>
+</div>
+<div class="h-28 flex items-end gap-2 px-2 border-b-2 border-black pb-1">
+<div class="w-1/2 bg-surface-container-highest rounded-t border-t-2 border-x-2 border-black" style="height: 100%;"></div>
+<div class="w-1/2 bg-black rounded-t border-t-2 border-x-2 border-black" style="height: 62%;"></div>
+</div>
+<div class="text-center text-label-sm font-bold text-on-surface">Q3 2023</div>
+</div>
+<div class="bg-surface-container p-space-md rounded-xl border-2 border-black shadow-[3px_3px_0px_0px_#000] flex flex-col justify-between space-y-space-md">
+<div class="flex justify-between items-center">
+<span class="text-label-sm font-bold text-on-surface-variant">v2.1.0</span>
+<span class="text-label-sm font-bold text-on-surface bg-white px-1.5 py-0.5 rounded border border-black">68% Auto</span>
+</div>
+<div class="h-28 flex items-end gap-2 px-2 border-b-2 border-black pb-1">
+<div class="w-1/2 bg-surface-container-highest rounded-t border-t-2 border-x-2 border-black" style="height: 90%;"></div>
+<div class="w-1/2 bg-black rounded-t border-t-2 border-x-2 border-black" style="height: 68%;"></div>
+</div>
+<div class="text-center text-label-sm font-bold text-on-surface">Q4 2023</div>
+</div>
+<div class="bg-surface-container p-space-md rounded-xl border-2 border-black shadow-[3px_3px_0px_0px_#000] flex flex-col justify-between space-y-space-md">
+<div class="flex justify-between items-center">
+<span class="text-label-sm font-bold text-on-surface-variant">v2.2.0</span>
+<span class="text-label-sm font-bold text-on-surface bg-white px-1.5 py-0.5 rounded border border-black">75% Auto</span>
+</div>
+<div class="h-28 flex items-end gap-2 px-2 border-b-2 border-black pb-1">
+<div class="w-1/2 bg-surface-container-highest rounded-t border-t-2 border-x-2 border-black" style="height: 80%;"></div>
+<div class="w-1/2 bg-black rounded-t border-t-2 border-x-2 border-black" style="height: 75%;"></div>
+</div>
+<div class="text-center text-label-sm font-bold text-on-surface">Q1 2024</div>
+</div>
+<div class="bg-surface-container p-space-md rounded-xl border-2 border-black shadow-[3px_3px_0px_0px_#000] flex flex-col justify-between space-y-space-md">
+<div class="flex justify-between items-center">
+<span class="text-label-sm font-bold text-on-surface-variant">v2.3.0</span>
+<span class="text-label-sm font-bold text-on-surface bg-white px-1.5 py-0.5 rounded border border-black">82% Auto</span>
+</div>
+<div class="h-28 flex items-end gap-2 px-2 border-b-2 border-black pb-1">
+<div class="w-1/2 bg-surface-container-highest rounded-t border-t-2 border-x-2 border-black" style="height: 70%;"></div>
+<div class="w-1/2 bg-black rounded-t border-t-2 border-x-2 border-black" style="height: 82%;"></div>
+</div>
+<div class="text-center text-label-sm font-bold text-on-surface">Q2 2024</div>
+</div>
+<div class="bg-primary-fixed p-space-md rounded-xl border-2 border-black shadow-[3px_3px_0px_0px_#000] flex flex-col justify-between space-y-space-md relative">
+<div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-on-primary px-2.5 py-0.5 rounded border-2 border-black text-[10px] font-bold uppercase tracking-wide shadow-[2px_2px_0px_0px_#000]">Current</div>
+<div class="flex justify-between items-center pt-1">
+<span class="text-label-sm font-bold text-primary">v2.4.0</span>
+<span class="text-label-sm font-bold text-on-surface bg-white px-1.5 py-0.5 rounded border border-black">89% Auto</span>
+</div>
+<div class="h-28 flex items-end gap-2 px-2 border-b-2 border-black pb-1">
+<div class="w-1/2 bg-surface-container-highest rounded-t border-t-2 border-x-2 border-black" style="height: 55%;"></div>
+<div class="w-1/2 bg-black rounded-t border-t-2 border-x-2 border-black" style="height: 89%;"></div>
+</div>
+<div class="text-center text-label-sm font-bold text-on-surface">Q3 2024</div>
+</div>
+</div>
+</div>
+<!-- Bottom Detailed Log Table Preview -->
+<div class="bg-white rounded-xl p-space-lg border-2 border-black shadow-[4px_4px_0px_0px_#000] flex flex-col space-y-space-md">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-sm font-bold text-on-surface">Test Suite Execution Breakdown</h3>
+<a class="text-label-sm font-bold text-primary hover:underline flex items-center gap-1 bg-surface-container px-3 py-1.5 rounded-lg border-2 border-black shadow-[2px_2px_0px_0px_#000]" href="#">
+            View All Suites <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b-2 border-black bg-surface-container text-label-sm font-bold text-on-surface">
+<th class="py-3 px-space-sm border-r-2 border-black">Test Suite Name</th>
+<th class="py-3 px-space-sm border-r-2 border-black">Environment</th>
+<th class="py-3 px-space-sm border-r-2 border-black">Total</th>
+<th class="py-3 px-space-sm border-r-2 border-black">Passed</th>
+<th class="py-3 px-space-sm border-r-2 border-black">Failed</th>
+<th class="py-3 px-space-sm border-r-2 border-black">Pass Rate</th>
+<th class="py-3 px-space-sm">Duration</th>
+</tr>
+</thead>
+<tbody class="text-body-sm font-medium divide-y-2 divide-black">
+<tr class="hover:bg-surface-container transition-colors">
+<td class="py-3 px-space-sm font-bold text-on-surface flex items-center gap-2 border-r-2 border-black">
+<span class="material-symbols-outlined text-primary text-[18px]">folder</span>
+                  Checkout &amp; Payment Flow
+                </td>
+<td class="py-3 px-space-sm text-on-surface-variant font-semibold border-r-2 border-black">Staging-US</td>
+<td class="py-3 px-space-sm text-on-surface font-bold border-r-2 border-black">340</td>
+<td class="py-3 px-space-sm text-emerald-700 font-bold border-r-2 border-black">312</td>
+<td class="py-3 px-space-sm text-rose-700 font-bold border-r-2 border-black">28</td>
+<td class="py-3 px-space-sm font-bold text-on-surface border-r-2 border-black">91.7%</td>
+<td class="py-3 px-space-sm text-on-surface-variant">14m 22s</td>
+</tr>
+<tr class="hover:bg-surface-container transition-colors">
+<td class="py-3 px-space-sm font-bold text-on-surface flex items-center gap-2 border-r-2 border-black">
+<span class="material-symbols-outlined text-primary text-[18px]">folder</span>
+                  User Authentication &amp; RBAC
+                </td>
+<td class="py-3 px-space-sm text-on-surface-variant font-semibold border-r-2 border-black">Staging-US</td>
+<td class="py-3 px-space-sm text-on-surface font-bold border-r-2 border-black">210</td>
+<td class="py-3 px-space-sm text-emerald-700 font-bold border-r-2 border-black">201</td>
+<td class="py-3 px-space-sm text-rose-700 font-bold border-r-2 border-black">9</td>
+<td class="py-3 px-space-sm font-bold text-on-surface border-r-2 border-black">95.7%</td>
+<td class="py-3 px-space-sm text-on-surface-variant">08m 15s</td>
+</tr>
+<tr class="hover:bg-surface-container transition-colors">
+<td class="py-3 px-space-sm font-bold text-on-surface flex items-center gap-2 border-r-2 border-black">
+<span class="material-symbols-outlined text-primary text-[18px]">folder</span>
+                  Catalog Search &amp; Filtering
+                </td>
+<td class="py-3 px-space-sm text-on-surface-variant font-semibold border-r-2 border-black">Staging-US</td>
+<td class="py-3 px-space-sm text-on-surface font-bold border-r-2 border-black">450</td>
+<td class="py-3 px-space-sm text-emerald-700 font-bold border-r-2 border-black">420</td>
+<td class="py-3 px-space-sm text-rose-700 font-bold border-r-2 border-black">30</td>
+<td class="py-3 px-space-sm font-bold text-on-surface border-r-2 border-black">93.3%</td>
+<td class="py-3 px-space-sm text-on-surface-variant">19m 40s</td>
+</tr>
+<tr class="hover:bg-surface-container transition-colors">
+<td class="py-3 px-space-sm font-bold text-on-surface flex items-center gap-2 border-r-2 border-black">
+<span class="material-symbols-outlined text-primary text-[18px]">folder</span>
+                  API Integration Suite
+                </td>
+<td class="py-3 px-space-sm text-on-surface-variant font-semibold border-r-2 border-black">QA-Internal</td>
+<td class="py-3 px-space-sm text-on-surface font-bold border-r-2 border-black">420</td>
+<td class="py-3 px-space-sm text-emerald-700 font-bold border-r-2 border-black">371</td>
+<td class="py-3 px-space-sm text-rose-700 font-bold border-r-2 border-black">7</td>
+<td class="py-3 px-space-sm font-bold text-on-surface border-r-2 border-black">88.3%</td>
+<td class="py-3 px-space-sm text-on-surface-variant">24m 05s</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

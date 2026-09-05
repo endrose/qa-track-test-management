@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {"darkMode":"class","theme":{"extend":{"colors":{"outline-variant":"#c6c6cd","on-primary-container":"#ffffff","surface":"#f8fafc","on-secondary-fixed-variant":"#003ea8","on-background":"#0f172a","on-primary":"#ffffff","background":"#fdfbf7","surface-container":"#f0edef","on-error":"#ffffff","on-surface-variant":"#45464d","surface-dim":"#e2e8f0","primary-fixed-dim":"#bec6e0","error":"#ef4444","inverse-on-surface":"#f3f0f2","on-primary-fixed":"#131b2e","on-secondary":"#ffffff","secondary-fixed":"#dbe1ff","surface-bright":"#fcf8fa","secondary-container":"#316bf3","inverse-primary":"#bec6e0","surface-container-highest":"#e4e2e4","surface-tint":"#565e74","on-tertiary":"#ffffff","on-secondary-fixed":"#00174b","surface-container-high":"#cbd5e1","primary":"#000000","on-primary-fixed-variant":"#3f465c","secondary-fixed-dim":"#b4c5ff","on-tertiary-container":"#009668","surface-container-low":"#f1f5f9","surface-variant":"#e4e2e4","surface-container-lowest":"#ffffff","on-surface":"#1b1b1d","primary-container":"#3b82f6","tertiary":"#000000","secondary":"#0051d5","on-error-container":"#93000a","inverse-surface":"#303032","tertiary-fixed":"#6ffbbe","primary-fixed":"#dae2fd","outline":"#000000","on-tertiary-fixed":"#002113","on-tertiary-fixed-variant":"#005236","on-secondary-container":"#fefcff","error-container":"#ffdad6","tertiary-container":"#002113","tertiary-fixed-dim":"#4edea3"},"borderRadius":{"DEFAULT":"0rem","lg":"0rem","xl":"0rem","full":"9999px"},"spacing":{"element-gap":"1rem","gutter":"1.5rem","margin":"2rem"},"fontFamily":{"title":["\"Geist, Inter, system-ui, sans-serif\""],"label":["\"Geist, Inter, system-ui, sans-serif\""],"display":["\"Geist, Inter, system-ui, sans-serif\""],"body":["\"Geist, Inter, system-ui, sans-serif\""],"headline":["\"Geist, Inter, system-ui, sans-serif\""]},"fontSize":{"title":["20px",{"lineHeight":"28px","fontWeight":"700"}],"label":["12px",{"lineHeight":"16px","letterSpacing":"0.05em","fontWeight":"700"}],"display":["36px",{"lineHeight":"40px","letterSpacing":"-0.025em","fontWeight":"800"}],"body":["14px",{"lineHeight":"20px","fontWeight":"500"}],"headline":["24px",{"lineHeight":"32px","letterSpacing":"0.025em","fontWeight":"700"}]}}}};</script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist,+Inter,+system-ui,+sans-serif:wght@100..900&display=swap" rel="stylesheet"/></head><body class="bg-surface font-body text-on-surface"><aside class="fixed left-0 top-0 h-full w-[250px] bg-surface-container-lowest border-r-[3px] border-outline z-50 flex flex-col"><div class="h-16 px-gutter flex items-center border-b-[3px] border-outline bg-primary text-on-primary font-headline text-title"><span class="material-symbols-outlined mr-2">bug_report</span>QATrack</div><div class="flex-1 overflow-y-auto py-4 px-3 space-y-6"><nav class="space-y-1" data-active-classes="bg-primary text-on-primary font-bold shadow-[2px_2px_0px_#000000]"><div class="px-3 py-1 text-label text-on-surface-variant uppercase tracking-wider">Workspace</div><a class="flex items-center px-3 py-2 border-[2px] border-transparent hover:border-outline text-on-surface hover:bg-surface-container transition-all" data-path="dashboard" href="#"><span class="material-symbols-outlined mr-3 text-[20px]">dashboard</span>Dashboard</a><a class="flex items-center px-3 py-2 border-[2px] border-transparent hover:border-outline text-on-surface hover:bg-surface-container transition-all" data-path="projects" href="#"><span class="material-symbols-outlined mr-3 text-[20px]">folder</span>Projects</a></nav><nav class="space-y-1" data-active-classes="bg-primary text-on-primary font-bold shadow-[2px_2px_0px_#000000]"><div class="px-3 py-1 text-label text-on-surface-variant uppercase tracking-wider">Testing</div><a class="flex items-center px-3 py-2 border-[2px] border-transparent hover:border-outline text-on-surface hover:bg-surface-container transition-all" data-path="requirements" href="#"><span class="material-symbols-outlined mr-3 text-[20px]">fact_check</span>Requirements</a><a class="flex items-center px-3 py-2 border-[2px] border-transparent hover:border-outline text-on-surface hover:bg-surface-container transition-all" data-path="test-scenarios" href="#"><span class="material-symbols-outlined mr-3 text-[20px]">account_tree</span>Test Scenarios</a><a aria-current="page" class="flex items-center px-3 py-2 border-[2px] border-transparent hover:border-outline transition-all bg-primary text-on-primary font-bold shadow-[2px_2px_0px_#000000]" data-path="test-cases" href="#"><span class="material-symbols-outlined mr-3 text-[20px]">checklist</span>Test Cases</a><a class="flex items-center px-3 py-2 border-[2px] border-transparent hover:border-outline text-on-surface hover:bg-surface-container transition-all" data-path="test-executions" href="#"><span class="material-symbols-outlined mr-3 text-[20px]">play_arrow</span>Test Executions</a><a class="flex items-center px-3 py-2 border-[2px] border-transparent hover:border-outline text-on-surface hover:bg-surface-container transition-all" data-path="automation" href="#"><span class="material-symbols-outlined mr-3 text-[20px]">smart_toy</span>Automation</a></nav><nav class="space-y-1" data-active-classes="bg-primary text-on-primary font-bold shadow-[2px_2px_0px_#000000]"><div class="px-3 py-1 text-label text-on-surface-variant uppercase tracking-wider">Quality</div><a class="flex items-center px-3 py-2 border-[2px] border-transparent hover:border-outline text-on-surface hover:bg-surface-container transition-all" data-path="bugs" href="#"><span class="material-symbols-outlined mr-3 text-[20px]">pest_control</span>Bugs</a><a class="flex items-center px-3 py-2 border-[2px] border-transparent hover:border-outline text-on-surface hover:bg-surface-container transition-all" data-path="reports" href="#"><span class="material-symbols-outlined mr-3 text-[20px]">bar_chart</span>Reports</a><a class="flex items-center px-3 py-2 border-[2px] border-transparent hover:border-outline text-on-surface hover:bg-surface-container transition-all" data-path="rtm" href="#"><span class="material-symbols-outlined mr-3 text-[20px]">grid_view</span>RTM</a></nav><nav class="space-y-1" data-active-classes="bg-primary text-on-primary font-bold shadow-[2px_2px_0px_#000000]"><div class="px-3 py-1 text-label text-on-surface-variant uppercase tracking-wider">Admin</div><a class="flex items-center px-3 py-2 border-[2px] border-transparent hover:border-outline text-on-surface hover:bg-surface-container transition-all" data-path="settings" href="#"><span class="material-symbols-outlined mr-3 text-[20px]">settings</span>Settings</a></nav></div><div class="p-3 border-t-[3px] border-outline bg-surface-container-low flex flex-col gap-2"><div class="flex items-center justify-between text-on-surface-variant text-label"><a class="hover:text-on-surface" href="#">Help</a><a class="hover:text-on-surface" href="#">Docs</a></div><div class="flex items-center gap-3 p-2 bg-surface border-[2px] border-outline shadow-[2px_2px_0px_#000000]"><div class="w-8 h-8 bg-primary flex items-center justify-center text-on-primary font-bold">E</div><div class="flex flex-col"><span class="font-bold text-body">Endros</span><span class="text-label text-on-surface-variant">QA Lead</span></div></div></div></aside><div class="pl-[250px]"><header class="fixed top-0 left-[250px] right-0 h-16 bg-surface border-b-[3px] border-outline z-40 flex items-center justify-between px-gutter"><div class="flex items-center gap-4"><div class="flex items-center gap-2 px-3 py-1 bg-surface-container border-[2px] border-outline shadow-[2px_2px_0px_#000000]"><span class="material-symbols-outlined text-[18px]">folder_open</span><span class="font-bold text-body">E-Commerce Platform</span><span class="material-symbols-outlined text-[18px]">expand_more</span></div><div class="px-2 py-1 bg-tertiary-fixed text-on-tertiary-fixed font-label uppercase border-[2px] border-outline">QA</div></div><div class="flex items-center gap-4"><div class="flex items-center gap-2 px-3 py-1 bg-surface border-[2px] border-outline shadow-[2px_2px_0px_#000000] w-64 text-on-surface-variant"><span class="material-symbols-outlined text-[18px]">search</span><span class="text-body flex-1">Search...</span><span class="px-1.5 py-0.5 bg-surface-dim border-[1px] border-outline text-label">Ctrl + K</span></div><button class="p-2 bg-surface border-[2px] border-outline shadow-[2px_2px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all"><span class="material-symbols-outlined text-[20px]">notifications</span></button><div class="w-8 h-8 bg-primary border-[2px] border-outline flex items-center justify-center text-on-primary font-bold shadow-[2px_2px_0px_#000000]">E</div></div></header><main class="relative pt-16 bg-surface min-h-screen p-margin"><div class="flex flex-col w-full">
+<!-- Top Section: Header & Actions -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-element-gap mb-margin">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2 py-0.5 bg-primary text-on-primary font-label uppercase text-[10px] tracking-widest">Inventory</span>
+<span class="text-on-surface-variant font-label text-[12px]">MODULE // TC-MGMT</span>
+</div>
+<h1 class="font-headline text-display text-on-surface uppercase tracking-tight">Test Cases</h1>
+<p class="text-body text-on-surface-variant mt-1">Manage and execute test suite inventory with high-density data tables.</p>
+</div>
+<div class="flex flex-wrap items-center gap-3">
+<button class="px-4 py-2 bg-surface-container-lowest border-[2px] border-outline font-label uppercase tracking-wider shadow-[3px_3px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all flex items-center gap-2" onclick="alert('Exporting inventory...')">
+<span class="material-symbols-outlined text-[18px]">download</span>Export
+      </button>
+<button class="px-4 py-2 bg-surface-container-lowest border-[2px] border-outline font-label uppercase tracking-wider shadow-[3px_3px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all flex items-center gap-2" onclick="alert('Importing test cases...')">
+<span class="material-symbols-outlined text-[18px]">upload</span>Import
+      </button>
+<button class="px-4 py-2 bg-secondary text-on-secondary border-[2px] border-outline font-label uppercase tracking-wider shadow-[3px_3px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all flex items-center gap-2" onclick="openCreateModal()">
+<span class="material-symbols-outlined text-[18px]">add</span>Create Test Case
+      </button>
+</div>
+</div>
+<!-- Metric Overview Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter mb-margin">
+<div class="bg-surface-container-lowest border-[3px] border-outline p-gutter shadow-[4px_4px_0px_#000000] flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label text-on-surface-variant uppercase">Total Test Cases</span>
+<span class="material-symbols-outlined text-secondary">checklist</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-display text-3xl">1,248</span>
+<span class="text-label text-on-tertiary-container font-bold">+12 this week</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border-[3px] border-outline p-gutter shadow-[4px_4px_0px_#000000] flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label text-on-surface-variant uppercase">Automation Rate</span>
+<span class="material-symbols-outlined text-secondary-container">smart_toy</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-display text-3xl">64.2%</span>
+<span class="text-label text-on-surface-variant font-bold">Target: 70%</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border-[3px] border-outline p-gutter shadow-[4px_4px_0px_#000000] flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label text-on-surface-variant uppercase">Passing Rate</span>
+<span class="material-symbols-outlined text-on-tertiary-container">task_alt</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-display text-3xl">91.8%</span>
+<span class="text-label text-on-tertiary-container font-bold">+2.4%</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border-[3px] border-outline p-gutter shadow-[4px_4px_0px_#000000] flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label text-on-surface-variant uppercase">Failed Executions</span>
+<span class="material-symbols-outlined text-error">error</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-display text-3xl">14</span>
+<span class="text-label text-error font-bold">Needs Review</span>
+</div>
+</div>
+</div>
+<!-- Filters & Search Toolbar -->
+<div class="bg-surface-container-lowest border-[3px] border-outline p-gutter shadow-[4px_4px_0px_#000000] mb-margin flex flex-col gap-4">
+<div class="flex flex-col lg:flex-row gap-4 items-stretch lg:items-center justify-between">
+<div class="flex flex-wrap items-center gap-3 flex-1">
+<!-- Search Input -->
+<div class="flex items-center bg-surface border-[2px] border-outline px-3 py-1.5 shadow-[2px_2px_0px_#000000] flex-1 min-w-[240px]">
+<span class="material-symbols-outlined text-[18px] mr-2 text-on-surface-variant">search</span>
+<input class="bg-transparent border-none outline-none w-full text-body text-on-surface placeholder:text-on-surface-variant" placeholder="Search by ID, title, or keyword..." type="text"/>
+</div>
+<!-- Dropdowns -->
+<select class="bg-surface border-[2px] border-outline px-3 py-2 text-body font-bold uppercase shadow-[2px_2px_0px_#000000] outline-none cursor-pointer">
+<option>Type: All</option>
+<option>Functional</option>
+<option>Regression</option>
+<option>Security</option>
+</select>
+<select class="bg-surface border-[2px] border-outline px-3 py-2 text-body font-bold uppercase shadow-[2px_2px_0px_#000000] outline-none cursor-pointer">
+<option>Priority: All</option>
+<option>High</option>
+<option>Medium</option>
+<option>Low</option>
+</select>
+<select class="bg-surface border-[2px] border-outline px-3 py-2 text-body font-bold uppercase shadow-[2px_2px_0px_#000000] outline-none cursor-pointer">
+<option>Status: All</option>
+<option>Active</option>
+<option>Draft</option>
+<option>Deprecated</option>
+</select>
+<select class="bg-surface border-[2px] border-outline px-3 py-2 text-body font-bold uppercase shadow-[2px_2px_0px_#000000] outline-none cursor-pointer">
+<option>Automation: All</option>
+<option>Automated</option>
+<option>Manual</option>
+</select>
+<select class="bg-surface border-[2px] border-outline px-3 py-2 text-body font-bold uppercase shadow-[2px_2px_0px_#000000] outline-none cursor-pointer">
+<option>Requirement: All</option>
+<option>REQ-AUTH-01</option>
+<option>REQ-PAY-04</option>
+<option>REQ-CART-09</option>
+</select>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-3 py-2 bg-surface-dim border-[2px] border-outline font-label uppercase shadow-[2px_2px_0px_#000000] hover:bg-surface-container transition-all" onclick="resetFilters()">Reset</button>
+</div>
+</div>
+</div>
+<!-- Test Case Data Table -->
+<div class="bg-surface-container-lowest border-[3px] border-outline shadow-[6px_6px_0px_#000000] overflow-x-auto mb-margin">
+<table class="w-full text-left border-collapse min-w-[1100px]">
+<thead>
+<tr class="bg-surface-container border-b-[3px] border-outline text-label uppercase">
+<th class="p-3 w-12 border-r-[2px] border-outline text-center">
+<input class="w-4 h-4 accent-primary cursor-pointer" id="selectAll" type="checkbox"/>
+</th>
+<th class="p-3 border-r-[2px] border-outline">ID</th>
+<th class="p-3 border-r-[2px] border-outline">Title</th>
+<th class="p-3 border-r-[2px] border-outline">Scenario</th>
+<th class="p-3 border-r-[2px] border-outline">Requirement</th>
+<th class="p-3 border-r-[2px] border-outline">Type</th>
+<th class="p-3 border-r-[2px] border-outline">Priority</th>
+<th class="p-3 border-r-[2px] border-outline">Automation</th>
+<th class="p-3 border-r-[2px] border-outline">Last Result</th>
+<th class="p-3 border-r-[2px] border-outline">Status</th>
+<th class="p-3">Updated</th>
+</tr>
+</thead>
+<tbody class="divide-y-[2px] divide-outline text-body">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="p-3 border-r-[2px] border-outline text-center"><input class="w-4 h-4 accent-primary cursor-pointer" type="checkbox"/></td>
+<td class="p-3 border-r-[2px] border-outline font-mono font-bold text-secondary">TC-1024</td>
+<td class="p-3 border-r-[2px] border-outline font-bold">Login with valid credentials</td>
+<td class="p-3 border-r-[2px] border-outline text-on-surface-variant">Authentication Flow</td>
+<td class="p-3 border-r-[2px] border-outline font-mono">REQ-AUTH-01</td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-secondary-fixed text-on-secondary-fixed font-label uppercase border-[1px] border-outline text-[10px]">Functional</span></td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-error-container text-on-error-container font-label uppercase border-[1px] border-outline text-[10px] font-bold">HIGH</span></td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-surface-container-high font-label uppercase border-[1px] border-outline text-[10px]">AUTOMATED</span></td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-tertiary-fixed text-on-tertiary-fixed font-label uppercase border-[1px] border-outline text-[10px] font-bold">PASSED</span></td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-surface-dim font-label uppercase border-[1px] border-outline text-[10px]">ACTIVE</span></td>
+<td class="p-3 font-mono text-on-surface-variant text-xs">2023-10-24</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="p-3 border-r-[2px] border-outline text-center"><input class="w-4 h-4 accent-primary cursor-pointer" type="checkbox"/></td>
+<td class="p-3 border-r-[2px] border-outline font-mono font-bold text-secondary">TC-1025</td>
+<td class="p-3 border-r-[2px] border-outline font-bold">Checkout payment gateway timeout</td>
+<td class="p-3 border-r-[2px] border-outline text-on-surface-variant">Payment Processing</td>
+<td class="p-3 border-r-[2px] border-outline font-mono">REQ-PAY-04</td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-secondary-fixed text-on-secondary-fixed font-label uppercase border-[1px] border-outline text-[10px]">Regression</span></td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-error-container text-on-error-container font-label uppercase border-[1px] border-outline text-[10px] font-bold">HIGH</span></td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-surface-container-high font-label uppercase border-[1px] border-outline text-[10px]">AUTOMATED</span></td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-error-container text-on-error-container font-label uppercase border-[1px] border-outline text-[10px] font-bold">FAILED</span></td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-surface-dim font-label uppercase border-[1px] border-outline text-[10px]">ACTIVE</span></td>
+<td class="p-3 font-mono text-on-surface-variant text-xs">2023-10-23</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="p-3 border-r-[2px] border-outline text-center"><input class="w-4 h-4 accent-primary cursor-pointer" type="checkbox"/></td>
+<td class="p-3 border-r-[2px] border-outline font-mono font-bold text-secondary">TC-1026</td>
+<td class="p-3 border-r-[2px] border-outline font-bold">SQL Injection payload on search bar</td>
+<td class="p-3 border-r-[2px] border-outline text-on-surface-variant">Security Audit</td>
+<td class="p-3 border-r-[2px] border-outline font-mono">REQ-SEC-02</td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-secondary-fixed text-on-secondary-fixed font-label uppercase border-[1px] border-outline text-[10px]">Security</span></td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-error-container text-on-error-container font-label uppercase border-[1px] border-outline text-[10px] font-bold">HIGH</span></td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-surface-container-high font-label uppercase border-[1px] border-outline text-[10px]">MANUAL</span></td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-tertiary-fixed text-on-tertiary-fixed font-label uppercase border-[1px] border-outline text-[10px] font-bold">PASSED</span></td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-surface-dim font-label uppercase border-[1px] border-outline text-[10px]">ACTIVE</span></td>
+<td class="p-3 font-mono text-on-surface-variant text-xs">2023-10-22</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="p-3 border-r-[2px] border-outline text-center"><input class="w-4 h-4 accent-primary cursor-pointer" type="checkbox"/></td>
+<td class="p-3 border-r-[2px] border-outline font-mono font-bold text-secondary">TC-1027</td>
+<td class="p-3 border-r-[2px] border-outline font-bold">Add item to cart without inventory</td>
+<td class="p-3 border-r-[2px] border-outline text-on-surface-variant">Inventory Sync</td>
+<td class="p-3 border-r-[2px] border-outline font-mono">REQ-CART-09</td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-secondary-fixed text-on-secondary-fixed font-label uppercase border-[1px] border-outline text-[10px]">Functional</span></td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-surface-container-high text-on-surface font-label uppercase border-[1px] border-outline text-[10px]">MEDIUM</span></td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-surface-container-high font-label uppercase border-[1px] border-outline text-[10px]">AUTOMATED</span></td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-tertiary-fixed text-on-tertiary-fixed font-label uppercase border-[1px] border-outline text-[10px] font-bold">PASSED</span></td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-surface-dim font-label uppercase border-[1px] border-outline text-[10px]">ACTIVE</span></td>
+<td class="p-3 font-mono text-on-surface-variant text-xs">2023-10-21</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="p-3 border-r-[2px] border-outline text-center"><input class="w-4 h-4 accent-primary cursor-pointer" type="checkbox"/></td>
+<td class="p-3 border-r-[2px] border-outline font-mono font-bold text-secondary">TC-1028</td>
+<td class="p-3 border-r-[2px] border-outline font-bold">Password reset token expiration check</td>
+<td class="p-3 border-r-[2px] border-outline text-on-surface-variant">Authentication Flow</td>
+<td class="p-3 border-r-[2px] border-outline font-mono">REQ-AUTH-03</td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-secondary-fixed text-on-secondary-fixed font-label uppercase border-[1px] border-outline text-[10px]">Functional</span></td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-surface-container-high text-on-surface font-label uppercase border-[1px] border-outline text-[10px]">MEDIUM</span></td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-surface-container-high font-label uppercase border-[1px] border-outline text-[10px]">AUTOMATED</span></td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-tertiary-fixed text-on-tertiary-fixed font-label uppercase border-[1px] border-outline text-[10px] font-bold">PASSED</span></td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-surface-dim font-label uppercase border-[1px] border-outline text-[10px]">ACTIVE</span></td>
+<td class="p-3 font-mono text-on-surface-variant text-xs">2023-10-20</td>
+</tr>
+<!-- Row 6 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="p-3 border-r-[2px] border-outline text-center"><input class="w-4 h-4 accent-primary cursor-pointer" type="checkbox"/></td>
+<td class="p-3 border-r-[2px] border-outline font-mono font-bold text-secondary">TC-1029</td>
+<td class="p-3 border-r-[2px] border-outline font-bold">Multi-currency exchange rate calculation</td>
+<td class="p-3 border-r-[2px] border-outline text-on-surface-variant">Billing System</td>
+<td class="p-3 border-r-[2px] border-outline font-mono">REQ-BILL-11</td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-secondary-fixed text-on-secondary-fixed font-label uppercase border-[1px] border-outline text-[10px]">Regression</span></td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-surface-container-high text-on-surface font-label uppercase border-[1px] border-outline text-[10px]">LOW</span></td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-surface-container-high font-label uppercase border-[1px] border-outline text-[10px]">MANUAL</span></td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-error-container text-on-error-container font-label uppercase border-[1px] border-outline text-[10px] font-bold">FAILED</span></td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-surface-dim font-label uppercase border-[1px] border-outline text-[10px]">DRAFT</span></td>
+<td class="p-3 font-mono text-on-surface-variant text-xs">2023-10-19</td>
+</tr>
+<!-- Row 7 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="p-3 border-r-[2px] border-outline text-center"><input class="w-4 h-4 accent-primary cursor-pointer" type="checkbox"/></td>
+<td class="p-3 border-r-[2px] border-outline font-mono font-bold text-secondary">TC-1030</td>
+<td class="p-3 border-r-[2px] border-outline font-bold">XSS sanitization in user profile bio</td>
+<td class="p-3 border-r-[2px] border-outline text-on-surface-variant">Security Audit</td>
+<td class="p-3 border-r-[2px] border-outline font-mono">REQ-SEC-05</td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-secondary-fixed text-on-secondary-fixed font-label uppercase border-[1px] border-outline text-[10px]">Security</span></td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-error-container text-on-error-container font-label uppercase border-[1px] border-outline text-[10px] font-bold">HIGH</span></td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-surface-container-high font-label uppercase border-[1px] border-outline text-[10px]">AUTOMATED</span></td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-tertiary-fixed text-on-tertiary-fixed font-label uppercase border-[1px] border-outline text-[10px] font-bold">PASSED</span></td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-surface-dim font-label uppercase border-[1px] border-outline text-[10px]">ACTIVE</span></td>
+<td class="p-3 font-mono text-on-surface-variant text-xs">2023-10-18</td>
+</tr>
+<!-- Row 8 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="p-3 border-r-[2px] border-outline text-center"><input class="w-4 h-4 accent-primary cursor-pointer" type="checkbox"/></td>
+<td class="p-3 border-r-[2px] border-outline font-mono font-bold text-secondary">TC-1031</td>
+<td class="p-3 border-r-[2px] border-outline font-bold">API Rate limiting under concurrent load</td>
+<td class="p-3 border-r-[2px] border-outline text-on-surface-variant">Performance</td>
+<td class="p-3 border-r-[2px] border-outline font-mono">REQ-PERF-02</td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-secondary-fixed text-on-secondary-fixed font-label uppercase border-[1px] border-outline text-[10px]">Functional</span></td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-surface-container-high text-on-surface font-label uppercase border-[1px] border-outline text-[10px]">MEDIUM</span></td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-surface-container-high font-label uppercase border-[1px] border-outline text-[10px]">AUTOMATED</span></td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-tertiary-fixed text-on-tertiary-fixed font-label uppercase border-[1px] border-outline text-[10px] font-bold">PASSED</span></td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-surface-dim font-label uppercase border-[1px] border-outline text-[10px]">ACTIVE</span></td>
+<td class="p-3 font-mono text-on-surface-variant text-xs">2023-10-17</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Controls -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+<div class="text-label text-on-surface-variant uppercase">
+      Showing <span class="font-bold text-on-surface">1-8</span> of <span class="font-bold text-on-surface">1,248</span> test cases
+    </div>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1.5 bg-surface-container-lowest border-[2px] border-outline font-label uppercase shadow-[2px_2px_0px_#000000] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all disabled:opacity-50" disabled="">Previous</button>
+<button class="px-3 py-1.5 bg-primary text-on-primary border-[2px] border-outline font-label uppercase shadow-[2px_2px_0px_#000000]">1</button>
+<button class="px-3 py-1.5 bg-surface-container-lowest border-[2px] border-outline font-label uppercase shadow-[2px_2px_0px_#000000] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all">2</button>
+<button class="px-3 py-1.5 bg-surface-container-lowest border-[2px] border-outline font-label uppercase shadow-[2px_2px_0px_#000000] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all">3</button>
+<span class="px-2">...</span>
+<button class="px-3 py-1.5 bg-surface-container-lowest border-[2px] border-outline font-label uppercase shadow-[2px_2px_0px_#000000] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all">156</button>
+<button class="px-3 py-1.5 bg-surface-container-lowest border-[2px] border-outline font-label uppercase shadow-[2px_2px_0px_#000000] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all">Next</button>
+</div>
+</div>
+<!-- Modal Template Placeholder for Create Test Case -->
+<div class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 hidden" id="createModal">
+<div class="bg-surface-container-lowest border-[3px] border-outline p-gutter shadow-[8px_8px_0px_#000000] w-full max-w-lg">
+<div class="flex items-center justify-between pb-3 border-b-[2px] border-outline mb-4">
+<h3 class="font-headline text-title uppercase">Create New Test Case</h3>
+<button class="p-1 hover:bg-surface-dim border-[2px] border-transparent hover:border-outline" onclick="closeCreateModal()"><span class="material-symbols-outlined">close</span></button>
+</div>
+<div class="space-y-4">
+<div>
+<label class="block font-label uppercase text-[11px] mb-1">Test Title</label>
+<input class="w-full bg-surface border-[2px] border-outline p-2 text-body" placeholder="e.g. Verify user profile picture upload" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block font-label uppercase text-[11px] mb-1">Test Type</label>
+<select class="w-full bg-surface border-[2px] border-outline p-2 text-body">
+<option>Functional</option>
+<option>Regression</option>
+<option>Security</option>
+</select>
+</div>
+<div>
+<label class="block font-label uppercase text-[11px] mb-1">Priority</label>
+<select class="w-full bg-surface border-[2px] border-outline p-2 text-body">
+<option>High</option>
+<option>Medium</option>
+<option>Low</option>
+</select>
+</div>
+</div>
+<div>
+<label class="block font-label uppercase text-[11px] mb-1">Test Scenario / Module</label>
+<input class="w-full bg-surface border-[2px] border-outline p-2 text-body" placeholder="e.g. User Profile Settings" type="text"/>
+</div>
+<div>
+<label class="block font-label uppercase text-[11px] mb-1">Pre-conditions & Steps</label>
+<textarea class="w-full bg-surface border-[2px] border-outline p-2 text-body" placeholder="1. Navigate to profile..." rows="3"></textarea>
+</div>
+</div>
+<div class="flex justify-end gap-3 mt-6 pt-3 border-t-[2px] border-outline">
+<button class="px-4 py-2 bg-surface-dim border-[2px] border-outline font-label uppercase shadow-[2px_2px_0px_#000000]" onclick="closeCreateModal()">Cancel</button>
+<button class="px-4 py-2 bg-secondary text-on-secondary border-[2px] border-outline font-label uppercase shadow-[2px_2px_0px_#000000]" onclick="closeCreateModal(); alert('Test case created successfully!')">Save Test Case</button>
+</div>
+</div>
+</div>
+<script>
+    function openCreateModal() {
+      document.getElementById('createModal').classList.remove('hidden');
+    }
+    function closeCreateModal() {
+      document.getElementById('createModal').classList.add('hidden');
+    }
+    function resetFilters() {
+      document.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+    }
+    document.getElementById('selectAll').addEventListener('change', function(e) {
+      const checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');
+      checkboxes.forEach(cb => cb.checked = e.target.checked);
+    });
+  </script>
+</div></main></div></body></html>

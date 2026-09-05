@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+
+<html class="" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<style>
+  @layer base { 
+    html, body { margin: 0; padding: 0; } 
+    body { overscroll-behavior: none; } 
+    main > :first-child { margin-top: 0 !important; } 
+    main > :last-child { margin-bottom: 0 !important; } 
+  }
+  ::-webkit-scrollbar { display: none; }
+  /* Neo-brutalist shadow helper */
+  .shadow-neo {
+    box-shadow: 3px 3px 0px #000000;
+  }
+  .shadow-neo-sm {
+    box-shadow: 2px 2px 0px #000000;
+  }
+  .shadow-neo-lg {
+    box-shadow: 5px 5px 0px #000000;
+  }
+</style>
+<script src="https://cdn.tailwindcss.com"></script>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "secondary-container": "#316bf3",
+          "surface-container-low": "#f6f3f5",
+          "tertiary": "#000000",
+          "surface-container": "#e2e8f0",
+          "secondary": "#0051d5",
+          "primary-fixed": "#dae2fd",
+          "background": "#fdfbf7",
+          "surface-container-highest": "#e4e2e4",
+          "surface-dim": "#dcd9db",
+          "on-primary-container": "#7c839b",
+          "surface-tint": "#565e74",
+          "error-container": "#ffdad6",
+          "on-background": "#0f172a",
+          "surface-container-high": "#cbd5e1",
+          "on-tertiary-container": "#009668",
+          "surface-variant": "#e4e2e4",
+          "primary-container": "#131b2e",
+          "on-primary-fixed": "#131b2e",
+          "tertiary-fixed": "#6ffbbe",
+          "on-surface-variant": "#45464d",
+          "inverse-primary": "#bec6e0",
+          "error": "#ef4444",
+          "surface-container-lowest": "#ffffff",
+          "secondary-fixed-dim": "#b4c5ff",
+          "on-tertiary": "#ffffff",
+          "on-secondary-container": "#fefcff",
+          "on-error": "#ffffff",
+          "primary-fixed-dim": "#bec6e0",
+          "on-error-container": "#93000a",
+          "tertiary-fixed-dim": "#4edea3",
+          "on-secondary-fixed-variant": "#003ea8",
+          "inverse-surface": "#303032",
+          "inverse-on-surface": "#f3f0f2",
+          "on-primary-fixed-variant": "#3f465c",
+          "on-tertiary-fixed": "#002113",
+          "on-surface": "#1b1b1d",
+          "primary": "#000000",
+          "on-secondary": "#ffffff",
+          "outline-variant": "#334155",
+          "outline": "#000000",
+          "surface-bright": "#ffffff",
+          "on-primary": "#ffffff",
+          "surface": "#f8fafc",
+          "tertiary-container": "#002113",
+          "secondary-fixed": "#dbe1ff",
+          "on-secondary-fixed": "#00174b",
+          "on-tertiary-fixed-variant": "#005236"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "space-sm": "12px",
+          "space-xl": "32px",
+          "space-lg": "24px",
+          "space-xs": "8px",
+          "grid-gutter": "24px",
+          "sidebar-width": "260px",
+          "space-xxs": "4px",
+          "space-md": "16px",
+          "space-xxl": "48px"
+        },
+        "fontFamily": {
+          "display": ["\"Geist, Inter, system-ui, sans-serif\""],
+          "title": ["\"Geist, Inter, system-ui, sans-serif\""],
+          "body": ["\"Geist, Inter, system-ui, sans-serif\""],
+          "label": ["\"Geist, Inter, system-ui, sans-serif\""],
+          "headline": ["\"Geist, Inter, system-ui, sans-serif\""]
+        },
+        "fontSize": {
+          "display": ["36px", { "lineHeight": "40px", "letterSpacing": "-0.025em", "fontWeight": "800" }],
+          "title": ["20px", { "lineHeight": "28px", "fontWeight": "700" }],
+          "body": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+          "label": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+          "headline": ["24px", { "lineHeight": "32px", "letterSpacing": "0.025em", "fontWeight": "700" }]
+        }
+      }
+    }
+  };
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500;700&amp;family=Geist:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+</head>
+<body class="bg-[#fdfbf7] font-body text-on-surface">
+<aside class="fixed left-0 top-0 h-full w-[250px] bg-white border-r-2 border-outline z-50 flex flex-col">
+<div class="h-16 px-space-lg flex items-center gap-3 border-b-2 border-outline bg-[#fffdfa]">
+<div class="w-8 h-8 bg-black text-white flex items-center justify-center font-bold rounded shadow-neo-sm">Q</div>
+<span class="font-headline text-on-surface font-extrabold tracking-tight">QATrack</span>
+</div>
+<nav class="flex-1 px-space-md py-space-md space-y-2 overflow-y-auto">
+<a class="flex items-center gap-3 px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-medium border border-transparent hover:border-outline" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span>Dashboard</a>
+<a class="flex items-center gap-3 px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-medium border border-transparent hover:border-outline" data-path="projects" href="#"><span class="material-symbols-outlined text-[20px]">folder</span>Projects</a>
+<a class="flex items-center gap-3 px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-medium border border-transparent hover:border-outline" data-path="requirements" href="#"><span class="material-symbols-outlined text-[20px]">assignment</span>Requirements</a>
+<a class="flex items-center gap-3 px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-medium border border-transparent hover:border-outline" data-path="test-scenarios" href="#"><span class="material-symbols-outlined text-[20px]">account_tree</span>Test Scenarios</a>
+<a class="flex items-center gap-3 px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-medium border border-transparent hover:border-outline" data-path="test-cases" href="#"><span class="material-symbols-outlined text-[20px]">checklist</span>Test Cases</a>
+<a class="flex items-center gap-3 px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-medium border border-transparent hover:border-outline" data-path="test-executions" href="#"><span class="material-symbols-outlined text-[20px]">play_arrow</span>Test Executions</a>
+<a class="flex items-center gap-3 px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-medium border border-transparent hover:border-outline" data-path="automation" href="#"><span class="material-symbols-outlined text-[20px]">smart_toy</span>Automation</a>
+<a aria-current="page" class="flex items-center gap-3 px-space-md py-space-sm rounded-lg bg-[#316bf3] text-white font-bold border-2 border-outline shadow-neo-sm transition-colors" data-path="bugs" href="#"><span class="material-symbols-outlined text-[20px]">bug_report</span>Bugs</a>
+<a class="flex items-center gap-3 px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-medium border border-transparent hover:border-outline" data-path="reports" href="#"><span class="material-symbols-outlined text-[20px]">bar_chart</span>Reports</a>
+<a class="flex items-center gap-3 px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-medium border border-transparent hover:border-outline" data-path="rtm" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span>RTM</a>
+<a class="flex items-center gap-3 px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-medium border border-transparent hover:border-outline" data-path="settings" href="#"><span class="material-symbols-outlined text-[20px]">settings</span>Settings</a>
+</nav>
+</aside>
+<div class="pl-[250px]">
+<header class="fixed top-0 left-[250px] right-0 h-16 bg-[#fffdfa]/90 backdrop-blur-xl z-40 flex items-center justify-between px-space-lg border-b-2 border-outline">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-2 px-space-sm py-1 bg-white rounded-lg border-2 border-outline font-label shadow-neo-sm">
+<span class="text-on-surface-variant">Project:</span>
+<span class="font-bold text-on-surface">E-Commerce Platform</span>
+</div>
+<div class="flex items-center gap-2 px-space-sm py-1 bg-[#dbe1ff] rounded-lg border-2 border-outline font-label shadow-neo-sm">
+<span class="text-on-surface-variant">Env:</span>
+<span class="font-bold text-black">QA</span>
+</div>
+</div>
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-3 px-space-md py-1.5 bg-white rounded-lg text-on-surface-variant w-64 border-2 border-outline shadow-neo-sm">
+<span class="material-symbols-outlined text-[18px]">search</span>
+<span class="text-body flex-1 font-medium">Search...</span>
+<span class="text-label px-1.5 py-0.5 bg-surface-container rounded border border-outline text-on-surface font-bold">Ctrl K</span>
+</div>
+<button class="relative p-2 bg-white rounded-lg border-2 border-outline shadow-neo-sm text-on-surface hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<div class="w-9 h-9 rounded-lg bg-[#6ffbbe] border-2 border-outline shadow-neo-sm flex items-center justify-center font-bold">
+<span class="material-symbols-outlined text-black text-[18px]">person</span>
+</div>
+</div>
+</header>
+<main class="relative pt-16 bg-[#fdfbf7] min-h-screen">
+<div class="flex flex-col w-full p-space-lg space-y-space-lg">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<h1 class="font-headline text-3xl font-extrabold text-on-surface tracking-tight">Bug Management</h1>
+<p class="text-on-surface-variant font-body font-medium">Track, triage, and resolve defects across active QA environments.</p>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="flex items-center gap-2 px-space-md py-2 bg-white hover:bg-surface-container text-on-surface rounded-lg transition-colors font-label border-2 border-outline shadow-neo">
+<span class="material-symbols-outlined text-[18px]">download</span>
+            Export CSV
+          </button>
+<button class="flex items-center gap-2 px-space-md py-2 bg-[#316bf3] hover:bg-secondary text-white rounded-lg transition-colors font-label border-2 border-outline shadow-neo font-bold" onclick="document.getElementById('create-bug-modal').classList.remove('hidden')">
+<span class="material-symbols-outlined text-[18px]">add</span>
+            + Create Bug
+          </button>
+</div>
+</div>
+<div class="grid grid-cols-5 gap-space-md">
+<div class="bg-white p-space-md rounded-xl border-2 border-outline shadow-neo flex flex-col gap-2">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-label uppercase font-bold tracking-wider">Open Bugs</span>
+<span class="material-symbols-outlined text-[18px] text-error font-bold">error</span>
+</div>
+<div class="text-3xl text-on-surface font-extrabold">24</div>
+<div class="text-label text-error font-bold">+4 since last build</div>
+</div>
+<div class="bg-white p-space-md rounded-xl border-2 border-outline shadow-neo flex flex-col gap-2">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-label uppercase font-bold tracking-wider">In Progress</span>
+<span class="material-symbols-outlined text-[18px] text-[#316bf3] font-bold">sync</span>
+</div>
+<div class="text-3xl text-on-surface font-extrabold">12</div>
+<div class="text-label text-on-surface-variant font-medium">Avg resolution: 1.4d</div>
+</div>
+<div class="bg-white p-space-md rounded-xl border-2 border-outline shadow-neo flex flex-col gap-2">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-label uppercase font-bold tracking-wider">Ready for Retest</span>
+<span class="material-symbols-outlined text-[18px] text-black font-bold">replay</span>
+</div>
+<div class="text-3xl text-on-surface font-extrabold">8</div>
+<div class="text-label text-black font-bold">Pending QA verification</div>
+</div>
+<div class="bg-white p-space-md rounded-xl border-2 border-outline shadow-neo flex flex-col gap-2">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-label uppercase font-bold tracking-wider">Resolved Today</span>
+<span class="material-symbols-outlined text-[18px] text-green-600 font-bold">check_circle</span>
+</div>
+<div class="text-3xl text-on-surface font-extrabold">7</div>
+<div class="text-label text-green-700 font-bold">+2 vs daily target</div>
+</div>
+<div class="bg-white p-space-md rounded-xl border-2 border-outline shadow-neo flex flex-col gap-2">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-label uppercase font-bold tracking-wider">Critical Blockers</span>
+<span class="material-symbols-outlined text-[18px] text-error font-bold">dangerous</span>
+</div>
+<div class="text-3xl text-error font-extrabold">3</div>
+<div class="text-label text-error font-bold">Requires immediate triage</div>
+</div>
+</div>
+<div class="bg-white p-space-md rounded-xl border-2 border-outline shadow-neo flex flex-wrap items-center justify-between gap-space-md">
+<div class="flex flex-wrap items-center gap-space-sm flex-1">
+<div class="relative flex-1 min-w-[220px]">
+<span class="absolute left-3 top-2.5 material-symbols-outlined text-[18px] text-on-surface-variant">search</span>
+<input class="w-full pl-9 pr-space-md py-2 bg-surface-container-low text-on-surface rounded-lg text-body border-2 border-outline font-medium focus:outline-none focus:ring-2 focus:ring-black" placeholder="Filter by summary, ID, or description..." type="text"/>
+</div>
+<select class="px-space-md py-2 bg-surface-container-low text-on-surface rounded-lg text-body border-2 border-outline font-medium focus:outline-none">
+<option>Status: All Statuses</option>
+<option>Open</option>
+<option>Assigned</option>
+<option>In Progress</option>
+<option>Resolved</option>
+<option>Retest</option>
+<option>Closed</option>
+</select>
+<select class="px-space-md py-2 bg-surface-container-low text-on-surface rounded-lg text-body border-2 border-outline font-medium focus:outline-none">
+<option>Severity: All</option>
+<option>Critical</option>
+<option>High</option>
+<option>Medium</option>
+<option>Low</option>
+</select>
+<select class="px-space-md py-2 bg-surface-container-low text-on-surface rounded-lg text-body border-2 border-outline font-medium focus:outline-none">
+<option>Assignee: All</option>
+<option>Alex Chen</option>
+<option>Sarah Jenkins</option>
+<option>Devon Miles</option>
+<option>Unassigned</option>
+</select>
+<select class="px-space-md py-2 bg-surface-container-low text-on-surface rounded-lg text-body border-2 border-outline font-medium focus:outline-none">
+<option>Env: All</option>
+<option>QA-01 (Staging)</option>
+<option>QA-02 (Mobile)</option>
+<option>Production</option>
+</select>
+</div>
+<button class="px-space-md py-2 bg-surface-container-low hover:bg-surface-container text-on-surface rounded-lg text-body border-2 border-outline font-bold shadow-neo-sm transition-colors">
+          Reset Filters
+        </button>
+</div>
+<div class="bg-white rounded-xl border-2 border-outline shadow-neo overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container text-on-surface font-label border-b-2 border-outline">
+<th class="py-3.5 px-4 font-bold">ID</th>
+<th class="py-3.5 px-4 font-bold">Title &amp; Summary</th>
+<th class="py-3.5 px-4 font-bold">Severity</th>
+<th class="py-3.5 px-4 font-bold">Priority</th>
+<th class="py-3.5 px-4 font-bold">Status</th>
+<th class="py-3.5 px-4 font-bold">Test Case</th>
+<th class="py-3.5 px-4 font-bold">Environment</th>
+<th class="py-3.5 px-4 font-bold">Assignee</th>
+<th class="py-3.5 px-4 font-bold">Created</th>
+</tr>
+</thead>
+<tbody class="divide-y-2 divide-outline text-body text-on-surface font-medium">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-4 font-mono font-bold text-black">BUG-1024</td>
+<td class="py-3 px-4 font-bold">Checkout flow fails when applying multi-tier discount codes</td>
+<td class="py-3 px-4"><span class="px-2 py-0.5 rounded text-label bg-red-400 text-black font-extrabold border-2 border-outline shadow-neo-sm">CRITICAL</span></td>
+<td class="py-3 px-4"><span class="font-bold text-on-surface">P1 - High</span></td>
+<td class="py-3 px-4"><span class="px-2 py-0.5 rounded text-label bg-[#316bf3] text-white font-extrabold border-2 border-outline shadow-neo-sm">IN PROGRESS</span></td>
+<td class="py-3 px-4 text-on-surface hover:underline cursor-pointer font-mono font-bold">TC-408</td>
+<td class="py-3 px-4 text-on-surface-variant font-semibold">QA-01 (Staging)</td>
+<td class="py-3 px-4 flex items-center gap-2">
+<div class="w-6 h-6 rounded bg-[#6ffbbe] border-2 border-outline flex items-center justify-center text-label font-bold text-black">AC</div>
+<span class="font-bold">Alex Chen</span>
+</td>
+<td class="py-3 px-4 text-on-surface-variant font-mono text-xs">2 hours ago</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-4 font-mono font-bold text-black">BUG-1023</td>
+<td class="py-3 px-4 font-bold">User profile avatar upload returns 500 error on oversized PNGs</td>
+<td class="py-3 px-4"><span class="px-2 py-0.5 rounded text-label bg-orange-300 text-black font-extrabold border-2 border-outline shadow-neo-sm">HIGH</span></td>
+<td class="py-3 px-4"><span class="font-bold text-on-surface">P2 - Medium</span></td>
+<td class="py-3 px-4"><span class="px-2 py-0.5 rounded text-label bg-yellow-300 text-black font-extrabold border-2 border-outline shadow-neo-sm">OPEN</span></td>
+<td class="py-3 px-4 text-on-surface hover:underline cursor-pointer font-mono font-bold">TC-112</td>
+<td class="py-3 px-4 text-on-surface-variant font-semibold">QA-02 (Mobile)</td>
+<td class="py-3 px-4 flex items-center gap-2">
+<div class="w-6 h-6 rounded bg-pink-300 border-2 border-outline flex items-center justify-center text-label font-bold text-black">SJ</div>
+<span class="font-bold">Sarah Jenkins</span>
+</td>
+<td class="py-3 px-4 text-on-surface-variant font-mono text-xs">Yesterday</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-4 font-mono font-bold text-black">BUG-1022</td>
+<td class="py-3 px-4 font-bold">Navigation drawer remains locked in portrait mode on iPad Air</td>
+<td class="py-3 px-4"><span class="px-2 py-0.5 rounded text-label bg-yellow-200 text-black font-extrabold border-2 border-outline shadow-neo-sm">MEDIUM</span></td>
+<td class="py-3 px-4"><span class="font-bold text-on-surface">P3 - Low</span></td>
+<td class="py-3 px-4"><span class="px-2 py-0.5 rounded text-label bg-purple-300 text-black font-extrabold border-2 border-outline shadow-neo-sm">RETEST</span></td>
+<td class="py-3 px-4 text-on-surface hover:underline cursor-pointer font-mono font-bold">TC-309</td>
+<td class="py-3 px-4 text-on-surface-variant font-semibold">QA-02 (Mobile)</td>
+<td class="py-3 px-4 flex items-center gap-2">
+<div class="w-6 h-6 rounded bg-blue-200 border-2 border-outline flex items-center justify-center text-label font-bold text-black">DM</div>
+<span class="font-bold">Devon Miles</span>
+</td>
+<td class="py-3 px-4 text-on-surface-variant font-mono text-xs">Oct 24</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-4 font-mono font-bold text-black">BUG-1021</td>
+<td class="py-3 px-4 font-bold">OAuth login redirect fails if session cookie contains whitespace</td>
+<td class="py-3 px-4"><span class="px-2 py-0.5 rounded text-label bg-red-400 text-black font-extrabold border-2 border-outline shadow-neo-sm">CRITICAL</span></td>
+<td class="py-3 px-4"><span class="font-bold text-on-surface">P1 - High</span></td>
+<td class="py-3 px-4"><span class="px-2 py-0.5 rounded text-label bg-green-400 text-black font-extrabold border-2 border-outline shadow-neo-sm">RESOLVED</span></td>
+<td class="py-3 px-4 text-on-surface hover:underline cursor-pointer font-mono font-bold">TC-055</td>
+<td class="py-3 px-4 text-on-surface-variant font-semibold">QA-01 (Staging)</td>
+<td class="py-3 px-4 flex items-center gap-2">
+<div class="w-6 h-6 rounded bg-[#6ffbbe] border-2 border-outline flex items-center justify-center text-label font-bold text-black">AC</div>
+<span class="font-bold">Alex Chen</span>
+</td>
+<td class="py-3 px-4 text-on-surface-variant font-mono text-xs">Oct 23</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-4 font-mono font-bold text-black">BUG-1020</td>
+<td class="py-3 px-4 font-bold">Search bar suggestions drop down vertically misaligned on Safari</td>
+<td class="py-3 px-4"><span class="px-2 py-0.5 rounded text-label bg-blue-100 text-black font-extrabold border-2 border-outline shadow-neo-sm">LOW</span></td>
+<td class="py-3 px-4"><span class="font-bold text-on-surface">P3 - Low</span></td>
+<td class="py-3 px-4"><span class="px-2 py-0.5 rounded text-label bg-gray-300 text-black font-extrabold border-2 border-outline shadow-neo-sm">CLOSED</span></td>
+<td class="py-3 px-4 text-on-surface hover:underline cursor-pointer font-mono font-bold">TC-210</td>
+<td class="py-3 px-4 text-on-surface-variant font-semibold">Production</td>
+<td class="py-3 px-4 flex items-center gap-2">
+<div class="w-6 h-6 rounded bg-pink-300 border-2 border-outline flex items-center justify-center text-label font-bold text-black">SJ</div>
+<span class="font-bold">Sarah Jenkins</span>
+</td>
+<td class="py-3 px-4 text-on-surface-variant font-mono text-xs">Oct 22</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-4 font-mono font-bold text-black">BUG-1019</td>
+<td class="py-3 px-4 font-bold">Inventory count synchronization lag during flash sale simulation</td>
+<td class="py-3 px-4"><span class="px-2 py-0.5 rounded text-label bg-red-400 text-black font-extrabold border-2 border-outline shadow-neo-sm">CRITICAL</span></td>
+<td class="py-3 px-4"><span class="font-bold text-on-surface">P1 - High</span></td>
+<td class="py-3 px-4"><span class="px-2 py-0.5 rounded text-label bg-[#6ffbbe] text-black font-extrabold border-2 border-outline shadow-neo-sm">ASSIGNED</span></td>
+<td class="py-3 px-4 text-on-surface hover:underline cursor-pointer font-mono font-bold">TC-419</td>
+<td class="py-3 px-4 text-on-surface-variant font-semibold">QA-01 (Staging)</td>
+<td class="py-3 px-4 flex items-center gap-2">
+<div class="w-6 h-6 rounded bg-blue-200 border-2 border-outline flex items-center justify-center text-label font-bold text-black">DM</div>
+<span class="font-bold">Devon Miles</span>
+</td>
+<td class="py-3 px-4 text-on-surface-variant font-mono text-xs">Oct 21</td>
+</tr>
+</tbody>
+</table>
+<div class="flex items-center justify-between px-space-md py-space-sm bg-surface-container text-body font-bold text-on-surface border-t-2 border-outline">
+<span>Showing 1-6 of 44 bugs</span>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1 bg-white border-2 border-outline rounded shadow-neo-sm hover:bg-surface-container-low disabled:opacity-50" disabled="">Previous</button>
+<button class="px-3 py-1 bg-[#316bf3] text-white border-2 border-outline rounded shadow-neo-sm font-extrabold">1</button>
+<button class="px-3 py-1 bg-white border-2 border-outline rounded shadow-neo-sm hover:bg-surface-container-low">2</button>
+<button class="px-3 py-1 bg-white border-2 border-outline rounded shadow-neo-sm hover:bg-surface-container-low">3</button>
+<button class="px-3 py-1 bg-white border-2 border-outline rounded shadow-neo-sm hover:bg-surface-container-low">Next</button>
+</div>
+</div>
+</div>
+<div class="hidden fixed inset-0 bg-black/50 backdrop-blur-xs z-50 flex items-center justify-center" id="create-bug-modal">
+<div class="bg-white w-full max-w-2xl rounded-2xl p-space-lg shadow-neo-lg flex flex-col gap-space-md border-2 border-outline">
+<div class="flex items-center justify-between border-b-2 border-outline pb-3">
+<h2 class="font-headline text-2xl font-extrabold text-on-surface">Create New Bug</h2>
+<button class="w-8 h-8 rounded border-2 border-outline flex items-center justify-center bg-white hover:bg-surface-container text-on-surface font-bold" onclick="document.getElementById('create-bug-modal').classList.add('hidden')">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<div class="flex flex-col gap-4">
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-on-surface font-bold">Bug Title / Summary</label>
+<input class="px-space-md py-2 bg-surface-container-low text-on-surface rounded-lg text-body border-2 border-outline font-medium focus:outline-none focus:ring-2 focus:ring-black" placeholder="e.g. Cart total miscalculates when applying promo code" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-on-surface font-bold">Severity</label>
+<select class="px-space-md py-2 bg-surface-container-low text-on-surface rounded-lg text-body border-2 border-outline font-medium focus:outline-none">
+<option>Critical</option>
+<option>High</option>
+<option>Medium</option>
+<option>Low</option>
+</select>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-on-surface font-bold">Priority</label>
+<select class="px-space-md py-2 bg-surface-container-low text-on-surface rounded-lg text-body border-2 border-outline font-medium focus:outline-none">
+<option>P1 - High</option>
+<option>P2 - Medium</option>
+<option>P3 - Low</option>
+</select>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-on-surface font-bold">Environment</label>
+<select class="px-space-md py-2 bg-surface-container-low text-on-surface rounded-lg text-body border-2 border-outline font-medium focus:outline-none">
+<option>QA-01 (Staging)</option>
+<option>QA-02 (Mobile)</option>
+<option>Production</option>
+</select>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-on-surface font-bold">Assignee</label>
+<select class="px-space-md py-2 bg-surface-container-low text-on-surface rounded-lg text-body border-2 border-outline font-medium focus:outline-none">
+<option>Alex Chen</option>
+<option>Sarah Jenkins</option>
+<option>Devon Miles</option>
+</select>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-on-surface font-bold">Description &amp; Reproduction Steps</label>
+<textarea class="p-space-md bg-surface-container-low text-on-surface rounded-lg text-body border-2 border-outline font-medium focus:outline-none focus:ring-2 focus:ring-black" placeholder="1. Go to... 2. Click on... 3. Observe error..." rows="4"></textarea>
+</div>
+</div>
+<div class="flex items-center justify-end gap-space-sm pt-2 border-t-2 border-outline">
+<button class="px-space-md py-2 bg-white text-on-surface hover:bg-surface-container rounded-lg text-body border-2 border-outline font-bold shadow-neo-sm" onclick="document.getElementById('create-bug-modal').classList.add('hidden')">Cancel</button>
+<button class="px-space-lg py-2 bg-[#316bf3] hover:bg-secondary text-white rounded-lg text-body font-bold border-2 border-outline shadow-neo" onclick="document.getElementById('create-bug-modal').classList.add('hidden')">Submit Bug</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

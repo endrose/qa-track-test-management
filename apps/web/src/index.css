@@ -1,0 +1,30 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+@layer base {
+  body {
+    @apply bg-background text-text font-sans antialiased;
+  }
+}
+
+@layer components {
+  .btn-neo {
+    @apply bg-surface border-neo border-border px-4 py-2 font-bold shadow-neo transition-transform active:translate-x-1 active:translate-y-1 active:shadow-none hover:-translate-y-0.5 hover:-translate-x-0.5 hover:shadow-neo-lg;
+  }
+  
+  .btn-neo-primary {
+    @apply bg-primary border-neo border-border px-4 py-2 font-bold shadow-neo transition-transform active:translate-x-1 active:translate-y-1 active:shadow-none hover:-translate-y-0.5 hover:-translate-x-0.5 hover:shadow-neo-lg;
+  }
+
+  .card-neo {
+    @apply bg-surface border-neo border-border shadow-neo p-6;
+  }
+
+  .input-neo {
+    @apply border-neo border-border px-3 py-2 bg-surface focus:outline-none focus:ring-2 focus:ring-secondary transition-all;
+  }
+  
+  .badge-neo {
+    @apply border-2 border-border px-2 py-0.5 text-xs font-bold uppercase tracking-wide bg-surface;
+  }
+}

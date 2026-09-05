@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {"darkMode":"class","theme":{"extend":{"colors":{"outline-variant":"#c6c6cd","on-primary-container":"#ffffff","surface":"#f8fafc","on-secondary-fixed-variant":"#003ea8","on-background":"#0f172a","on-primary":"#ffffff","background":"#fdfbf7","surface-container":"#f0edef","on-error":"#ffffff","on-surface-variant":"#45464d","surface-dim":"#e2e8f0","primary-fixed-dim":"#bec6e0","error":"#ef4444","inverse-on-surface":"#f3f0f2","on-primary-fixed":"#131b2e","on-secondary":"#ffffff","secondary-fixed":"#dbe1ff","surface-bright":"#fcf8fa","secondary-container":"#316bf3","inverse-primary":"#bec6e0","surface-container-highest":"#e4e2e4","surface-tint":"#565e74","on-tertiary":"#ffffff","on-secondary-fixed":"#00174b","surface-container-high":"#cbd5e1","primary":"#000000","on-primary-fixed-variant":"#3f465c","secondary-fixed-dim":"#b4c5ff","on-tertiary-container":"#009668","surface-container-low":"#f1f5f9","surface-variant":"#e4e2e4","surface-container-lowest":"#ffffff","on-surface":"#1b1b1d","primary-container":"#3b82f6","tertiary":"#000000","secondary":"#0051d5","on-error-container":"#93000a","inverse-surface":"#303032","tertiary-fixed":"#6ffbbe","primary-fixed":"#dae2fd","outline":"#000000","on-tertiary-fixed":"#002113","on-tertiary-fixed-variant":"#005236","on-secondary-container":"#fefcff","error-container":"#ffdad6","tertiary-container":"#002113","tertiary-fixed-dim":"#4edea3"},"borderRadius":{"DEFAULT":"0rem","lg":"0rem","xl":"0rem","full":"9999px"},"spacing":{"element-gap":"1rem","gutter":"1.5rem","margin":"2rem"},"fontFamily":{"title":["\"Geist, Inter, system-ui, sans-serif\""],"label":["\"Geist, Inter, system-ui, sans-serif\""],"display":["\"Geist, Inter, system-ui, sans-serif\""],"body":["\"Geist, Inter, system-ui, sans-serif\""],"headline":["\"Geist, Inter, system-ui, sans-serif\""]},"fontSize":{"title":["20px",{"lineHeight":"28px","fontWeight":"700"}],"label":["12px",{"lineHeight":"16px","letterSpacing":"0.05em","fontWeight":"700"}],"display":["36px",{"lineHeight":"40px","letterSpacing":"-0.025em","fontWeight":"800"}],"body":["14px",{"lineHeight":"20px","fontWeight":"500"}],"headline":["24px",{"lineHeight":"32px","letterSpacing":"0.025em","fontWeight":"700"}]}}}};</script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist,+Inter,+system-ui,+sans-serif:wght@100..900&display=swap" rel="stylesheet"/></head><body class="bg-surface font-body text-on-surface"><aside class="fixed left-0 top-0 h-full w-[250px] bg-surface-container-lowest border-r-[3px] border-outline z-50 flex flex-col"><div class="h-16 px-gutter flex items-center border-b-[3px] border-outline bg-primary text-on-primary font-headline text-title"><span class="material-symbols-outlined mr-2">bug_report</span>QATrack</div><div class="flex-1 overflow-y-auto py-4 px-3 space-y-6"><nav class="space-y-1" data-active-classes="bg-primary text-on-primary font-bold shadow-[2px_2px_0px_#000000]"><div class="px-3 py-1 text-label text-on-surface-variant uppercase tracking-wider">Workspace</div><a aria-current="page" class="flex items-center px-3 py-2 border-[2px] border-transparent hover:border-outline transition-all bg-primary text-on-primary font-bold shadow-[2px_2px_0px_#000000]" data-path="dashboard" href="#"><span class="material-symbols-outlined mr-3 text-[20px]">dashboard</span>Dashboard</a><a class="flex items-center px-3 py-2 border-[2px] border-transparent hover:border-outline text-on-surface hover:bg-surface-container transition-all" data-path="projects" href="#"><span class="material-symbols-outlined mr-3 text-[20px]">folder</span>Projects</a></nav><nav class="space-y-1" data-active-classes="bg-primary text-on-primary font-bold shadow-[2px_2px_0px_#000000]"><div class="px-3 py-1 text-label text-on-surface-variant uppercase tracking-wider">Testing</div><a class="flex items-center px-3 py-2 border-[2px] border-transparent hover:border-outline text-on-surface hover:bg-surface-container transition-all" data-path="requirements" href="#"><span class="material-symbols-outlined mr-3 text-[20px]">fact_check</span>Requirements</a><a class="flex items-center px-3 py-2 border-[2px] border-transparent hover:border-outline text-on-surface hover:bg-surface-container transition-all" data-path="test-scenarios" href="#"><span class="material-symbols-outlined mr-3 text-[20px]">account_tree</span>Test Scenarios</a><a class="flex items-center px-3 py-2 border-[2px] border-transparent hover:border-outline text-on-surface hover:bg-surface-container transition-all" data-path="test-cases" href="#"><span class="material-symbols-outlined mr-3 text-[20px]">checklist</span>Test Cases</a><a class="flex items-center px-3 py-2 border-[2px] border-transparent hover:border-outline text-on-surface hover:bg-surface-container transition-all" data-path="test-executions" href="#"><span class="material-symbols-outlined mr-3 text-[20px]">play_arrow</span>Test Executions</a><a class="flex items-center px-3 py-2 border-[2px] border-transparent hover:border-outline text-on-surface hover:bg-surface-container transition-all" data-path="automation" href="#"><span class="material-symbols-outlined mr-3 text-[20px]">smart_toy</span>Automation</a></nav><nav class="space-y-1" data-active-classes="bg-primary text-on-primary font-bold shadow-[2px_2px_0px_#000000]"><div class="px-3 py-1 text-label text-on-surface-variant uppercase tracking-wider">Quality</div><a class="flex items-center px-3 py-2 border-[2px] border-transparent hover:border-outline text-on-surface hover:bg-surface-container transition-all" data-path="bugs" href="#"><span class="material-symbols-outlined mr-3 text-[20px]">pest_control</span>Bugs</a><a class="flex items-center px-3 py-2 border-[2px] border-transparent hover:border-outline text-on-surface hover:bg-surface-container transition-all" data-path="reports" href="#"><span class="material-symbols-outlined mr-3 text-[20px]">bar_chart</span>Reports</a><a class="flex items-center px-3 py-2 border-[2px] border-transparent hover:border-outline text-on-surface hover:bg-surface-container transition-all" data-path="rtm" href="#"><span class="material-symbols-outlined mr-3 text-[20px]">grid_view</span>RTM</a></nav><nav class="space-y-1" data-active-classes="bg-primary text-on-primary font-bold shadow-[2px_2px_0px_#000000]"><div class="px-3 py-1 text-label text-on-surface-variant uppercase tracking-wider">Admin</div><a class="flex items-center px-3 py-2 border-[2px] border-transparent hover:border-outline text-on-surface hover:bg-surface-container transition-all" data-path="settings" href="#"><span class="material-symbols-outlined mr-3 text-[20px]">settings</span>Settings</a></nav></div><div class="p-3 border-t-[3px] border-outline bg-surface-container-low flex flex-col gap-2"><div class="flex items-center justify-between text-on-surface-variant text-label"><a class="hover:text-on-surface" href="#">Help</a><a class="hover:text-on-surface" href="#">Docs</a></div><div class="flex items-center gap-3 p-2 bg-surface border-[2px] border-outline shadow-[2px_2px_0px_#000000]"><div class="w-8 h-8 bg-primary flex items-center justify-center text-on-primary font-bold">E</div><div class="flex flex-col"><span class="font-bold text-body">Endros</span><span class="text-label text-on-surface-variant">QA Lead</span></div></div></div></aside><div class="pl-[250px]"><header class="fixed top-0 left-[250px] right-0 h-16 bg-surface border-b-[3px] border-outline z-40 flex items-center justify-between px-gutter"><div class="flex items-center gap-4"><div class="flex items-center gap-2 px-3 py-1 bg-surface-container border-[2px] border-outline shadow-[2px_2px_0px_#000000]"><span class="material-symbols-outlined text-[18px]">folder_open</span><span class="font-bold text-body">E-Commerce Platform</span><span class="material-symbols-outlined text-[18px]">expand_more</span></div><div class="px-2 py-1 bg-tertiary-fixed text-on-tertiary-fixed font-label uppercase border-[2px] border-outline">QA</div></div><div class="flex items-center gap-4"><div class="flex items-center gap-2 px-3 py-1 bg-surface border-[2px] border-outline shadow-[2px_2px_0px_#000000] w-64 text-on-surface-variant"><span class="material-symbols-outlined text-[18px]">search</span><span class="text-body flex-1">Search...</span><span class="px-1.5 py-0.5 bg-surface-dim border-[1px] border-outline text-label">Ctrl + K</span></div><button class="p-2 bg-surface border-[2px] border-outline shadow-[2px_2px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all"><span class="material-symbols-outlined text-[20px]">notifications</span></button><div class="w-8 h-8 bg-primary border-[2px] border-outline flex items-center justify-center text-on-primary font-bold shadow-[2px_2px_0px_#000000]">E</div></div></header><main class="relative pt-16 bg-surface min-h-screen p-margin"><div class="flex flex-col w-full gap-gutter">
+<!-- Top Banner / Title Header -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-surface-container-lowest border-[3px] border-outline p-gutter shadow-[4px_4px_0px_#000000]">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 bg-primary text-on-primary font-label uppercase text-[10px] tracking-widest border-[2px] border-outline">Dashboard v4.2</span>
+<span class="text-on-surface-variant font-body text-body">E-Commerce Platform / QA Environment</span>
+</div>
+<h1 class="font-display text-display text-on-surface tracking-tight uppercase">QUALITY DASHBOARD</h1>
+</div>
+<div class="flex flex-wrap items-center gap-3">
+<button class="px-4 py-2 bg-[#fde047] text-on-surface font-label uppercase border-[2px] border-outline shadow-[3px_3px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">play_arrow</span>
+        Run Tests
+      </button>
+<button class="px-4 py-2 bg-[#86efac] text-on-surface font-label uppercase border-[2px] border-outline shadow-[3px_3px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add_task</span>
+        Create Test Case
+      </button>
+<button class="px-4 py-2 bg-[#fca5a5] text-on-surface font-label uppercase border-[2px] border-outline shadow-[3px_3px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">bug_report</span>
+        Create Bug
+      </button>
+</div>
+</div>
+<!-- KPI Blocks Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
+<!-- KPI 1 -->
+<div class="bg-[#fde047] border-[3px] border-outline p-4 shadow-[4px_4px_0px_#000000] flex flex-col justify-between">
+<div class="flex items-center justify-between text-on-surface mb-2">
+<span class="font-label uppercase text-label">Test Cases</span>
+<span class="material-symbols-outlined text-[20px]">checklist</span>
+</div>
+<div class="flex items-baseline justify-between">
+<span class="font-display text-display font-black">1,248</span>
+<span class="font-label text-[10px] px-1 bg-surface border border-outline">+12 this week</span>
+</div>
+</div>
+<!-- KPI 2 -->
+<div class="bg-[#86efac] border-[3px] border-outline p-4 shadow-[4px_4px_0px_#000000] flex flex-col justify-between">
+<div class="flex items-center justify-between text-on-surface mb-2">
+<span class="font-label uppercase text-label">Pass Rate</span>
+<span class="material-symbols-outlined text-[20px]">trending_up</span>
+</div>
+<div class="flex items-baseline justify-between">
+<span class="font-display text-display font-black">86%</span>
+<span class="font-label text-[10px] px-1 bg-surface border border-outline">+2.4%</span>
+</div>
+</div>
+<!-- KPI 3 -->
+<div class="bg-[#93c5fd] border-[3px] border-outline p-4 shadow-[4px_4px_0px_#000000] flex flex-col justify-between">
+<div class="flex items-center justify-between text-on-surface mb-2">
+<span class="font-label uppercase text-label">Automation</span>
+<span class="material-symbols-outlined text-[20px]">smart_toy</span>
+</div>
+<div class="flex items-baseline justify-between">
+<span class="font-display text-display font-black">64%</span>
+<span class="font-label text-[10px] px-1 bg-surface border border-outline">Target: 70%</span>
+</div>
+</div>
+<!-- KPI 4 -->
+<div class="bg-[#fdba74] border-[3px] border-outline p-4 shadow-[4px_4px_0px_#000000] flex flex-col justify-between">
+<div class="flex items-center justify-between text-on-surface mb-2">
+<span class="font-label uppercase text-label">Open Bugs</span>
+<span class="material-symbols-outlined text-[20px]">pest_control</span>
+</div>
+<div class="flex items-baseline justify-between">
+<span class="font-display text-display font-black">37</span>
+<span class="font-label text-[10px] px-1 bg-surface border border-outline">-5 today</span>
+</div>
+</div>
+<!-- KPI 5 -->
+<div class="bg-[#ef4444] text-white border-[3px] border-outline p-4 shadow-[4px_4px_0px_#000000] flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label uppercase text-label text-white">Critical Bugs</span>
+<span class="material-symbols-outlined text-[20px]">warning</span>
+</div>
+<div class="flex items-baseline justify-between">
+<span class="font-display text-display font-black">3</span>
+<span class="font-label text-[10px] px-1 bg-black text-white border border-white">Blocker</span>
+</div>
+</div>
+<!-- KPI 6 -->
+<div class="bg-surface-container-highest border-[3px] border-outline p-4 shadow-[4px_4px_0px_#000000] flex flex-col justify-between">
+<div class="flex items-center justify-between text-on-surface mb-2">
+<span class="font-label uppercase text-label">Blocked</span>
+<span class="material-symbols-outlined text-[20px]">block</span>
+</div>
+<div class="flex items-baseline justify-between">
+<span class="font-display text-display font-black">12</span>
+<span class="font-label text-[10px] px-1 bg-surface border border-outline">Env issues</span>
+</div>
+</div>
+</div>
+<!-- Analytics & Coverage Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<!-- Test Execution Analytics -->
+<div class="lg:col-span-2 bg-surface-container-lowest border-[3px] border-outline p-gutter shadow-[4px_4px_0px_#000000] flex flex-col justify-between">
+<div class="flex items-center justify-between mb-4 pb-2 border-b-[2px] border-outline">
+<h2 class="font-headline text-headline uppercase flex items-center gap-2">
+<span class="material-symbols-outlined">bar_chart</span>
+          Test Execution Breakdown
+        </h2>
+<span class="font-label text-label uppercase px-2 py-1 bg-surface border-[2px] border-outline">Last 24 Hours</span>
+</div>
+<!-- Execution Stack / Bars -->
+<div class="space-y-4 my-2">
+<!-- Passed -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-label text-label">
+<span class="flex items-center gap-1.5"><span class="w-3 h-3 bg-[#86efac] border-[2px] border-outline inline-block"></span> PASSED (1,072)</span>
+<span>85.9%</span>
+</div>
+<div class="w-full h-6 bg-surface border-[2px] border-outline p-0.5">
+<div class="h-full bg-[#86efac] border-r-[2px] border-outline" style="width: 85.9%;"></div>
+</div>
+</div>
+<!-- Failed -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-label text-label">
+<span class="flex items-center gap-1.5"><span class="w-3 h-3 bg-[#ef4444] border-[2px] border-outline inline-block"></span> FAILED (84)</span>
+<span>6.7%</span>
+</div>
+<div class="w-full h-6 bg-surface border-[2px] border-outline p-0.5">
+<div class="h-full bg-[#ef4444] border-r-[2px] border-outline" style="width: 6.7%;"></div>
+</div>
+</div>
+<!-- Blocked -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-label text-label">
+<span class="flex items-center gap-1.5"><span class="w-3 h-3 bg-[#fdba74] border-[2px] border-outline inline-block"></span> BLOCKED (32)</span>
+<span>2.5%</span>
+</div>
+<div class="w-full h-6 bg-surface border-[2px] border-outline p-0.5">
+<div class="h-full bg-[#fdba74] border-r-[2px] border-outline" style="width: 2.5%;"></div>
+</div>
+</div>
+<!-- Skipped / Not Run -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-label text-label">
+<span class="flex items-center gap-1.5"><span class="w-3 h-3 bg-[#cbd5e1] border-[2px] border-outline inline-block"></span> SKIPPED / NOT RUN (60)</span>
+<span>4.9%</span>
+</div>
+<div class="w-full h-6 bg-surface border-[2px] border-outline p-0.5">
+<div class="h-full bg-[#cbd5e1] border-r-[2px] border-outline" style="width: 4.9%;"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-4 mt-2 border-t-[2px] border-outline text-body font-body">
+<span>Total Executed Suite: <strong>1,248 Tests</strong></span>
+<button class="underline font-bold uppercase text-label hover:text-secondary">View Full Logs →</button>
+</div>
+</div>
+<!-- Requirement Coverage -->
+<div class="bg-surface-container-lowest border-[3px] border-outline p-gutter shadow-[4px_4px_0px_#000000] flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-4 pb-2 border-b-[2px] border-outline">
+<h2 class="font-headline text-headline uppercase flex items-center gap-2">
+<span class="material-symbols-outlined">fact_check</span>
+            RTM Coverage
+          </h2>
+<span class="font-label text-label uppercase px-2 py-1 bg-tertiary-fixed text-on-tertiary-fixed border-[2px] border-outline">Active</span>
+</div>
+<!-- Circular or Big Progress Meter -->
+<div class="flex flex-col items-center justify-center py-4 bg-surface border-[2px] border-outline mb-4">
+<span class="font-display text-[48px] font-black tracking-tighter">92%</span>
+<span class="font-label uppercase text-label text-on-surface-variant">Requirement Coverage</span>
+</div>
+<div class="space-y-2 text-body font-body">
+<div class="flex justify-between py-1 border-b border-outline-variant">
+<span>Total Requirements</span>
+<strong>340</strong>
+</div>
+<div class="flex justify-between py-1 border-b border-outline-variant">
+<span>Covered by Tests</span>
+<strong>312</strong>
+</div>
+<div class="flex justify-between py-1">
+<span>Uncovered Items</span>
+<strong class="text-error">28</strong>
+</div>
+</div>
+</div>
+<button class="w-full py-2 bg-primary text-on-primary font-label uppercase border-[2px] border-outline shadow-[2px_2px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all mt-4">
+        Traceability Matrix
+      </button>
+</div>
+</div>
+<!-- Recent Test Runs Table -->
+<div class="bg-surface-container-lowest border-[3px] border-outline p-gutter shadow-[4px_4px_0px_#000000]">
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4 pb-2 border-b-[2px] border-outline">
+<h2 class="font-headline text-headline uppercase flex items-center gap-2">
+<span class="material-symbols-outlined">history</span>
+        Recent Test Runs
+      </h2>
+<div class="flex items-center gap-2 w-full sm:w-auto">
+<input class="px-3 py-1 bg-surface border-[2px] border-outline font-body text-body w-full sm:w-48" placeholder="Filter runs..." type="text"/>
+<button class="px-3 py-1 bg-surface border-[2px] border-outline font-label uppercase shadow-[2px_2px_0px_#000000] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all">Filter</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse border-[2px] border-outline">
+<thead>
+<tr class="bg-primary text-on-primary font-label uppercase text-label">
+<th class="p-3 border-r-[2px] border-outline">Run ID</th>
+<th class="p-3 border-r-[2px] border-outline">Type</th>
+<th class="p-3 border-r-[2px] border-outline">Environment</th>
+<th class="p-3 border-r-[2px] border-outline">Browser</th>
+<th class="p-3 border-r-[2px] border-outline">Passed</th>
+<th class="p-3 border-r-[2px] border-outline">Failed</th>
+<th class="p-3 border-r-[2px] border-outline">Duration</th>
+<th class="p-3">Status</th>
+</tr>
+</thead>
+<tbody class="font-body text-body divide-y-[2px] divide-outline">
+<tr class="hover:bg-surface-container transition-colors">
+<td class="p-3 border-r-[2px] border-outline font-bold">#RUN-8942</td>
+<td class="p-3 border-r-[2px] border-outline">Regression</td>
+<td class="p-3 border-r-[2px] border-outline">Staging-US</td>
+<td class="p-3 border-r-[2px] border-outline">Chrome 122</td>
+<td class="p-3 border-r-[2px] border-outline text-[#15803d] font-bold">342</td>
+<td class="p-3 border-r-[2px] border-outline text-error font-bold">0</td>
+<td class="p-3 border-r-[2px] border-outline">14m 22s</td>
+<td class="p-3"><span class="px-2 py-0.5 bg-[#86efac] border-[2px] border-outline font-label uppercase text-[10px]">Passed</span></td>
+</tr>
+<tr class="hover:bg-surface-container transition-colors">
+<td class="p-3 border-r-[2px] border-outline font-bold">#RUN-8941</td>
+<td class="p-3 border-r-[2px] border-outline">Smoke</td>
+<td class="p-3 border-r-[2px] border-outline">Production</td>
+<td class="p-3 border-r-[2px] border-outline">Safari 17</td>
+<td class="p-3 border-r-[2px] border-outline text-[#15803d] font-bold">45</td>
+<td class="p-3 border-r-[2px] border-outline text-error font-bold">3</td>
+<td class="p-3 border-r-[2px] border-outline">2m 10s</td>
+<td class="p-3"><span class="px-2 py-0.5 bg-[#ef4444] text-white border-[2px] border-outline font-label uppercase text-[10px]">Failed</span></td>
+</tr>
+<tr class="hover:bg-surface-container transition-colors">
+<td class="p-3 border-r-[2px] border-outline font-bold">#RUN-8940</td>
+<td class="p-3 border-r-[2px] border-outline">Integration</td>
+<td class="p-3 border-r-[2px] border-outline">Staging-EU</td>
+<td class="p-3 border-r-[2px] border-outline">Firefox 123</td>
+<td class="p-3 border-r-[2px] border-outline text-[#15803d] font-bold">189</td>
+<td class="p-3 border-r-[2px] border-outline text-error font-bold">12</td>
+<td class="p-3 border-r-[2px] border-outline">8m 45s</td>
+<td class="p-3"><span class="px-2 py-0.5 bg-[#ef4444] text-white border-[2px] border-outline font-label uppercase text-[10px]">Failed</span></td>
+</tr>
+<tr class="hover:bg-surface-container transition-colors">
+<td class="p-3 border-r-[2px] border-outline font-bold">#RUN-8939</td>
+<td class="p-3 border-r-[2px] border-outline">API Suite</td>
+<td class="p-3 border-r-[2px] border-outline">Dev-Cluster</td>
+<td class="p-3 border-r-[2px] border-outline">Postman/Node</td>
+<td class="p-3 border-r-[2px] border-outline text-[#15803d] font-bold">512</td>
+<td class="p-3 border-r-[2px] border-outline text-error font-bold">0</td>
+<td class="p-3 border-r-[2px] border-outline">4m 05s</td>
+<td class="p-3"><span class="px-2 py-0.5 bg-[#86efac] border-[2px] border-outline font-label uppercase text-[10px]">Passed</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Recent Bugs Table -->
+<div class="bg-surface-container-lowest border-[3px] border-outline p-gutter shadow-[4px_4px_0px_#000000]">
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4 pb-2 border-b-[2px] border-outline">
+<h2 class="font-headline text-headline uppercase flex items-center gap-2">
+<span class="material-symbols-outlined">pest_control</span>
+        Recent Bugs & Issues
+      </h2>
+<div class="flex items-center gap-2 w-full sm:w-auto">
+<select class="px-3 py-1 bg-surface border-[2px] border-outline font-label uppercase text-label">
+<option>All Severities</option>
+<option>Critical</option>
+<option>High</option>
+<option>Medium</option>
+<option>Low</option>
+</select>
+<button class="px-3 py-1 bg-[#fde047] border-[2px] border-outline font-label uppercase shadow-[2px_2px_0px_#000000] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all">Export</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse border-[2px] border-outline">
+<thead>
+<tr class="bg-primary text-on-primary font-label uppercase text-label">
+<th class="p-3 border-r-[2px] border-outline">Bug ID</th>
+<th class="p-3 border-r-[2px] border-outline">Title</th>
+<th class="p-3 border-r-[2px] border-outline">Severity</th>
+<th class="p-3 border-r-[2px] border-outline">Module</th>
+<th class="p-3 border-r-[2px] border-outline">Assignee</th>
+<th class="p-3 border-r-[2px] border-outline">Status</th>
+<th class="p-3">Actions</th>
+</tr>
+</thead>
+<tbody class="font-body text-body divide-y-[2px] divide-outline">
+<tr class="hover:bg-surface-container transition-colors">
+<td class="p-3 border-r-[2px] border-outline font-bold">#BUG-401</td>
+<td class="p-3 border-r-[2px] border-outline font-bold">Checkout flow crashes on Stripe 3DS verification timeout</td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-[#ef4444] text-white border-[2px] border-outline font-label uppercase text-[10px]">Critical</span></td>
+<td class="p-3 border-r-[2px] border-outline">Checkout / Payments</td>
+<td class="p-3 border-r-[2px] border-outline">alex.dev</td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-[#fde047] border-[2px] border-outline font-label uppercase text-[10px]">In Progress</span></td>
+<td class="p-3"><button class="underline font-bold text-label uppercase hover:text-secondary">View</button></td>
+</tr>
+<tr class="hover:bg-surface-container transition-colors">
+<td class="p-3 border-r-[2px] border-outline font-bold">#BUG-400</td>
+<td class="p-3 border-r-[2px] border-outline font-bold">Discount code applied twice when clicking back button</td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-[#fdba74] border-[2px] border-outline font-label uppercase text-[10px]">High</span></td>
+<td class="p-3 border-r-[2px] border-outline">Cart / Promo</td>
+<td class="p-3 border-r-[2px] border-outline">sarah.qa</td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-surface-container-high border-[2px] border-outline font-label uppercase text-[10px]">Open</span></td>
+<td class="p-3"><button class="underline font-bold text-label uppercase hover:text-secondary">View</button></td>
+</tr>
+<tr class="hover:bg-surface-container transition-colors">
+<td class="p-3 border-r-[2px] border-outline font-bold">#BUG-398</td>
+<td class="p-3 border-r-[2px] border-outline font-bold">Product image carousel stutters on mobile viewports</td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-[#fef08a] border-[2px] border-outline font-label uppercase text-[10px]">Medium</span></td>
+<td class="p-3 border-r-[2px] border-outline">PDP UI</td>
+<td class="p-3 border-r-[2px] border-outline">mike.fe</td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-[#86efac] border-[2px] border-outline font-label uppercase text-[10px]">Resolved</span></td>
+<td class="p-3"><button class="underline font-bold text-label uppercase hover:text-secondary">View</button></td>
+</tr>
+<tr class="hover:bg-surface-container transition-colors">
+<td class="p-3 border-r-[2px] border-outline font-bold">#BUG-395</td>
+<td class="p-3 border-r-[2px] border-outline font-bold">Typo in footer copyright notice string (2023 instead of 2024)</td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-[#e2e8f0] border-[2px] border-outline font-label uppercase text-[10px]">Low</span></td>
+<td class="p-3 border-r-[2px] border-outline">Footer</td>
+<td class="p-3 border-r-[2px] border-outline">unassigned</td>
+<td class="p-3 border-r-[2px] border-outline"><span class="px-2 py-0.5 bg-surface-container-high border-[2px] border-outline font-label uppercase text-[10px]">Open</span></td>
+<td class="p-3"><button class="underline font-bold text-label uppercase hover:text-secondary">View</button></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div></main></div></body></html>
