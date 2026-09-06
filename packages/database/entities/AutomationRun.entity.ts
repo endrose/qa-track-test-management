@@ -18,6 +18,12 @@ export class AutomationRun {
   @Column({ type: 'int', default: 0 })
   failed: number;
 
+  @Column({ default: 'Playwright' })
+  framework: string;
+
+  @Column({ type: 'text', nullable: true })
+  log: string;
+
   @ManyToOne(() => Project, { nullable: true })
   project: Project;
 

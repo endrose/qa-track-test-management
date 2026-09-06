@@ -10,6 +10,11 @@ export class TestReportsController {
     return this.testReportsService.findAll();
   }
 
+  @Post('generate')
+  generate(@Body() body: { name: string }) {
+    return this.testReportsService.generateReport(body.name);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.testReportsService.findOne(id);

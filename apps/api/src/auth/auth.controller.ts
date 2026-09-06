@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UnauthorizedException } from '@nestjs/common';
+import { Controller, Post, Body, Get, Delete, Param } from '@nestjs/common';
 import { AuthService } from './auth.service.js';
 
 @Controller('auth')
@@ -9,7 +9,7 @@ export class AuthController {
   async login(@Body() body: any) {
     const user = await this.authService.validateUser(body.email, body.password);
     if (!user) {
-      throw new UnauthorizedException('Invalid credentials');
+      return { error: 'Invalid credentials' };
     }
     return {
       token: 'mock-jwt-token-' + user.id,
@@ -20,5 +20,24 @@ export class AuthController {
         role: user.role
       }
     };
+  }
+
+  @Get('users')
+  async getUsers() {
+    return this.authService.getUsers();
+  }
+
+  @Post('users/invite')
+  async inviteUser(@Body() body: { email: string; role: string }) {
+    try {
+      return await this.authService.inviteUser(body.email, body.role);
+    } catch (e: any) {
+      return { error: e.message };
+    }
+  }
+
+  @Delete('users/:id')
+  async removeUser(@Param('id') id: string) {
+    return this.authService.removeUser(id);
   }
 }

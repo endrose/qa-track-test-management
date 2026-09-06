@@ -1,0 +1,11 @@
+{
+  "name": "cypress-automation",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "test": "cypress run --reporter json"
+  },
+  "devDependencies": {
+    "cypress": "^13.7.0"
+  }
+}

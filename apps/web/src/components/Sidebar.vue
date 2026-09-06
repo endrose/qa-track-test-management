@@ -54,10 +54,10 @@ const userRole = computed(() => user.value?.role || 'Member')
         </router-link>
       </nav>
 
-      <nav class="space-y-1">
+      <nav v-if="['Admin', 'QA Lead', 'Tester'].includes(userRole)" class="space-y-1">
         <div class="px-3 py-1 text-label text-on-surface-variant uppercase tracking-wider">Testing</div>
         <router-link 
-          v-for="item in testingItems" 
+          v-for="item in testingItems.filter(i => ['Admin', 'QA Lead'].includes(userRole) || i.name !== 'Automation')" 
           :key="item.name"
           :to="item.path"
           class="flex items-center px-3 py-2 border-[2px] border-transparent hover:border-outline text-on-surface hover:bg-surface-container transition-all"
@@ -68,10 +68,15 @@ const userRole = computed(() => user.value?.role || 'Member')
         </router-link>
       </nav>
 
-      <nav class="space-y-1">
+      <nav v-if="['Admin', 'QA Lead', 'Tester', 'Developer', 'Viewer'].includes(userRole)" class="space-y-1">
         <div class="px-3 py-1 text-label text-on-surface-variant uppercase tracking-wider">Quality</div>
         <router-link 
-          v-for="item in qualityItems" 
+          v-for="item in qualityItems.filter(i => {
+            if (i.name === 'Reports') return ['Admin', 'QA Lead', 'Viewer'].includes(userRole);
+            if (i.name === 'Bugs') return ['Admin', 'QA Lead', 'Tester', 'Developer'].includes(userRole);
+            if (i.name === 'RTM') return ['Admin', 'QA Lead', 'Tester', 'Viewer'].includes(userRole);
+            return true;
+          })" 
           :key="item.name"
           :to="item.path"
           class="flex items-center px-3 py-2 border-[2px] border-transparent hover:border-outline text-on-surface hover:bg-surface-container transition-all"
@@ -82,7 +87,7 @@ const userRole = computed(() => user.value?.role || 'Member')
         </router-link>
       </nav>
 
-      <nav class="space-y-1">
+      <nav v-if="userRole === 'Admin'" class="space-y-1">
         <div class="px-3 py-1 text-label text-on-surface-variant uppercase tracking-wider">Admin</div>
         <router-link 
           v-for="item in adminItems" 

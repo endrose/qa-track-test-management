@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 import { ProjectsModule } from './projects/projects.module.js';
@@ -14,11 +15,16 @@ import { Project, Requirement, TestExecution, AutomationRun, Bug, TestCase, Test
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      url: 'postgresql://postgres:postgres123@localhost:5432/qa-track-test-management',
-      entities: [Project, Requirement, TestExecution, AutomationRun, Bug, TestCase, TestReport, User],
-      synchronize: true, 
+    ConfigModule.forRoot({ isGlobal: true }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        type: 'postgres',
+        url: configService.get<string>('DATABASE_URL'),
+        entities: [Project, Requirement, TestExecution, AutomationRun, Bug, TestCase, TestReport, User],
+        synchronize: true, 
+      }),
     }),
     ProjectsModule,
     RequirementsModule,

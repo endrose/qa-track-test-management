@@ -4,7 +4,9 @@ import { ref, onMounted } from 'vue'
 const runs = ref<any[]>([])
 const projects = ref<any[]>([])
 const isModalOpen = ref(false)
-const newRun = ref({ suiteName: '', projectId: '' })
+const isLogModalOpen = ref(false)
+const currentLog = ref('')
+const newRun = ref({ suiteName: '', projectId: '', framework: 'Playwright' })
 
 const statusColors: Record<string, string> = {
   'Passed':  'bg-[#86efac]',
@@ -33,15 +35,14 @@ const triggerRun = async () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         suiteName: newRun.value.suiteName,
+        framework: newRun.value.framework,
         status: 'Running',
-        passed: 0,
-        failed: 0,
         project: newRun.value.projectId ? { id: newRun.value.projectId } : null,
       }),
     })
     if (res.ok) {
       isModalOpen.value = false
-      newRun.value = { suiteName: '', projectId: '' }
+      newRun.value = { suiteName: '', projectId: '', framework: 'Playwright' }
       fetchData()
     }
   } catch (err) {
@@ -54,7 +55,15 @@ const deleteRun = async (id: string) => {
   fetchData()
 }
 
-onMounted(fetchData)
+const viewLog = (log: string) => {
+  currentLog.value = log || 'No logs available.'
+  isLogModalOpen.value = true
+}
+
+onMounted(() => {
+  fetchData()
+  setInterval(fetchData, 5000) // Poll for updates
+})
 </script>
 
 <template>
@@ -79,14 +88,20 @@ onMounted(fetchData)
 
   <!-- Table -->
   <div class="bg-surface-container-lowest border-[3px] border-outline p-gutter shadow-[4px_4px_0px_#000000]">
-    <h2 class="font-headline text-headline uppercase flex items-center gap-2 mb-4 pb-2 border-b-[2px] border-outline">
-      <span class="material-symbols-outlined">terminal</span> Run History
-    </h2>
+    <div class="flex items-center justify-between mb-4 pb-2 border-b-[2px] border-outline">
+      <h2 class="font-headline text-headline uppercase flex items-center gap-2">
+        <span class="material-symbols-outlined">terminal</span> Run History
+      </h2>
+      <button @click="fetchData" class="flex items-center gap-2 px-2 py-1 bg-surface border-[2px] border-outline text-label font-label uppercase hover:bg-surface-container">
+        <span class="material-symbols-outlined text-[16px]">refresh</span> Refresh
+      </button>
+    </div>
     <div class="overflow-x-auto">
       <table class="w-full text-left border-collapse border-[2px] border-outline">
         <thead>
           <tr class="bg-primary text-on-primary font-label uppercase text-label">
             <th class="p-3 border-r-[2px] border-outline">Suite</th>
+            <th class="p-3 border-r-[2px] border-outline">Framework</th>
             <th class="p-3 border-r-[2px] border-outline">Status</th>
             <th class="p-3 border-r-[2px] border-outline">Passed</th>
             <th class="p-3 border-r-[2px] border-outline">Failed</th>
@@ -96,17 +111,21 @@ onMounted(fetchData)
         </thead>
         <tbody class="font-body text-body divide-y-[2px] divide-outline">
           <tr v-if="runs.length === 0">
-            <td colspan="6" class="p-4 text-center text-on-surface-variant">No automation runs yet.</td>
+            <td colspan="7" class="p-4 text-center text-on-surface-variant">No automation runs yet.</td>
           </tr>
           <tr v-for="run in runs" :key="run.id" class="hover:bg-surface-container transition-colors">
             <td class="p-3 border-r-[2px] border-outline font-bold">{{ run.suiteName }}</td>
+            <td class="p-3 border-r-[2px] border-outline font-label uppercase text-[10px]">{{ run.framework || 'Playwright' }}</td>
             <td class="p-3 border-r-[2px] border-outline">
               <span :class="statusColors[run.status] || 'bg-surface-dim'" class="px-2 py-0.5 border-[2px] border-outline font-label uppercase text-[10px]">{{ run.status }}</span>
             </td>
             <td class="p-3 border-r-[2px] border-outline text-[#15803d] font-bold">{{ run.passed }}</td>
             <td class="p-3 border-r-[2px] border-outline text-error font-bold">{{ run.failed }}</td>
-            <td class="p-3 border-r-[2px] border-outline">{{ new Date(run.createdAt).toLocaleDateString() }}</td>
-            <td class="p-3">
+            <td class="p-3 border-r-[2px] border-outline">{{ new Date(run.createdAt).toLocaleString() }}</td>
+            <td class="p-3 flex items-center gap-2">
+              <button @click="viewLog(run.log)" class="px-2 py-1 bg-[#fde047] text-on-surface font-label uppercase text-[10px] border-[2px] border-outline hover:translate-x-[1px] hover:translate-y-[1px] transition-all">
+                Logs
+              </button>
               <button @click="deleteRun(run.id)" class="px-2 py-1 bg-[#fca5a5] text-on-surface font-label uppercase text-[10px] border-[2px] border-outline hover:translate-x-[1px] hover:translate-y-[1px] transition-all">
                 Delete
               </button>
@@ -117,7 +136,7 @@ onMounted(fetchData)
     </div>
   </div>
 
-  <!-- Modal -->
+  <!-- Trigger Modal -->
   <div v-if="isModalOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
     <div class="w-full max-w-md bg-surface-container-lowest border-[3px] border-outline p-gutter shadow-[4px_4px_0px_#000000]">
       <h2 class="font-headline text-headline uppercase mb-4">Trigger Automation Run</h2>
@@ -125,6 +144,13 @@ onMounted(fetchData)
         <div class="flex flex-col gap-1">
           <label class="font-label uppercase text-label">Suite Name</label>
           <input v-model="newRun.suiteName" type="text" placeholder="e.g. Regression Suite v3" class="w-full px-3 py-2 bg-surface border-[2px] border-outline font-body focus:outline-none shadow-[2px_2px_0px_#000000]" required />
+        </div>
+        <div class="flex flex-col gap-1">
+          <label class="font-label uppercase text-label">Framework</label>
+          <select v-model="newRun.framework" class="w-full px-3 py-2 bg-surface border-[2px] border-outline font-body focus:outline-none shadow-[2px_2px_0px_#000000]">
+            <option value="Playwright">Playwright</option>
+            <option value="Cypress">Cypress</option>
+          </select>
         </div>
         <div class="flex flex-col gap-1">
           <label class="font-label uppercase text-label">Project</label>
@@ -140,4 +166,18 @@ onMounted(fetchData)
       </form>
     </div>
   </div>
+
+  <!-- Log Modal -->
+  <div v-if="isLogModalOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+    <div class="w-full max-w-4xl max-h-[80vh] flex flex-col bg-surface-container-lowest border-[3px] border-outline p-gutter shadow-[4px_4px_0px_#000000]">
+      <div class="flex items-center justify-between mb-4 border-b-[2px] border-outline pb-2">
+        <h2 class="font-headline text-headline uppercase">Execution Logs</h2>
+        <button @click="isLogModalOpen = false" class="material-symbols-outlined hover:text-error transition-colors">close</button>
+      </div>
+      <div class="flex-1 overflow-y-auto bg-[#1e1e1e] p-4 border-[2px] border-outline">
+        <pre class="font-mono text-[12px] text-[#d4d4d4] whitespace-pre-wrap">{{ currentLog }}</pre>
+      </div>
+    </div>
+  </div>
 </template>
+

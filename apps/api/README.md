@@ -9,6 +9,13 @@ The backend REST API for the QA Track Test Management system.
 - **Database**: PostgreSQL
 - **Testing**: Vitest & Supertest
 
+## ✨ Features
+
+- 🔒 **Authentication**: Local authentication with default users, and dynamic team member invitations via the API.
+- 🗄️ **Database Integration**: TypeORM connected to PostgreSQL with entities for Users, AutomationRuns, TestExecutions, and TestReports.
+- 🤖 **Automation Service**: Endpoints to trigger local child processes (Cypress/Playwright) and parse JSON output.
+- 📈 **Reporting & Metrics**: Data aggregation for dashboard widgets and report snapshots.
+
 ## Getting Started
 
 From this directory, you can run the API locally:

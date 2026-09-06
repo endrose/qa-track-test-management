@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "test": "playwright test"
+    "test": "playwright test",
+    "test:report": "playwright test && node post-test-report.js",
+    "report:push": "node post-test-report.js",
+    "show:report": "playwright show-report"
   },
   "devDependencies": {
     "@playwright/test": "^1.42.0",

@@ -30,4 +30,34 @@ export class AuthService implements OnModuleInit {
     }
     return null;
   }
+
+  async getUsers() {
+    return this.usersRepository.find({ order: { createdAt: 'DESC' } });
+  }
+
+  async inviteUser(email: string, role: string) {
+    const existing = await this.usersRepository.findOne({ where: { email } });
+    if (existing) {
+      throw new Error('User already exists');
+    }
+    
+    // Create new user with default password
+    const user = this.usersRepository.create({
+      email,
+      name: email.split('@')[0],
+      role,
+      passwordHash: 'password123', // Default password as per Option A
+      status: 'Pending',
+    });
+    
+    return this.usersRepository.save(user);
+  }
+
+  async removeUser(id: string) {
+    const user = await this.usersRepository.findOne({ where: { id } });
+    if (user) {
+      return this.usersRepository.remove(user);
+    }
+    return null;
+  }
 }

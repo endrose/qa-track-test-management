@@ -25,6 +25,15 @@ npm run build
 npm run preview
 ```
 
+## ✨ Features
+
+- 🎨 **Neo-brutalist Design**: Unique, bold UI using high-contrast borders and vibrant colors
+- 📊 **Dynamic Dashboard**: Live analytics fetching from PostgreSQL backend
+- 🤖 **Automation Interface**: Trigger local Cypress & Playwright tests directly from UI and view JSON results
+- 👥 **Role-Based Access Control (RBAC)**: Custom menu and permissions based on user role (Admin, QA Lead, Tester, Developer, Viewer).
+- 📈 **Advanced Reporting**: Generate testing snapshots and view history.
+- 📱 **Responsive Layout**: Works seamlessly on desktop and tablet devices
+
 ## Architecture
 
 This frontend is configured to consume the backend API and utilizes a modern Neobrutalism design system configured via Tailwind CSS. Components are built using the Vue 3 `<script setup>` syntax for better performance and developer experience.

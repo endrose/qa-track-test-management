@@ -11,12 +11,8 @@ const user = computed(() => {
 const profileForm = ref({ name: '', email: '', role: '' })
 const profileSaved = ref(false)
 
-// Team members mock
-const teamMembers = ref([
-  { id: 1, name: 'Admin User', email: 'admin@qatrack.com', role: 'Admin', status: 'Active' },
-  { id: 2, name: 'QA Lead', email: 'qalead@qatrack.com', role: 'QA Lead', status: 'Active' },
-  { id: 3, name: 'Dev Tester', email: 'dev@qatrack.com', role: 'Developer', status: 'Inactive' },
-])
+// Team members real data
+const teamMembers = ref<any[]>([])
 const inviteEmail = ref('')
 const inviteRole = ref('Tester')
 
@@ -41,10 +37,22 @@ const integrations = ref({
 
 const roles = ['Admin', 'QA Lead', 'Tester', 'Developer', 'Viewer']
 
+const fetchUsers = async () => {
+  try {
+    const res = await fetch('http://localhost:3000/api/auth/users')
+    if (res.ok) {
+      teamMembers.value = await res.json()
+    }
+  } catch (error) {
+    console.error('Failed to fetch users', error)
+  }
+}
+
 onMounted(() => {
   profileForm.value.name = user.value.name || ''
   profileForm.value.email = user.value.email || ''
   profileForm.value.role = user.value.role || ''
+  fetchUsers()
 })
 
 const saveProfile = () => {
@@ -52,20 +60,37 @@ const saveProfile = () => {
   setTimeout(() => { profileSaved.value = false }, 3000)
 }
 
-const inviteMember = () => {
+const inviteMember = async () => {
   if (!inviteEmail.value) return
-  teamMembers.value.push({
-    id: Date.now(),
-    name: inviteEmail.value.split('@')[0],
-    email: inviteEmail.value,
-    role: inviteRole.value,
-    status: 'Pending'
-  })
-  inviteEmail.value = ''
+  
+  try {
+    const res = await fetch('http://localhost:3000/api/auth/users/invite', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: inviteEmail.value, role: inviteRole.value }),
+    })
+    
+    if (res.ok) {
+      inviteEmail.value = ''
+      fetchUsers()
+    } else {
+      const error = await res.json()
+      alert(error.error || 'Failed to invite user')
+    }
+  } catch (error) {
+    console.error('Failed to invite user', error)
+  }
 }
 
-const removeMember = (id: number) => {
-  teamMembers.value = teamMembers.value.filter(m => m.id !== id)
+const removeMember = async (id: string) => {
+  if (confirm('Are you sure you want to remove this member?')) {
+    try {
+      await fetch(`http://localhost:3000/api/auth/users/${id}`, { method: 'DELETE' })
+      fetchUsers()
+    } catch (error) {
+      console.error('Failed to remove user', error)
+    }
+  }
 }
 
 const statusColor: Record<string, string> = {

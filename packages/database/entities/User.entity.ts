@@ -17,6 +17,9 @@ export class User {
   @Column({ default: 'QA Tester' })
   role: string;
 
+  @Column({ default: 'Active' })
+  status: string;
+
   @CreateDateColumn()
   createdAt: Date;
 

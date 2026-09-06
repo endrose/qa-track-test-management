@@ -6,10 +6,34 @@ QA Track is a comprehensive test management platform built with a modern monorep
 
 This workspace is managed by [Turborepo](https://turbo.build/) and contains multiple applications and shared packages to support the QA Track platform.
 
-### Applications
+## 🌟 Features
 
-- **`apps/web`**: The main user interface built with Vue 3, Vite, and Tailwind CSS v4.
-- **`apps/api`**: The backend RESTful API built with NestJS, TypeORM, and PostgreSQL.
+- **Project Management**: Create and manage multiple testing projects
+- **Test Case Management**: Write, organize, and track test cases and scenarios
+- **Test Execution**: Record manual test runs and track results
+- **Automation Integration**: Run and import results from Cypress and Playwright tests locally via `child_process`.
+- **Bug Tracking**: Built-in simple bug tracking linked to test cases
+- **Requirements Traceability**: Link tests to requirements with the RTM matrix
+- **Analytics & Reports**: Visual dashboard for test metrics, pass rates, and report snapshot generation.
+- **Role-Based Access Control (RBAC)**: Distinct permissions and views for Admin, QA Lead, Tester, Developer, and Viewer.
+
+## 🛠 Tech Stack
+
+### Frontend (apps/web)
+- **Vue 3** (Composition API)
+- **Vite** (Build tool)
+- **Tailwind CSS v4** (Styling, Neo-brutalist design)
+- **Vue Router** (Navigation)
+
+### Backend (apps/api)
+- **NestJS** (Node.js framework)
+- **TypeORM** (Database ORM)
+- **PostgreSQL** (Primary Database)
+- **Node child_process** (For executing local automation tests)
+
+### Infrastructure
+- **Turborepo** (Monorepo management)
+- **npm Workspaces**
 
 ### Development
 

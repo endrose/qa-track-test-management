@@ -4,6 +4,10 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const showDropdown = ref(false)
+const showProjectDropdown = ref(false)
+
+const projects = ['E-Commerce Platform', 'Mobile App', 'Internal Dashboard']
+const selectedProject = ref(projects[0])
 
 const user = computed(() => {
   try {
@@ -31,11 +35,41 @@ const handleLogout = () => {
 <template>
   <header class="fixed top-0 left-[250px] right-0 h-16 bg-surface border-b-[3px] border-outline z-40 flex items-center justify-between px-gutter">
     <div class="flex items-center gap-4">
-      <div class="flex items-center gap-2 px-3 py-1 bg-surface-container border-[2px] border-outline shadow-[2px_2px_0px_#000000]">
-        <span class="material-symbols-outlined text-[18px]">folder_open</span>
-        <span class="font-bold text-body">E-Commerce Platform</span>
-        <span class="material-symbols-outlined text-[18px]">expand_more</span>
+      <div class="relative">
+        <button 
+          @click="showProjectDropdown = !showProjectDropdown"
+          class="flex items-center gap-2 px-3 py-1 bg-surface-container border-[2px] border-outline shadow-[2px_2px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all"
+        >
+          <span class="material-symbols-outlined text-[18px]">folder_open</span>
+          <span class="font-bold text-body">{{ selectedProject }}</span>
+          <span class="material-symbols-outlined text-[18px]">expand_more</span>
+        </button>
+
+        <div 
+          v-if="showProjectDropdown"
+          class="absolute left-0 top-full mt-2 w-56 bg-surface border-[3px] border-outline shadow-[4px_4px_0px_#000000] z-50"
+        >
+          <div class="px-3 py-2 border-b-[2px] border-outline bg-surface-container">
+            <span class="font-label uppercase text-label text-on-surface-variant">Switch Project</span>
+          </div>
+          <button 
+            v-for="project in projects" 
+            :key="project"
+            @click="selectedProject = project; showProjectDropdown = false"
+            class="w-full text-left px-3 py-2 text-body font-bold hover:bg-primary hover:text-on-primary transition-colors flex items-center justify-between"
+          >
+            {{ project }}
+            <span v-if="selectedProject === project" class="material-symbols-outlined text-[16px]">check</span>
+          </button>
+        </div>
+
+        <div 
+          v-if="showProjectDropdown"
+          class="fixed inset-0 z-40"
+          @click="showProjectDropdown = false"
+        />
       </div>
+
       <div class="px-2 py-1 bg-tertiary-fixed text-on-tertiary-fixed font-label uppercase border-[2px] border-outline">
         QA
       </div>

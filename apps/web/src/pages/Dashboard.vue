@@ -4,22 +4,16 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
-const kpis = [
+const kpis = ref([
   { label: 'Test Cases', icon: 'checklist', value: '0', sub: 'Loading...', bg: 'bg-[#fde047]' },
-  { label: 'Pass Rate', icon: 'trending_up', value: '86%', sub: '+2.4%', bg: 'bg-[#86efac]' },
-  { label: 'Automation', icon: 'smart_toy', value: '64%', sub: 'Target: 70%', bg: 'bg-[#93c5fd]' },
+  { label: 'Pass Rate', icon: 'trending_up', value: '0%', sub: '...', bg: 'bg-[#86efac]' },
+  { label: 'Automation', icon: 'smart_toy', value: '0', sub: 'Runs', bg: 'bg-[#93c5fd]' },
   { label: 'Open Bugs', icon: 'pest_control', value: '0', sub: 'Loading...', bg: 'bg-[#fdba74]' },
   { label: 'Critical Bugs', icon: 'warning', value: '0', sub: 'Blocker', bg: 'bg-[#ef4444]', text: 'text-white' },
   { label: 'Blocked', icon: 'block', value: '0', sub: 'Env issues', bg: 'bg-surface-container-highest' },
-]
-
-const recentRuns = ref([
-  { id: '#RUN-8942', type: 'Regression', env: 'Staging-US', browser: 'Chrome 122', passed: 342, failed: 0, duration: '14m 22s', status: 'Passed', statusBg: 'bg-[#86efac]' },
-  { id: '#RUN-8941', type: 'Smoke', env: 'Production', browser: 'Safari 17', passed: 45, failed: 3, duration: '2m 10s', status: 'Failed', statusBg: 'bg-[#ef4444] text-white' },
-  { id: '#RUN-8940', type: 'Integration', env: 'Staging-EU', browser: 'Firefox 123', passed: 189, failed: 12, duration: '8m 45s', status: 'Failed', statusBg: 'bg-[#ef4444] text-white' },
-  { id: '#RUN-8939', type: 'Regression', env: 'QA-Asia', browser: 'Edge 121', passed: 210, failed: 0, duration: '10m 5s', status: 'Passed', statusBg: 'bg-[#86efac]' },
-  { id: '#RUN-8938', type: 'Smoke', env: 'Dev', browser: 'Chrome 121', passed: 40, failed: 0, duration: '1m 55s', status: 'Passed', statusBg: 'bg-[#86efac]' },
 ])
+
+const recentRuns = ref<any[]>([])
 
 // Filter state for Recent Test Runs
 const searchRun = ref('')
@@ -29,44 +23,63 @@ const filterStatus = ref('')
 const filteredRuns = computed(() =>
   recentRuns.value.filter(r => {
     const q = searchRun.value.toLowerCase()
-    const matchSearch = !q || r.id.toLowerCase().includes(q) || r.env.toLowerCase().includes(q) || r.type.toLowerCase().includes(q)
-    const matchType = !filterType.value || r.type === filterType.value
+    const matchSearch = !q || r.suiteName?.toLowerCase().includes(q) || r.framework?.toLowerCase().includes(q)
+    const matchType = !filterType.value || r.framework === filterType.value
     const matchStatus = !filterStatus.value || r.status === filterStatus.value
     return matchSearch && matchType && matchStatus
   })
 )
 
-const runTypes = ['Regression', 'Smoke', 'Integration']
+const runTypes = ['Playwright', 'Cypress']
+
+const statusColors: Record<string, string> = {
+  'Passed':  'bg-[#86efac]',
+  'Failed':  'bg-[#ef4444] text-white',
+  'Running': 'bg-[#93c5fd]',
+  'Skipped': 'bg-surface-container-highest',
+}
 
 // KPI real data
 const token = localStorage.getItem('token') || ''
-const dynamicKpis = ref({ testCases: 0, openBugs: 0, criticalBugs: 0, projects: 0, requirements: 0, coverage: 0 })
 
 onMounted(async () => {
   try {
-    const [tcRes, bugsRes, reqRes] = await Promise.all([
+    const [tcRes, bugsRes, reqRes, autoRes] = await Promise.all([
       fetch('http://localhost:3000/api/test-cases', { headers: { Authorization: `Bearer ${token}` } }),
       fetch('http://localhost:3000/api/bugs', { headers: { Authorization: `Bearer ${token}` } }),
       fetch('http://localhost:3000/api/requirements', { headers: { Authorization: `Bearer ${token}` } }),
+      fetch('http://localhost:3000/api/automation', { headers: { Authorization: `Bearer ${token}` } }),
     ])
     if (tcRes.ok) {
       const tc = await tcRes.json()
-      dynamicKpis.value.testCases = tc.length
-      kpis[0].value = tc.length.toString()
-      kpis[0].sub = `Total test cases`
+      kpis.value[0].value = tc.length.toString()
+      kpis.value[0].sub = `Total test cases`
     }
     if (bugsRes.ok) {
       const bugs = await bugsRes.json()
       const open = bugs.filter((b: any) => b.status !== 'Closed' && b.status !== 'Resolved')
       const critical = open.filter((b: any) => b.severity === 'Critical' || b.priority === 'Critical')
-      kpis[3].value = open.length.toString()
-      kpis[3].sub = `${open.length} open`
-      kpis[4].value = critical.length.toString()
+      kpis.value[3].value = open.length.toString()
+      kpis.value[3].sub = `${open.length} open`
+      kpis.value[4].value = critical.length.toString()
     }
     if (reqRes.ok) {
       const reqs = await reqRes.json()
-      kpis[5].value = reqs.length.toString()
-      kpis[5].sub = `Requirements`
+      kpis.value[5].value = reqs.length.toString()
+      kpis.value[5].sub = `Requirements`
+    }
+    if (autoRes.ok) {
+      const auto = await autoRes.json()
+      recentRuns.value = auto
+      kpis.value[2].value = auto.length.toString()
+      
+      const totalPassed = auto.reduce((sum: number, r: any) => sum + (r.passed || 0), 0)
+      const totalFailed = auto.reduce((sum: number, r: any) => sum + (r.failed || 0), 0)
+      const total = totalPassed + totalFailed
+      if (total > 0) {
+        kpis.value[1].value = Math.round((totalPassed / total) * 100) + '%'
+        kpis.value[1].sub = 'Pass Rate'
+      }
     }
   } catch {
     // fallback to static
@@ -226,27 +239,27 @@ const goToRTM = () => router.push('/rtm')
       <table class="w-full text-left border-collapse border-[2px] border-outline">
         <thead>
           <tr class="bg-primary text-on-primary font-label uppercase text-label">
-            <th class="p-3 border-r-[2px] border-outline">Run ID</th>
-            <th class="p-3 border-r-[2px] border-outline">Type</th>
-            <th class="p-3 border-r-[2px] border-outline">Environment</th>
+            <th class="p-3 border-r-[2px] border-outline">Suite Name</th>
+            <th class="p-3 border-r-[2px] border-outline">Framework</th>
+            <th class="p-3 border-r-[2px] border-outline">Status</th>
             <th class="p-3 border-r-[2px] border-outline">Passed</th>
             <th class="p-3 border-r-[2px] border-outline">Failed</th>
-            <th class="p-3 border-r-[2px] border-outline">Duration</th>
-            <th class="p-3">Status</th>
+            <th class="p-3">Date</th>
           </tr>
         </thead>
         <tbody class="font-body text-body divide-y-[2px] divide-outline">
           <tr v-for="run in filteredRuns" :key="run.id" class="hover:bg-surface-container transition-colors">
-            <td class="p-3 border-r-[2px] border-outline font-bold">{{ run.id }}</td>
-            <td class="p-3 border-r-[2px] border-outline">{{ run.type }}</td>
-            <td class="p-3 border-r-[2px] border-outline">{{ run.env }}</td>
+            <td class="p-3 border-r-[2px] border-outline font-bold">{{ run.suiteName }}</td>
+            <td class="p-3 border-r-[2px] border-outline">{{ run.framework || 'Playwright' }}</td>
+            <td class="p-3 border-r-[2px] border-outline">
+              <span :class="statusColors[run.status] || 'bg-surface-dim'" class="px-2 py-0.5 border-[2px] border-outline font-label uppercase text-[10px]">{{ run.status }}</span>
+            </td>
             <td class="p-3 border-r-[2px] border-outline text-[#15803d] font-bold">{{ run.passed }}</td>
             <td class="p-3 border-r-[2px] border-outline text-error font-bold">{{ run.failed }}</td>
-            <td class="p-3 border-r-[2px] border-outline">{{ run.duration }}</td>
-            <td class="p-3"><span :class="run.statusBg" class="px-2 py-0.5 border-[2px] border-outline font-label uppercase text-[10px]">{{ run.status }}</span></td>
+            <td class="p-3">{{ new Date(run.createdAt).toLocaleString() }}</td>
           </tr>
           <tr v-if="filteredRuns.length === 0">
-            <td colspan="7" class="p-6 text-center font-label uppercase text-on-surface-variant">No runs match your filter</td>
+            <td colspan="6" class="p-6 text-center font-label uppercase text-on-surface-variant">No runs match your filter</td>
           </tr>
         </tbody>
       </table>
