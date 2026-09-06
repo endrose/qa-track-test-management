@@ -1,7 +1,10 @@
 {
+  "extends": "tsconfig/base.json",
   "compilerOptions": {
-    "extends": "tsconfig/base.json",
-    "outDir": "dist"
+    "outDir": "dist",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "strictPropertyInitialization": false
   },
-  "include": ["index.ts"]
+  "include": ["index.ts", "entities/**/*.ts"]
 }

@@ -1,35 +1,95 @@
 <script setup lang="ts">
+import { ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const showDropdown = ref(false)
+
+const user = computed(() => {
+  try {
+    return JSON.parse(localStorage.getItem('user') || '{}')
+  } catch {
+    return {}
+  }
+})
+
+const userInitial = computed(() => {
+  const name = user.value?.name || user.value?.email || 'U'
+  return name.charAt(0).toUpperCase()
+})
+
+const userName = computed(() => user.value?.name || user.value?.email || 'User')
+
+const handleLogout = () => {
+  localStorage.removeItem('token')
+  localStorage.removeItem('user')
+  showDropdown.value = false
+  router.push('/login')
+}
 </script>
 
 <template>
-  <header class="h-16 border-b-neo border-border bg-surface flex items-center justify-between px-6 shrink-0">
+  <header class="fixed top-0 left-[250px] right-0 h-16 bg-surface border-b-[3px] border-outline z-40 flex items-center justify-between px-gutter">
     <div class="flex items-center gap-4">
-      <div class="font-bold border-neo border-border px-3 py-1 bg-background text-sm">
-        Project: E-Commerce Platform
+      <div class="flex items-center gap-2 px-3 py-1 bg-surface-container border-[2px] border-outline shadow-[2px_2px_0px_#000000]">
+        <span class="material-symbols-outlined text-[18px]">folder_open</span>
+        <span class="font-bold text-body">E-Commerce Platform</span>
+        <span class="material-symbols-outlined text-[18px]">expand_more</span>
       </div>
-      <div class="font-bold border-neo border-border px-3 py-1 bg-accent text-sm">
-        Env: QA
+      <div class="px-2 py-1 bg-tertiary-fixed text-on-tertiary-fixed font-label uppercase border-[2px] border-outline">
+        QA
       </div>
     </div>
 
     <div class="flex items-center gap-4">
-      <div class="relative">
-        <input 
-          type="text" 
-          placeholder="Search... (Ctrl+K)" 
-          class="input-neo w-64 text-sm font-medium"
-        />
-        <svg class="w-4 h-4 absolute right-3 top-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-        </svg>
+      <div class="flex items-center gap-2 px-3 py-1 bg-surface border-[2px] border-outline shadow-[2px_2px_0px_#000000] w-64 text-on-surface-variant">
+        <span class="material-symbols-outlined text-[18px]">search</span>
+        <input type="text" placeholder="Search..." class="text-body flex-1 bg-transparent outline-none text-on-surface" />
+        <span class="px-1.5 py-0.5 bg-surface-dim border-[1px] border-outline text-label">Ctrl + K</span>
       </div>
-      <button class="btn-neo p-2 bg-secondary text-white">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
-        </svg>
+      <button class="p-2 bg-surface border-[2px] border-outline shadow-[2px_2px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">
+        <span class="material-symbols-outlined text-[20px]">notifications</span>
       </button>
-      <div class="w-10 h-10 border-neo border-border bg-primary rounded-full shadow-neo flex items-center justify-center font-black">
-        ST
+
+      <!-- User avatar + dropdown -->
+      <div class="relative">
+        <button
+          id="user-menu-btn"
+          @click="showDropdown = !showDropdown"
+          class="flex items-center gap-2 px-2 py-1 bg-surface border-[2px] border-outline shadow-[2px_2px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all"
+        >
+          <div class="w-7 h-7 bg-primary border-[2px] border-outline flex items-center justify-center text-on-primary font-bold text-sm">
+            {{ userInitial }}
+          </div>
+          <span class="font-label text-body hidden sm:block max-w-[100px] truncate">{{ userName }}</span>
+          <span class="material-symbols-outlined text-[18px]">expand_more</span>
+        </button>
+
+        <!-- Dropdown menu -->
+        <div
+          v-if="showDropdown"
+          class="absolute right-0 top-full mt-2 w-48 bg-surface border-[3px] border-outline shadow-[4px_4px_0px_#000000] z-50"
+        >
+          <div class="px-4 py-3 border-b-[2px] border-outline">
+            <p class="font-label uppercase text-label text-on-surface-variant">Logged in as</p>
+            <p class="font-bold text-body truncate">{{ userName }}</p>
+          </div>
+          <button
+            id="logout-btn"
+            @click="handleLogout"
+            class="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-error hover:text-on-error transition-colors font-label uppercase text-body"
+          >
+            <span class="material-symbols-outlined text-[18px]">logout</span>
+            Logout
+          </button>
+        </div>
+
+        <!-- Backdrop to close dropdown -->
+        <div
+          v-if="showDropdown"
+          class="fixed inset-0 z-40"
+          @click="showDropdown = false"
+        />
       </div>
     </div>
   </header>

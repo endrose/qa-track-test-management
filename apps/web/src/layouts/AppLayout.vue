@@ -4,17 +4,17 @@ import TopBar from '../components/TopBar.vue'
 </script>
 
 <template>
-  <div class="flex h-screen w-full bg-background overflow-hidden">
+  <div class="bg-surface font-body text-on-surface min-h-screen">
     <!-- Sidebar -->
     <Sidebar />
 
-    <!-- Main Content -->
-    <div class="flex-1 flex flex-col h-full overflow-hidden">
+    <div class="pl-[250px]">
       <TopBar />
       
-      <!-- Scrollable Page Content -->
-      <main class="flex-1 overflow-y-auto p-6">
-        <RouterView />
+      <main class="relative pt-16 bg-surface min-h-screen p-margin">
+        <div class="flex flex-col w-full gap-gutter">
+          <RouterView />
+        </div>
       </main>
     </div>
   </div>
