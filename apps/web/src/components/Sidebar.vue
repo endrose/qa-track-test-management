@@ -17,6 +17,7 @@ const testingItems = [
 const qualityItems = [
   { name: 'Bugs', icon: 'pest_control', path: '/bugs' },
   { name: 'Reports', icon: 'bar_chart', path: '/reports' },
+  { name: 'Allure Report', icon: 'bar_chart_4_bars', path: '/allure-report' },
   { name: 'RTM', icon: 'grid_view', path: '/rtm' },
 ]
 
@@ -73,6 +74,7 @@ const userRole = computed(() => user.value?.role || 'Member')
         <router-link 
           v-for="item in qualityItems.filter(i => {
             if (i.name === 'Reports') return ['Admin', 'QA Lead', 'Viewer'].includes(userRole);
+            if (i.name === 'Allure Report') return ['Admin', 'QA Lead', 'Tester'].includes(userRole);
             if (i.name === 'Bugs') return ['Admin', 'QA Lead', 'Tester', 'Developer'].includes(userRole);
             if (i.name === 'RTM') return ['Admin', 'QA Lead', 'Tester', 'Viewer'].includes(userRole);
             return true;

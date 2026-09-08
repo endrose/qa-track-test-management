@@ -1,13 +1,27 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const showDropdown = ref(false)
 const showProjectDropdown = ref(false)
 
-const projects = ['E-Commerce Platform', 'Mobile App', 'Internal Dashboard']
-const selectedProject = ref(projects[0])
+const projects = ref<any[]>([])
+const selectedProject = ref('Select Project')
+
+onMounted(async () => {
+  try {
+    const res = await fetch('http://localhost:3000/api/projects')
+    if (res.ok) {
+      projects.value = await res.json()
+      if (projects.value.length > 0) {
+        selectedProject.value = projects.value[0].name
+      }
+    }
+  } catch (error) {
+    console.error('Failed to fetch projects', error)
+  }
+})
 
 const user = computed(() => {
   try {
@@ -54,12 +68,12 @@ const handleLogout = () => {
           </div>
           <button 
             v-for="project in projects" 
-            :key="project"
-            @click="selectedProject = project; showProjectDropdown = false"
+            :key="project.id"
+            @click="selectedProject = project.name; showProjectDropdown = false"
             class="w-full text-left px-3 py-2 text-body font-bold hover:bg-primary hover:text-on-primary transition-colors flex items-center justify-between"
           >
-            {{ project }}
-            <span v-if="selectedProject === project" class="material-symbols-outlined text-[16px]">check</span>
+            {{ project.name }}
+            <span v-if="selectedProject === project.name" class="material-symbols-outlined text-[16px]">check</span>
           </button>
         </div>
 

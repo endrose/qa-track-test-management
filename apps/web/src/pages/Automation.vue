@@ -73,9 +73,18 @@ onMounted(() => {
       <span class="px-2 py-0.5 bg-primary text-on-primary font-label uppercase text-[10px] tracking-widest border-[2px] border-outline w-fit">Automation</span>
       <h1 class="font-display text-display text-on-surface tracking-tight uppercase">Automation Runs</h1>
     </div>
-    <button @click="isModalOpen = true" class="px-4 py-2 bg-[#93c5fd] text-on-surface font-label uppercase border-[2px] border-outline shadow-[3px_3px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all flex items-center gap-2">
-      <span class="material-symbols-outlined text-[18px]">smart_toy</span> Trigger Run
-    </button>
+    <div class="flex items-center gap-3">
+      <a
+        href="http://localhost:3000/allure/index.html"
+        target="_blank"
+        class="px-4 py-2 bg-[#a78bfa] text-white font-label uppercase border-[2px] border-outline shadow-[3px_3px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all flex items-center gap-2"
+      >
+        <span class="material-symbols-outlined text-[18px]">bar_chart_4_bars</span> Allure Report
+      </a>
+      <button @click="isModalOpen = true" class="px-4 py-2 bg-[#93c5fd] text-on-surface font-label uppercase border-[2px] border-outline shadow-[3px_3px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all flex items-center gap-2">
+        <span class="material-symbols-outlined text-[18px]">smart_toy</span> Trigger Run
+      </button>
+    </div>
   </div>
 
   <!-- Stats -->
@@ -107,6 +116,7 @@ onMounted(() => {
             <th class="p-3 border-r-[2px] border-outline">Failed</th>
             <th class="p-3 border-r-[2px] border-outline">Date</th>
             <th class="p-3">Actions</th>
+            <th class="p-3">Report</th>
           </tr>
         </thead>
         <tbody class="font-body text-body divide-y-[2px] divide-outline">
@@ -129,6 +139,17 @@ onMounted(() => {
               <button @click="deleteRun(run.id)" class="px-2 py-1 bg-[#fca5a5] text-on-surface font-label uppercase text-[10px] border-[2px] border-outline hover:translate-x-[1px] hover:translate-y-[1px] transition-all">
                 Delete
               </button>
+            </td>
+            <td class="p-3">
+              <a
+                v-if="(run.framework || '').toLowerCase() === 'playwright' && run.status !== 'Running'"
+                href="http://localhost:3000/allure/index.html"
+                target="_blank"
+                class="px-2 py-1 bg-[#a78bfa] text-white font-label uppercase text-[10px] border-[2px] border-outline hover:translate-x-[1px] hover:translate-y-[1px] transition-all flex items-center gap-1 w-fit"
+              >
+                <span class="material-symbols-outlined text-[12px]">bar_chart_4_bars</span> Allure
+              </a>
+              <span v-else class="text-on-surface-variant text-[10px] font-label">—</span>
             </td>
           </tr>
         </tbody>

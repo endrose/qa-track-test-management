@@ -80,6 +80,16 @@ export class AutomationService {
       failed = 1;
     }
 
+    // Generate Allure Report
+    if (framework === 'Playwright') {
+      try {
+        const cwd = path.resolve(process.cwd(), '../../automation/playwright');
+        await execAsync('npx allure generate ./allure-results --clean', { cwd });
+      } catch (err) {
+        console.error('Failed to generate allure report', err);
+      }
+    }
+
     await this.update(id, { status, log: logOutput, passed, failed });
   }
 

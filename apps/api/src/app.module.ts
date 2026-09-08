@@ -13,6 +13,9 @@ import { TestReportsModule } from './test-reports/test-reports.module.js';
 import { AuthModule } from './auth/auth.module.js';
 import { Project, Requirement, TestExecution, AutomationRun, Bug, TestCase, TestReport, User } from 'database';
 
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -25,6 +28,10 @@ import { Project, Requirement, TestExecution, AutomationRun, Bug, TestCase, Test
         entities: [Project, Requirement, TestExecution, AutomationRun, Bug, TestCase, TestReport, User],
         synchronize: true, 
       }),
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(process.cwd(), '..', '..', 'automation', 'playwright', 'allure-report'),
+      serveRoot: '/allure',
     }),
     ProjectsModule,
     RequirementsModule,

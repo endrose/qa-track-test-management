@@ -13,6 +13,7 @@ import Automation from '../pages/Automation.vue'
 import TestScenarios from '../pages/TestScenarios.vue'
 import RTM from '../pages/RTM.vue'
 import Settings from '../pages/Settings.vue'
+import AllureReport from '../pages/AllureReport.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -87,6 +88,11 @@ const router = createRouter({
           path: 'settings',
           name: 'Settings',
           component: Settings
+        },
+        {
+          path: 'allure-report',
+          name: 'AllureReport',
+          component: AllureReport
         }
       ]
     }
