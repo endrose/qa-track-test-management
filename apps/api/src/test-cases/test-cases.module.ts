@@ -8,5 +8,6 @@ import { TestCasesService } from './test-cases.service.js';
   imports: [TypeOrmModule.forFeature([TestCase])],
   controllers: [TestCasesController],
   providers: [TestCasesService],
+  exports: [TestCasesService],
 })
 export class TestCasesModule {}

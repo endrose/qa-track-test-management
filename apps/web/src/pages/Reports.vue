@@ -2,7 +2,9 @@
 import { ref, computed, onMounted } from 'vue'
 
 const reports = ref<any[]>([])
+const projects = ref<any[]>([])
 const isGenerating = ref(false)
+const selectedProjectId = ref('')
 
 const fetchReports = async () => {
   try {
@@ -15,6 +17,15 @@ const fetchReports = async () => {
   }
 }
 
+const fetchProjects = async () => {
+  try {
+    const res = await fetch('http://localhost:3000/api/projects')
+    if (res.ok) projects.value = await res.json()
+  } catch (err) {
+    console.error('Failed to fetch projects', err)
+  }
+}
+
 const generateReport = async () => {
   isGenerating.value = true
   try {
@@ -22,7 +33,10 @@ const generateReport = async () => {
     const res = await fetch('http://localhost:3000/api/reports/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: reportName })
+      body: JSON.stringify({
+        name: reportName,
+        project: selectedProjectId.value ? { id: selectedProjectId.value } : null
+      })
     })
     if (res.ok) {
       await fetchReports()
@@ -39,7 +53,10 @@ const totalFailed = computed(() => reports.value.reduce((acc, r) => acc + (r.fai
 const totalTests = computed(() => totalPassed.value + totalFailed.value)
 const passRate = computed(() => totalTests.value === 0 ? 0 : Math.round((totalPassed.value / totalTests.value) * 100))
 
-onMounted(fetchReports)
+onMounted(() => {
+  fetchReports()
+  fetchProjects()
+})
 </script>
 
 <template>
@@ -48,14 +65,20 @@ onMounted(fetchReports)
       <span class="px-2 py-0.5 bg-primary text-on-primary font-label uppercase text-[10px] tracking-widest border-[2px] border-outline w-fit">Analytics</span>
       <h1 class="font-display text-display text-on-surface tracking-tight uppercase">Test Reports</h1>
     </div>
-    <button 
-      @click="generateReport" 
-      :disabled="isGenerating"
-      class="px-4 py-2 bg-[#93c5fd] text-on-surface font-label uppercase border-[2px] border-outline shadow-[3px_3px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-    >
-      <span class="material-symbols-outlined text-[18px]">add_chart</span> 
-      {{ isGenerating ? 'Generating...' : 'Generate Snapshot' }}
-    </button>
+    <div class="flex items-center gap-3">
+      <select v-model="selectedProjectId" class="px-3 py-2 bg-surface border-[2px] border-outline font-body focus:outline-none shadow-[2px_2px_0px_#000000] text-sm">
+        <option value="">All Projects</option>
+        <option v-for="p in projects" :key="p.id" :value="p.id">{{ p.name }}</option>
+      </select>
+      <button 
+        @click="generateReport" 
+        :disabled="isGenerating"
+        class="px-4 py-2 bg-[#93c5fd] text-on-surface font-label uppercase border-[2px] border-outline shadow-[3px_3px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        <span class="material-symbols-outlined text-[18px]">add_chart</span> 
+        {{ isGenerating ? 'Generating...' : 'Generate Snapshot' }}
+      </button>
+    </div>
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
@@ -82,6 +105,7 @@ onMounted(fetchReports)
         <thead>
           <tr class="bg-primary text-on-primary font-label uppercase text-label">
             <th class="p-3 border-r-[2px] border-outline">Report Name</th>
+            <th class="p-3 border-r-[2px] border-outline">Project</th>
             <th class="p-3 border-r-[2px] border-outline">Summary</th>
             <th class="p-3 border-r-[2px] border-outline">Passed</th>
             <th class="p-3 border-r-[2px] border-outline">Failed</th>
@@ -94,6 +118,10 @@ onMounted(fetchReports)
           </tr>
           <tr v-for="report in reports" :key="report.id" class="hover:bg-surface-container transition-colors">
             <td class="p-3 border-r-[2px] border-outline font-bold">{{ report.name }}</td>
+            <td class="p-3 border-r-[2px] border-outline">
+              <span v-if="report.project" class="px-2 py-0.5 bg-[#93c5fd] border-[2px] border-outline font-label uppercase text-[10px]">{{ report.project.name }}</span>
+              <span v-else class="text-on-surface-variant text-[10px]">—</span>
+            </td>
             <td class="p-3 border-r-[2px] border-outline text-label">{{ report.summary || '-' }}</td>
             <td class="p-3 border-r-[2px] border-outline text-[#15803d] font-bold">{{ report.passed }}</td>
             <td class="p-3 border-r-[2px] border-outline text-error font-bold">{{ report.failed }}</td>

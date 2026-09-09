@@ -1,0 +1,1 @@
+{"attachments":[],"errors":[{"message":"beforeEach hook failed: Test timeout of 30000ms exceeded while running \"beforeEach\" hook.","trace":"Test timeout of 30000ms exceeded while running \"beforeEach\" hook.\n    at D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\02-text-input.spec.ts:8:8","timestamp":1788942390195}]}

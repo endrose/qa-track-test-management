@@ -15,6 +15,11 @@ export class AutomationController {
     return this.automationService.create(data);
   }
 
+  @Post('test-cases/:id/execute')
+  executeTestCase(@Param('id') id: string) {
+    return this.automationService.executeTestCase(id);
+  }
+
   @Put(':id')
   update(@Param('id') id: string, @Body() data: any) {
     return this.automationService.update(id, data);

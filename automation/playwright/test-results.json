@@ -3,8 +3,7 @@
     "argv": [
       "C:\\Program Files\\nodejs\\node.exe",
       "D:\\Workspace\\vue\\qa-track-test-management\\node_modules\\@playwright\\test\\cli.js",
-      "test",
-      "--timeout=60000"
+      "test"
     ],
     "configFile": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\playwright.config.ts",
     "rootDir": "D:/Workspace/vue/qa-track-test-management/automation/playwright/tests",
@@ -36,7 +35,7 @@
         "testMatch": [
           "**/*.@(spec|test).?(c|m)[jt]s?(x)"
         ],
-        "timeout": 60000
+        "timeout": 30000
       }
     ],
     "quiet": false,
@@ -99,7 +98,7 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
@@ -109,12 +108,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 18422,
+                      "duration": 13873,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:50:16.230Z",
+                      "startTime": "2026-09-09T10:16:17.060Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -133,7 +132,7 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
@@ -143,12 +142,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 5951,
+                      "duration": 13745,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:50:40.072Z",
+                      "startTime": "2026-09-09T10:16:36.345Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -167,7 +166,7 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
@@ -177,12 +176,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1400,
+                      "duration": 21653,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:50:46.056Z",
+                      "startTime": "2026-09-09T10:16:50.161Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -218,7 +217,7 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
@@ -228,12 +227,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 2001,
+                      "duration": 22669,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:50:47.492Z",
+                      "startTime": "2026-09-09T10:17:11.890Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -252,7 +251,7 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
@@ -262,12 +261,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 2192,
+                      "duration": 3635,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:50:49.515Z",
+                      "startTime": "2026-09-09T10:17:34.619Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -282,11 +281,11 @@
             },
             {
               "title": "TC-006: Submit button triggers result after text entry",
-              "ok": true,
+              "ok": false,
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
@@ -295,18 +294,109 @@
                     {
                       "workerIndex": 0,
                       "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 6763,
-                      "errors": [],
+                      "status": "timedOut",
+                      "duration": 30282,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n    at D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\02-text-input.spec.ts:8:8",
+                        "location": {
+                          "file": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\02-text-input.spec.ts",
+                          "column": 8,
+                          "line": 8
+                        },
+                        "snippet": "\u001b[0m \u001b[90m  6 |\u001b[39m \u001b[90m */\u001b[39m\n \u001b[90m  7 |\u001b[39m test\u001b[33m.\u001b[39mdescribe(\u001b[32m'Text Input Element'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  8 |\u001b[39m   test\u001b[33m.\u001b[39mbeforeEach(\u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n \u001b[90m    |\u001b[39m        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m  9 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'/elements/input/simple'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 10 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 11 |\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\02-text-input.spec.ts",
+                            "column": 8,
+                            "line": 8
+                          },
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n   6 |  */\n   7 | test.describe('Text Input Element', () => {\n>  8 |   test.beforeEach(async ({ page }) => {\n     |        ^\n   9 |     await page.goto('/elements/input/simple');\n  10 |   });\n  11 |\n    at D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\02-text-input.spec.ts:8:8"
+                        }
+                      ],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:50:51.726Z",
+                      "startTime": "2026-09-09T10:17:38.391Z",
                       "annotations": [],
-                      "attachments": []
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\test-results\\02-text-input-Text-Input-E-d3abe-ers-result-after-text-entry-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\test-results\\02-text-input-Text-Input-E-d3abe-ers-result-after-text-entry-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\02-text-input.spec.ts",
+                        "column": 8,
+                        "line": 8
+                      }
+                    },
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 40207,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n    at D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\02-text-input.spec.ts:8:8",
+                        "location": {
+                          "file": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\02-text-input.spec.ts",
+                          "column": 8,
+                          "line": 8
+                        },
+                        "snippet": "\u001b[0m \u001b[90m  6 |\u001b[39m \u001b[90m */\u001b[39m\n \u001b[90m  7 |\u001b[39m test\u001b[33m.\u001b[39mdescribe(\u001b[32m'Text Input Element'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  8 |\u001b[39m   test\u001b[33m.\u001b[39mbeforeEach(\u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n \u001b[90m    |\u001b[39m        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m  9 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'/elements/input/simple'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 10 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 11 |\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\02-text-input.spec.ts",
+                            "column": 8,
+                            "line": 8
+                          },
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n   6 |  */\n   7 | test.describe('Text Input Element', () => {\n>  8 |   test.beforeEach(async ({ page }) => {\n     |        ^\n   9 |     await page.goto('/elements/input/simple');\n  10 |   });\n  11 |\n    at D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\02-text-input.spec.ts:8:8"
+                        },
+                        {
+                          "location": {
+                            "file": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\02-text-input.spec.ts",
+                            "column": 16,
+                            "line": 9
+                          },
+                          "message": "Error: page.goto: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://www.qa-practice.com/elements/input/simple\", waiting until \"load\"\u001b[22m\n\n\n   7 | test.describe('Text Input Element', () => {\n   8 |   test.beforeEach(async ({ page }) => {\n>  9 |     await page.goto('/elements/input/simple');\n     |                ^\n  10 |   });\n  11 |\n  12 |   test('TC-004: Text input page loads correctly', async ({ page }) => {\n    at D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\02-text-input.spec.ts:9:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 1,
+                      "startTime": "2026-09-09T10:18:10.896Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\test-results\\02-text-input-Text-Input-E-d3abe-ers-result-after-text-entry-chromium-retry1\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\test-results\\02-text-input-Text-Input-E-d3abe-ers-result-after-text-entry-chromium-retry1\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\02-text-input.spec.ts",
+                        "column": 8,
+                        "line": 8
+                      }
                     }
                   ],
-                  "status": "expected"
+                  "status": "unexpected"
                 }
               ],
               "id": "2992bf18bcc43814a8e2-413406716f4817e3187c",
@@ -320,27 +410,84 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 2,
                       "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 1423,
-                      "errors": [],
+                      "status": "timedOut",
+                      "duration": 40155,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n    at D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\02-text-input.spec.ts:8:8",
+                        "location": {
+                          "file": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\02-text-input.spec.ts",
+                          "column": 8,
+                          "line": 8
+                        },
+                        "snippet": "\u001b[0m \u001b[90m  6 |\u001b[39m \u001b[90m */\u001b[39m\n \u001b[90m  7 |\u001b[39m test\u001b[33m.\u001b[39mdescribe(\u001b[32m'Text Input Element'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  8 |\u001b[39m   test\u001b[33m.\u001b[39mbeforeEach(\u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n \u001b[90m    |\u001b[39m        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m  9 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'/elements/input/simple'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 10 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 11 |\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\02-text-input.spec.ts",
+                            "column": 8,
+                            "line": 8
+                          },
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n   6 |  */\n   7 | test.describe('Text Input Element', () => {\n>  8 |   test.beforeEach(async ({ page }) => {\n     |        ^\n   9 |     await page.goto('/elements/input/simple');\n  10 |   });\n  11 |\n    at D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\02-text-input.spec.ts:8:8"
+                        },
+                        {
+                          "location": {
+                            "file": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\02-text-input.spec.ts",
+                            "column": 16,
+                            "line": 9
+                          },
+                          "message": "Error: page.goto: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://www.qa-practice.com/elements/input/simple\", waiting until \"load\"\u001b[22m\n\n\n   7 | test.describe('Text Input Element', () => {\n   8 |   test.beforeEach(async ({ page }) => {\n>  9 |     await page.goto('/elements/input/simple');\n     |                ^\n  10 |   });\n  11 |\n  12 |   test('TC-004: Text input page loads correctly', async ({ page }) => {\n    at D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\02-text-input.spec.ts:9:16"
+                        }
+                      ],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:50:58.510Z",
+                      "startTime": "2026-09-09T10:18:58.802Z",
                       "annotations": [],
-                      "attachments": []
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\test-results\\02-text-input-Text-Input-E-3c2e1-nput-field-clears-correctly-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\02-text-input.spec.ts",
+                        "column": 8,
+                        "line": 8
+                      }
+                    },
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 13072,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 1,
+                      "startTime": "2026-09-09T10:19:46.295Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\test-results\\02-text-input-Text-Input-E-3c2e1-nput-field-clears-correctly-chromium-retry1\\trace.zip"
+                        }
+                      ]
                     }
                   ],
-                  "status": "expected"
+                  "status": "flaky"
                 }
               ],
               "id": "2992bf18bcc43814a8e2-04e68ab3816171a3a759",
@@ -354,27 +501,84 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 3,
                       "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 1333,
-                      "errors": [],
+                      "status": "timedOut",
+                      "duration": 40099,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n    at D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\02-text-input.spec.ts:8:8",
+                        "location": {
+                          "file": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\02-text-input.spec.ts",
+                          "column": 8,
+                          "line": 8
+                        },
+                        "snippet": "\u001b[0m \u001b[90m  6 |\u001b[39m \u001b[90m */\u001b[39m\n \u001b[90m  7 |\u001b[39m test\u001b[33m.\u001b[39mdescribe(\u001b[32m'Text Input Element'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  8 |\u001b[39m   test\u001b[33m.\u001b[39mbeforeEach(\u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n \u001b[90m    |\u001b[39m        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m  9 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'/elements/input/simple'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 10 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 11 |\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\02-text-input.spec.ts",
+                            "column": 8,
+                            "line": 8
+                          },
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n   6 |  */\n   7 | test.describe('Text Input Element', () => {\n>  8 |   test.beforeEach(async ({ page }) => {\n     |        ^\n   9 |     await page.goto('/elements/input/simple');\n  10 |   });\n  11 |\n    at D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\02-text-input.spec.ts:8:8"
+                        },
+                        {
+                          "location": {
+                            "file": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\02-text-input.spec.ts",
+                            "column": 16,
+                            "line": 9
+                          },
+                          "message": "Error: page.goto: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://www.qa-practice.com/elements/input/simple\", waiting until \"load\"\u001b[22m\n\n\n   7 | test.describe('Text Input Element', () => {\n   8 |   test.beforeEach(async ({ page }) => {\n>  9 |     await page.goto('/elements/input/simple');\n     |                ^\n  10 |   });\n  11 |\n  12 |   test('TC-004: Text input page loads correctly', async ({ page }) => {\n    at D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\02-text-input.spec.ts:9:16"
+                        }
+                      ],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:50:59.960Z",
+                      "startTime": "2026-09-09T10:20:04.868Z",
                       "annotations": [],
-                      "attachments": []
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\test-results\\02-text-input-Text-Input-E-9774d--accepts-special-characters-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\02-text-input.spec.ts",
+                        "column": 8,
+                        "line": 8
+                      }
+                    },
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 22939,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 1,
+                      "startTime": "2026-09-09T10:20:47.037Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\test-results\\02-text-input-Text-Input-E-9774d--accepts-special-characters-chromium-retry1\\trace.zip"
+                        }
+                      ]
                     }
                   ],
-                  "status": "expected"
+                  "status": "flaky"
                 }
               ],
               "id": "2992bf18bcc43814a8e2-782f4f8a227aeaed8348",
@@ -405,22 +609,22 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 4,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 6013,
+                      "duration": 20628,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:51:01.322Z",
+                      "startTime": "2026-09-09T10:21:15.500Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -439,22 +643,22 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 4,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 3752,
+                      "duration": 15619,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:51:07.355Z",
+                      "startTime": "2026-09-09T10:21:36.186Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -473,27 +677,84 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 4,
                       "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 8106,
-                      "errors": [],
+                      "status": "timedOut",
+                      "duration": 40060,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n    at D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\03-buttons.spec.ts:8:8",
+                        "location": {
+                          "file": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\03-buttons.spec.ts",
+                          "column": 8,
+                          "line": 8
+                        },
+                        "snippet": "\u001b[0m \u001b[90m  6 |\u001b[39m \u001b[90m */\u001b[39m\n \u001b[90m  7 |\u001b[39m test\u001b[33m.\u001b[39mdescribe(\u001b[32m'Button Elements'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  8 |\u001b[39m   test\u001b[33m.\u001b[39mbeforeEach(\u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n \u001b[90m    |\u001b[39m        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m  9 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'/elements/button/simple'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 10 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 11 |\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\03-buttons.spec.ts",
+                            "column": 8,
+                            "line": 8
+                          },
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n   6 |  */\n   7 | test.describe('Button Elements', () => {\n>  8 |   test.beforeEach(async ({ page }) => {\n     |        ^\n   9 |     await page.goto('/elements/button/simple');\n  10 |   });\n  11 |\n    at D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\03-buttons.spec.ts:8:8"
+                        },
+                        {
+                          "location": {
+                            "file": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\03-buttons.spec.ts",
+                            "column": 16,
+                            "line": 9
+                          },
+                          "message": "Error: page.goto: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://www.qa-practice.com/elements/button/simple\", waiting until \"load\"\u001b[22m\n\n\n   7 | test.describe('Button Elements', () => {\n   8 |   test.beforeEach(async ({ page }) => {\n>  9 |     await page.goto('/elements/button/simple');\n     |                ^\n  10 |   });\n  11 |\n  12 |   test('TC-009: Button page loads and button is visible', async ({ page }) => {\n    at D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\03-buttons.spec.ts:9:16"
+                        }
+                      ],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:51:11.128Z",
+                      "startTime": "2026-09-09T10:21:51.867Z",
                       "annotations": [],
-                      "attachments": []
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\test-results\\03-buttons-Button-Elements-7543f-utton-is-enabled-by-default-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\03-buttons.spec.ts",
+                        "column": 8,
+                        "line": 8
+                      }
+                    },
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 11766,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 1,
+                      "startTime": "2026-09-09T10:22:34.358Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\test-results\\03-buttons-Button-Elements-7543f-utton-is-enabled-by-default-chromium-retry1\\trace.zip"
+                        }
+                      ]
                     }
                   ],
-                  "status": "expected"
+                  "status": "flaky"
                 }
               ],
               "id": "bdd24d678f156f03461e-86c5e6d32b5374249f03",
@@ -507,22 +768,22 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 5,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1735,
+                      "duration": 4443,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:51:19.250Z",
+                      "startTime": "2026-09-09T10:22:51.553Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -558,22 +819,22 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 5,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 5727,
+                      "duration": 14648,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:51:21.013Z",
+                      "startTime": "2026-09-09T10:22:56.063Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -588,31 +849,117 @@
             },
             {
               "title": "TC-014: Checkbox is unchecked by default",
-              "ok": true,
+              "ok": false,
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 5,
                       "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 1928,
-                      "errors": [],
+                      "status": "timedOut",
+                      "duration": 40068,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n    at D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\04-checkbox.spec.ts:8:8",
+                        "location": {
+                          "file": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\04-checkbox.spec.ts",
+                          "column": 8,
+                          "line": 8
+                        },
+                        "snippet": "\u001b[0m \u001b[90m  6 |\u001b[39m \u001b[90m */\u001b[39m\n \u001b[90m  7 |\u001b[39m test\u001b[33m.\u001b[39mdescribe(\u001b[32m'Checkbox Elements'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  8 |\u001b[39m   test\u001b[33m.\u001b[39mbeforeEach(\u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n \u001b[90m    |\u001b[39m        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m  9 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'/elements/checkbox/single_checkbox'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 10 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 11 |\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\04-checkbox.spec.ts",
+                            "column": 8,
+                            "line": 8
+                          },
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n   6 |  */\n   7 | test.describe('Checkbox Elements', () => {\n>  8 |   test.beforeEach(async ({ page }) => {\n     |        ^\n   9 |     await page.goto('/elements/checkbox/single_checkbox');\n  10 |   });\n  11 |\n    at D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\04-checkbox.spec.ts:8:8"
+                        },
+                        {
+                          "location": {
+                            "file": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\04-checkbox.spec.ts",
+                            "column": 16,
+                            "line": 9
+                          },
+                          "message": "Error: page.goto: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://www.qa-practice.com/elements/checkbox/single_checkbox\", waiting until \"load\"\u001b[22m\n\n\n   7 | test.describe('Checkbox Elements', () => {\n   8 |   test.beforeEach(async ({ page }) => {\n>  9 |     await page.goto('/elements/checkbox/single_checkbox');\n     |                ^\n  10 |   });\n  11 |\n  12 |   test('TC-013: Checkbox page loads correctly', async ({ page }) => {\n    at D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\04-checkbox.spec.ts:9:16"
+                        }
+                      ],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:51:26.759Z",
+                      "startTime": "2026-09-09T10:23:10.766Z",
                       "annotations": [],
-                      "attachments": []
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\test-results\\04-checkbox-Checkbox-Eleme-d23dd-box-is-unchecked-by-default-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\04-checkbox.spec.ts",
+                        "column": 8,
+                        "line": 8
+                      }
+                    },
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 36362,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n    at D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\04-checkbox.spec.ts:8:8",
+                        "location": {
+                          "file": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\04-checkbox.spec.ts",
+                          "column": 8,
+                          "line": 8
+                        },
+                        "snippet": "\u001b[0m \u001b[90m  6 |\u001b[39m \u001b[90m */\u001b[39m\n \u001b[90m  7 |\u001b[39m test\u001b[33m.\u001b[39mdescribe(\u001b[32m'Checkbox Elements'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  8 |\u001b[39m   test\u001b[33m.\u001b[39mbeforeEach(\u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n \u001b[90m    |\u001b[39m        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m  9 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'/elements/checkbox/single_checkbox'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 10 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 11 |\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\04-checkbox.spec.ts",
+                            "column": 8,
+                            "line": 8
+                          },
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n   6 |  */\n   7 | test.describe('Checkbox Elements', () => {\n>  8 |   test.beforeEach(async ({ page }) => {\n     |        ^\n   9 |     await page.goto('/elements/checkbox/single_checkbox');\n  10 |   });\n  11 |\n    at D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\04-checkbox.spec.ts:8:8"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 1,
+                      "startTime": "2026-09-09T10:23:52.903Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\test-results\\04-checkbox-Checkbox-Eleme-d23dd-box-is-unchecked-by-default-chromium-retry1\\error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\test-results\\04-checkbox-Checkbox-Eleme-d23dd-box-is-unchecked-by-default-chromium-retry1\\trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\04-checkbox.spec.ts",
+                        "column": 8,
+                        "line": 8
+                      }
                     }
                   ],
-                  "status": "expected"
+                  "status": "unexpected"
                 }
               ],
               "id": "ca401dcf0b44ef376bba-893337ea9b4b05da2586",
@@ -626,22 +973,22 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 7,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 13941,
+                      "duration": 10183,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:51:28.706Z",
+                      "startTime": "2026-09-09T10:24:36.616Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -660,22 +1007,22 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 7,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 5513,
+                      "duration": 15017,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:51:42.664Z",
+                      "startTime": "2026-09-09T10:24:52.066Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -694,27 +1041,84 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 7,
                       "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 1733,
-                      "errors": [],
+                      "status": "timedOut",
+                      "duration": 35159,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n    at D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\04-checkbox.spec.ts:8:8",
+                        "location": {
+                          "file": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\04-checkbox.spec.ts",
+                          "column": 8,
+                          "line": 8
+                        },
+                        "snippet": "\u001b[0m \u001b[90m  6 |\u001b[39m \u001b[90m */\u001b[39m\n \u001b[90m  7 |\u001b[39m test\u001b[33m.\u001b[39mdescribe(\u001b[32m'Checkbox Elements'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  8 |\u001b[39m   test\u001b[33m.\u001b[39mbeforeEach(\u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n \u001b[90m    |\u001b[39m        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m  9 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(\u001b[32m'/elements/checkbox/single_checkbox'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 10 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 11 |\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\04-checkbox.spec.ts",
+                            "column": 8,
+                            "line": 8
+                          },
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n\n   6 |  */\n   7 | test.describe('Checkbox Elements', () => {\n>  8 |   test.beforeEach(async ({ page }) => {\n     |        ^\n   9 |     await page.goto('/elements/checkbox/single_checkbox');\n  10 |   });\n  11 |\n    at D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\04-checkbox.spec.ts:8:8"
+                        },
+                        {
+                          "location": {
+                            "file": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\04-checkbox.spec.ts",
+                            "column": 16,
+                            "line": 9
+                          },
+                          "message": "Error: page.goto: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://www.qa-practice.com/elements/checkbox/single_checkbox\", waiting until \"load\"\u001b[22m\n\n\n   7 | test.describe('Checkbox Elements', () => {\n   8 |   test.beforeEach(async ({ page }) => {\n>  9 |     await page.goto('/elements/checkbox/single_checkbox');\n     |                ^\n  10 |   });\n  11 |\n  12 |   test('TC-013: Checkbox page loads correctly', async ({ page }) => {\n    at D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\04-checkbox.spec.ts:9:16"
+                        }
+                      ],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:51:48.193Z",
+                      "startTime": "2026-09-09T10:25:07.138Z",
                       "annotations": [],
-                      "attachments": []
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\test-results\\04-checkbox-Checkbox-Eleme-7b1e6-n-be-toggled-multiple-times-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\04-checkbox.spec.ts",
+                        "column": 8,
+                        "line": 8
+                      }
+                    },
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7854,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 1,
+                      "startTime": "2026-09-09T10:25:44.045Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\test-results\\04-checkbox-Checkbox-Eleme-7b1e6-n-be-toggled-multiple-times-chromium-retry1\\trace.zip"
+                        }
+                      ]
                     }
                   ],
-                  "status": "expected"
+                  "status": "flaky"
                 }
               ],
               "id": "ca401dcf0b44ef376bba-5d33e031ac9b3a1c15b9",
@@ -745,22 +1149,22 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 8,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 7577,
+                      "duration": 3949,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:51:49.990Z",
+                      "startTime": "2026-09-09T10:25:57.361Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -779,22 +1183,22 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 8,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 4432,
+                      "duration": 3606,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:51:57.586Z",
+                      "startTime": "2026-09-09T10:26:01.357Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -813,22 +1217,22 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 8,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 6137,
+                      "duration": 13322,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:52:02.044Z",
+                      "startTime": "2026-09-09T10:26:05.010Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -847,22 +1251,22 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 8,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1381,
+                      "duration": 13198,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:52:08.200Z",
+                      "startTime": "2026-09-09T10:26:18.391Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -881,22 +1285,22 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 8,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1417,
+                      "duration": 12343,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:52:09.601Z",
+                      "startTime": "2026-09-09T10:26:31.643Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -923,22 +1327,22 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 8,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 5915,
+                      "duration": 11450,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:52:11.037Z",
+                      "startTime": "2026-09-09T10:26:44.032Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -957,22 +1361,22 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 8,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1759,
+                      "duration": 2698,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:52:16.973Z",
+                      "startTime": "2026-09-09T10:26:55.530Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -991,22 +1395,22 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 8,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1424,
+                      "duration": 7224,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:52:18.753Z",
+                      "startTime": "2026-09-09T10:26:58.264Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1025,22 +1429,22 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 8,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 2768,
+                      "duration": 3646,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:52:20.196Z",
+                      "startTime": "2026-09-09T10:27:05.532Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1076,22 +1480,22 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 8,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 5886,
+                      "duration": 9060,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:52:22.999Z",
+                      "startTime": "2026-09-09T10:27:09.245Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1110,22 +1514,22 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 8,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1564,
+                      "duration": 14630,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:52:28.915Z",
+                      "startTime": "2026-09-09T10:27:18.357Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1144,22 +1548,22 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 8,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1643,
+                      "duration": 2898,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:52:30.502Z",
+                      "startTime": "2026-09-09T10:27:33.042Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1186,22 +1590,22 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 8,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 5661,
+                      "duration": 2917,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:52:32.165Z",
+                      "startTime": "2026-09-09T10:27:35.986Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1220,22 +1624,22 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 8,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 2527,
+                      "duration": 12537,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:52:37.845Z",
+                      "startTime": "2026-09-09T10:27:38.959Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1254,22 +1658,22 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 8,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 6479,
+                      "duration": 8406,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:52:40.391Z",
+                      "startTime": "2026-09-09T10:27:51.533Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1288,22 +1692,22 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 8,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1873,
+                      "duration": 3861,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:52:46.886Z",
+                      "startTime": "2026-09-09T10:27:59.981Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1339,22 +1743,22 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 8,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 2524,
+                      "duration": 3044,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:52:48.786Z",
+                      "startTime": "2026-09-09T10:28:03.907Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1373,22 +1777,22 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 8,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 6643,
+                      "duration": 25594,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:52:51.323Z",
+                      "startTime": "2026-09-09T10:28:06.993Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1407,22 +1811,22 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 8,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1800,
+                      "duration": 15852,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:52:57.983Z",
+                      "startTime": "2026-09-09T10:28:32.628Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1441,27 +1845,73 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 8,
                       "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 6222,
-                      "errors": [],
+                      "status": "timedOut",
+                      "duration": 32475,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\07-navigation-layout.spec.ts",
+                            "column": 16,
+                            "line": 25
+                          },
+                          "message": "Error: page.goto: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://www.qa-practice.com/elements/select\", waiting until \"load\"\u001b[22m\n\n\n  23 |\n  24 |   test('TC-037: Select nav link is accessible', async ({ page }) => {\n> 25 |     await page.goto('/elements/select');\n     |                ^\n  26 |     await expect(page).toHaveURL(/\\/elements\\/select/);\n  27 |   });\n  28 |\n    at D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\07-navigation-layout.spec.ts:25:16"
+                        }
+                      ],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:52:59.798Z",
+                      "startTime": "2026-09-09T10:28:48.518Z",
                       "annotations": [],
-                      "attachments": []
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\test-results\\07-navigation-layout-Navig-110bc-lect-nav-link-is-accessible-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\test-results\\07-navigation-layout-Navig-110bc-lect-nav-link-is-accessible-chromium\\error-context.md"
+                        }
+                      ]
+                    },
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 16711,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 1,
+                      "startTime": "2026-09-09T10:29:23.409Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\test-results\\07-navigation-layout-Navig-110bc-lect-nav-link-is-accessible-chromium-retry1\\trace.zip"
+                        }
+                      ]
                     }
                   ],
-                  "status": "expected"
+                  "status": "flaky"
                 }
               ],
               "id": "fead2740de985cf8db8a-3714fad5ca901dbe0779",
@@ -1475,22 +1925,22 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 9,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1970,
+                      "duration": 16143,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:53:06.036Z",
+                      "startTime": "2026-09-09T10:29:45.528Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1509,22 +1959,22 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 9,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1711,
+                      "duration": 4352,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:53:08.020Z",
+                      "startTime": "2026-09-09T10:30:01.721Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1543,22 +1993,22 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 9,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 4917,
+                      "duration": 18341,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:53:09.747Z",
+                      "startTime": "2026-09-09T10:30:06.116Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1585,22 +2035,22 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 9,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1443,
+                      "duration": 2182,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:53:14.675Z",
+                      "startTime": "2026-09-09T10:30:24.500Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1619,22 +2069,22 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 9,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 2560,
+                      "duration": 25853,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:53:16.132Z",
+                      "startTime": "2026-09-09T10:30:26.727Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1653,22 +2103,22 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 9,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 5292,
+                      "duration": 20078,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:53:18.708Z",
+                      "startTime": "2026-09-09T10:30:52.626Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1687,22 +2137,22 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 9,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 6184,
+                      "duration": 25781,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:53:24.014Z",
+                      "startTime": "2026-09-09T10:31:12.755Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1721,22 +2171,22 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 60000,
+                  "timeout": 30000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 9,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 25696,
+                      "duration": 25040,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-08T10:53:30.214Z",
+                      "startTime": "2026-09-09T10:31:38.584Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1752,15 +2202,613 @@
           ]
         }
       ]
+    },
+    {
+      "title": "08-api-reqbin.spec.ts",
+      "file": "08-api-reqbin.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "ReqBin API — POST /echo/post/json",
+          "file": "08-api-reqbin.spec.ts",
+          "line": 64,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC-API-001: POST dengan payload valid mengembalikan status 200",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5289,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-09T10:32:03.736Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a8dedae68f5442f01c41-eb498e2d84fc9f3eb4c5",
+              "file": "08-api-reqbin.spec.ts",
+              "line": 75,
+              "column": 7
+            },
+            {
+              "title": "TC-API-002: Response Content-Type mengandung application/json",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5229,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-09T10:32:09.074Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a8dedae68f5442f01c41-c0a04eedc34379dfd545",
+              "file": "08-api-reqbin.spec.ts",
+              "line": 80,
+              "column": 7
+            },
+            {
+              "title": "TC-API-003: Response body adalah JSON yang valid (parseable)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 243,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-09T10:32:14.341Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a8dedae68f5442f01c41-39a0e6f2bebf8c128334",
+              "file": "08-api-reqbin.spec.ts",
+              "line": 86,
+              "column": 7
+            },
+            {
+              "title": "TC-API-004: Response body mengandung field \"success\"",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 234,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-09T10:32:14.622Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a8dedae68f5442f01c41-c6cc24d8373a99344ef9",
+              "file": "08-api-reqbin.spec.ts",
+              "line": 93,
+              "column": 7
+            },
+            {
+              "title": "TC-API-005: Field \"success\" bernilai \"true\"",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 265,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-09T10:32:14.894Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a8dedae68f5442f01c41-3df5eb9f50c352a98762",
+              "file": "08-api-reqbin.spec.ts",
+              "line": 99,
+              "column": 7
+            },
+            {
+              "title": "TC-API-006: Request body mengandung semua field wajib (Id, Customer, Quantity, Price)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 260,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-09T10:32:15.196Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a8dedae68f5442f01c41-080d43c79a31ee0aecc4",
+              "file": "08-api-reqbin.spec.ts",
+              "line": 105,
+              "column": 7
+            },
+            {
+              "title": "TC-API-007: Method yang digunakan adalah POST",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 364,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-09T10:32:15.495Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a8dedae68f5442f01c41-76c9bfc2d49177fe5954",
+              "file": "08-api-reqbin.spec.ts",
+              "line": 113,
+              "column": 7
+            },
+            {
+              "title": "TC-API-008: POST dengan Quantity lebih besar tetap mengembalikan 200",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 354,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-09T10:32:15.899Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a8dedae68f5442f01c41-71752f95966be62de2ff",
+              "file": "08-api-reqbin.spec.ts",
+              "line": 118,
+              "column": 7
+            },
+            {
+              "title": "TC-API-009: POST dengan Price desimal dikirim dengan benar",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 298,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-09T10:32:16.363Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a8dedae68f5442f01c41-3b650e407d822326d2f1",
+              "file": "08-api-reqbin.spec.ts",
+              "line": 124,
+              "column": 7
+            },
+            {
+              "title": "TC-API-010: Response time tidak lebih dari 2 detik",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 270,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-09T10:32:16.739Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a8dedae68f5442f01c41-86eeaca8a17b2f947e2c",
+              "file": "08-api-reqbin.spec.ts",
+              "line": 130,
+              "column": 7
+            },
+            {
+              "title": "TC-API-011: POST dengan extra field tidak menyebabkan error (5xx)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 274,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-09T10:32:17.048Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a8dedae68f5442f01c41-410ff32008b652b40790",
+              "file": "08-api-reqbin.spec.ts",
+              "line": 140,
+              "column": 7
+            },
+            {
+              "title": "TC-API-012: POST dengan payload kosong tidak crash (bukan 5xx)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 263,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-09T10:32:17.362Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a8dedae68f5442f01c41-fd9b7d612da3d5383a26",
+              "file": "08-api-reqbin.spec.ts",
+              "line": 145,
+              "column": 7
+            },
+            {
+              "title": "TC-API-013: POST dengan Price = 0 dikirim dengan benar",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 322,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-09T10:32:17.666Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a8dedae68f5442f01c41-4f983e06ff4552b69bcd",
+              "file": "08-api-reqbin.spec.ts",
+              "line": 151,
+              "column": 7
+            },
+            {
+              "title": "TC-API-014: POST dengan Quantity = 0 dikirim dengan benar",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 240,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-09T10:32:18.028Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a8dedae68f5442f01c41-60c688c20d4e5b925c64",
+              "file": "08-api-reqbin.spec.ts",
+              "line": 157,
+              "column": 7
+            },
+            {
+              "title": "TC-API-015: POST dengan Customer string panjang dikirim dengan benar",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 235,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-09T10:32:18.301Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a8dedae68f5442f01c41-e89e4e9e183d705cb573",
+              "file": "08-api-reqbin.spec.ts",
+              "line": 163,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "generic-api.spec.ts",
+      "file": "generic-api.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Generic Data-Driven API Test",
+          "file": "generic-api.spec.ts",
+          "line": 9,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Execute dynamic API request based on UI configuration",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "No valid URL or Method provided in the configuration",
+                      "location": {
+                        "file": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\generic-api.spec.ts",
+                        "line": 25,
+                        "column": 12
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 3,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-09T10:32:18.587Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "No valid URL or Method provided in the configuration",
+                          "location": {
+                            "file": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\tests\\generic-api.spec.ts",
+                            "line": 25,
+                            "column": 12
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "52f023616e3e25095cfd-d7f458ee44abfb3d71d2",
+              "file": "generic-api.spec.ts",
+              "line": 23,
+              "column": 7
+            }
+          ]
+        }
+      ]
     }
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-09-08T10:50:15.033Z",
-    "duration": 221732.748,
-    "expected": 45,
-    "skipped": 0,
-    "unexpected": 0,
-    "flaky": 0
+    "startTime": "2026-09-09T10:16:15.782Z",
+    "duration": 963775.531,
+    "expected": 53,
+    "skipped": 1,
+    "unexpected": 2,
+    "flaky": 5
   }
 }

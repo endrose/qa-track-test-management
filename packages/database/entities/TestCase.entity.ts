@@ -21,6 +21,18 @@ export class TestCase {
   @ManyToOne(() => Project, { nullable: true })
   project: Project;
 
+  @Column({ default: 'none' })
+  automationType: string; // 'none' | 'script' | 'data-driven'
+
+  @Column({ nullable: true })
+  automationTool: string; // 'playwright' | 'cypress'
+
+  @Column({ nullable: true })
+  automationScript: string; // e.g., '01-login.spec.ts'
+
+  @Column({ type: 'json', nullable: true })
+  automationConfig: any; // JSON payload for data-driven tests
+
   @CreateDateColumn()
   createdAt: Date;
 

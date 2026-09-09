@@ -8,5 +8,6 @@ import { BugsService } from './bugs.service.js';
   imports: [TypeOrmModule.forFeature([Bug])],
   controllers: [BugsController],
   providers: [BugsService],
+  exports: [BugsService],
 })
 export class BugsModule {}

@@ -2,10 +2,11 @@
 import { ref, onMounted } from 'vue'
 
 const bugs = ref<any[]>([])
+const projects = ref<any[]>([])
 const isModalOpen = ref(false)
 const isEditOpen = ref(false)
 const editBug = ref<any>(null)
-const newBug = ref({ title: '', description: '', severity: 'Major', status: 'Open' })
+const newBug = ref({ title: '', description: '', severity: 'Major', status: 'Open', projectId: '' })
 
 const severityColors: Record<string, string> = {
   'Critical': 'bg-[#ef4444] text-white',
@@ -29,16 +30,28 @@ const fetchBugs = async () => {
   }
 }
 
+const fetchProjects = async () => {
+  try {
+    const res = await fetch('http://localhost:3000/api/projects')
+    if (res.ok) projects.value = await res.json()
+  } catch (err) {
+    console.error('Failed to fetch projects', err)
+  }
+}
+
 const createBug = async () => {
   try {
     const res = await fetch('http://localhost:3000/api/bugs', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newBug.value),
+      body: JSON.stringify({
+        ...newBug.value,
+        project: newBug.value.projectId ? { id: newBug.value.projectId } : null
+      }),
     })
     if (res.ok) {
       isModalOpen.value = false
-      newBug.value = { title: '', description: '', severity: 'Major', status: 'Open' }
+      newBug.value = { title: '', description: '', severity: 'Major', status: 'Open', projectId: '' }
       fetchBugs()
     }
   } catch (err) {
@@ -47,7 +60,7 @@ const createBug = async () => {
 }
 
 const openEdit = (bug: any) => {
-  editBug.value = { ...bug }
+  editBug.value = { ...bug, projectId: bug.project?.id || '' }
   isEditOpen.value = true
 }
 
@@ -61,6 +74,7 @@ const updateBug = async () => {
         description: editBug.value.description,
         severity: editBug.value.severity,
         status: editBug.value.status,
+        project: editBug.value.projectId ? { id: editBug.value.projectId } : null,
       }),
     })
     if (res.ok) {
@@ -79,7 +93,10 @@ const deleteBug = async (id: string) => {
   fetchBugs()
 }
 
-onMounted(fetchBugs)
+onMounted(() => {
+  fetchBugs()
+  fetchProjects()
+})
 </script>
 
 <template>
@@ -170,6 +187,13 @@ onMounted(fetchBugs)
             </select>
           </div>
         </div>
+        <div class="flex flex-col gap-1">
+          <label class="font-label uppercase text-label">Project</label>
+          <select v-model="newBug.projectId" class="w-full px-3 py-2 bg-surface border-[2px] border-outline font-body focus:outline-none shadow-[2px_2px_0px_#000000]">
+            <option value="">— None —</option>
+            <option v-for="p in projects" :key="p.id" :value="p.id">{{ p.name }}</option>
+          </select>
+        </div>
         <div class="flex justify-end gap-3 mt-4">
           <button type="button" @click="isModalOpen = false" class="px-4 py-2 border-[2px] border-outline font-label uppercase hover:bg-surface-dim">Cancel</button>
           <button type="submit" class="px-4 py-2 bg-primary text-on-primary font-label uppercase border-[2px] border-outline shadow-[2px_2px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none">Save</button>
@@ -204,6 +228,13 @@ onMounted(fetchBugs)
               <option>Open</option><option>In Progress</option><option>Resolved</option><option>Closed</option>
             </select>
           </div>
+        </div>
+        <div class="flex flex-col gap-1">
+          <label class="font-label uppercase text-label">Project</label>
+          <select v-model="editBug.projectId" class="w-full px-3 py-2 bg-surface border-[2px] border-outline font-body focus:outline-none shadow-[2px_2px_0px_#000000]">
+            <option value="">— None —</option>
+            <option v-for="p in projects" :key="p.id" :value="p.id">{{ p.name }}</option>
+          </select>
         </div>
         <div class="flex justify-end gap-3 mt-4">
           <button type="button" @click="isEditOpen = false" class="px-4 py-2 border-[2px] border-outline font-label uppercase hover:bg-surface-dim">Cancel</button>
