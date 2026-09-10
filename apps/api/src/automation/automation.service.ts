@@ -140,7 +140,13 @@ export class AutomationService {
     let logOutput = '';
     
     try {
-      const env = { ...process.env, TEST_CASE_CONFIG: JSON.stringify(testCase.automationConfig || {}) };
+      const allureResultsDir = testCase.project?.id ? `./allure-results/${testCase.project.id}` : './allure-results';
+      const env = { 
+        ...process.env, 
+        TEST_CASE_CONFIG: JSON.stringify(testCase.automationConfig || {}),
+        ALLURE_RESULTS_DIR: allureResultsDir
+      };
+      
       const { stdout, stderr } = await execAsync(command, { cwd, env });
       logOutput = stdout + '\n' + stderr;
       status = 'Passed';
@@ -165,7 +171,29 @@ export class AutomationService {
     
     // Update status manual test case
     await this.testCasesService.update(testCaseId, { status });
+
+    // Generate Allure Report and clean up project dir
+    if (framework === 'playwright') {
+      try {
+        const allureResultsDir = testCase.project?.id ? `./allure-results/${testCase.project.id}` : './allure-results';
+        const allureReportDir = testCase.project?.id ? `./allure-report/${testCase.project.id}` : './allure-report';
+        await execAsync(`npx allure generate ${allureResultsDir} -o ${allureReportDir} --clean`, { cwd });
+      } catch (err) {
+        console.error('Failed to generate allure report', err);
+      }
+    }
     
+    // Save the run logic (to be used by reports later)
+    await this.create({
+      suiteName: testCase.title,
+      status,
+      passed: status === 'Passed' ? 1 : 0,
+      failed: status === 'Failed' ? 1 : 0,
+      framework,
+      log: logOutput,
+      project: testCase.project,
+    });
+
     return { status, log: logOutput };
   }
 }

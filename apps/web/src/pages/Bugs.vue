@@ -131,6 +131,7 @@ onMounted(() => {
         <thead>
           <tr class="bg-primary text-on-primary font-label uppercase text-label">
             <th class="p-3 border-r-[2px] border-outline">Title</th>
+            <th class="p-3 border-r-[2px] border-outline">Project</th>
             <th class="p-3 border-r-[2px] border-outline">Severity</th>
             <th class="p-3 border-r-[2px] border-outline">Status</th>
             <th class="p-3 border-r-[2px] border-outline">Created</th>
@@ -143,6 +144,10 @@ onMounted(() => {
           </tr>
           <tr v-for="bug in bugs" :key="bug.id" class="hover:bg-surface-container transition-colors">
             <td class="p-3 border-r-[2px] border-outline font-bold">{{ bug.title }}</td>
+            <td class="p-3 border-r-[2px] border-outline">
+              <span v-if="bug.project" class="px-2 py-0.5 bg-[#93c5fd] border-[2px] border-outline font-label uppercase text-[10px]">{{ bug.project.name }}</span>
+              <span v-else class="text-on-surface-variant text-[10px]">—</span>
+            </td>
             <td class="p-3 border-r-[2px] border-outline">
               <span :class="severityColors[bug.severity] || 'bg-surface-dim'" class="px-2 py-0.5 border-[2px] border-outline font-label uppercase text-[10px]">{{ bug.severity }}</span>
             </td>

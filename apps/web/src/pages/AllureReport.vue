@@ -1,10 +1,36 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 
 const isLoading = ref(true)
 const hasError = ref(false)
-const allureUrl = 'http://localhost:3000/allure/index.html'
+const projects = ref<any[]>([])
+const selectedProjectId = ref('')
+
+const allureUrl = computed(() => {
+  if (selectedProjectId.value) {
+    return `http://localhost:3000/allure/${selectedProjectId.value}/index.html`
+  }
+  return 'http://localhost:3000/allure/index.html'
+})
+
 const iframeRef = ref<HTMLIFrameElement | null>(null)
+
+const fetchProjects = async () => {
+  try {
+    const res = await fetch('http://localhost:3000/api/projects')
+    if (res.ok) projects.value = await res.json()
+  } catch (err) {
+    console.error('Failed to fetch projects', err)
+  }
+}
+
+watch(selectedProjectId, () => {
+  refresh()
+})
+
+onMounted(() => {
+  fetchProjects()
+})
 
 const handleLoad = () => {
   isLoading.value = false
@@ -19,12 +45,12 @@ const refresh = () => {
   isLoading.value = true
   hasError.value = false
   if (iframeRef.value) {
-    iframeRef.value.src = allureUrl + '?t=' + Date.now()
+    iframeRef.value.src = allureUrl.value + '?t=' + Date.now()
   }
 }
 
 const openExternal = () => {
-  window.open(allureUrl, '_blank')
+  window.open(allureUrl.value, '_blank')
 }
 </script>
 
@@ -36,6 +62,10 @@ const openExternal = () => {
       <h1 class="font-display text-display text-on-surface tracking-tight uppercase">Allure Report</h1>
     </div>
     <div class="flex items-center gap-3">
+      <select v-model="selectedProjectId" class="px-3 py-2 bg-surface border-[2px] border-outline font-body focus:outline-none shadow-[2px_2px_0px_#000000] text-sm max-w-[200px]">
+        <option value="">Default (Global)</option>
+        <option v-for="p in projects" :key="p.id" :value="p.id">{{ p.name }}</option>
+      </select>
       <button
         @click="refresh"
         class="px-4 py-2 bg-surface-container text-on-surface font-label uppercase border-[2px] border-outline shadow-[3px_3px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all flex items-center gap-2"

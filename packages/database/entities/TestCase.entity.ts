@@ -21,6 +21,9 @@ export class TestCase {
   @ManyToOne(() => Project, { nullable: true })
   project: Project;
 
+  @Column({ default: 'Functional' })
+  testType: string; // 'Functional', 'Smoke Test', 'Regression Test'
+
   @Column({ default: 'none' })
   automationType: string; // 'none' | 'script' | 'data-driven'
 

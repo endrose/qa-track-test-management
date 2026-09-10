@@ -11,11 +11,11 @@ export class BugsService {
   ) {}
 
   findAll() {
-    return this.bugsRepository.find();
+    return this.bugsRepository.find({ relations: ['project', 'testCase'], order: { createdAt: 'DESC' } });
   }
 
   async findOne(id: string) {
-    const bug = await this.bugsRepository.findOne({ where: { id } });
+    const bug = await this.bugsRepository.findOne({ where: { id }, relations: ['project', 'testCase'] });
     if (!bug) throw new NotFoundException('Bug not found');
     return bug;
   }

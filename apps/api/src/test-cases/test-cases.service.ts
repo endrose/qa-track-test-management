@@ -11,7 +11,7 @@ export class TestCasesService {
   ) {}
 
   findAll() {
-    return this.testCasesRepository.find();
+    return this.testCasesRepository.find({ relations: ['project'], order: { createdAt: 'DESC' } });
   }
 
   async findOne(id: string) {

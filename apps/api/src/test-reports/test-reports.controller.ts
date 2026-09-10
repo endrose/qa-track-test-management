@@ -11,8 +11,8 @@ export class TestReportsController {
   }
 
   @Post('generate')
-  generate(@Body() body: { name: string }) {
-    return this.testReportsService.generateReport(body.name);
+  generate(@Body() body: { name: string; project?: { id: string } }) {
+    return this.testReportsService.generateReport(body.name, body.project?.id);
   }
 
   @Get(':id')

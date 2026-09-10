@@ -7,7 +7,7 @@ const isModalOpen = ref(false)
 const isEditOpen = ref(false)
 const editTc = ref<any>(null)
 const newTc = ref({ 
-  title: '', description: '', priority: 'Medium', status: 'Draft', projectId: '',
+  title: '', description: '', priority: 'Medium', status: 'Draft', projectId: '', testType: 'Functional',
   automationType: 'none', automationTool: 'playwright', automationScript: '', automationConfig: ''
 })
 
@@ -54,7 +54,7 @@ const createTestCase = async () => {
     })
     if (res.ok) {
       isModalOpen.value = false
-      newTc.value = { title: '', description: '', priority: 'Medium', status: 'Draft', projectId: '', automationType: 'none', automationTool: 'playwright', automationScript: '', automationConfig: '' }
+      newTc.value = { title: '', description: '', priority: 'Medium', status: 'Draft', projectId: '', testType: 'Functional', automationType: 'none', automationTool: 'playwright', automationScript: '', automationConfig: '' }
       fetchTestCases()
     }
   } catch (err) {
@@ -81,6 +81,7 @@ const updateTestCase = async () => {
         description: editTc.value.description,
         priority: editTc.value.priority,
         status: editTc.value.status,
+        testType: editTc.value.testType,
         project: editTc.value.projectId ? { id: editTc.value.projectId } : null,
         automationType: editTc.value.automationType,
         automationTool: editTc.value.automationTool,
@@ -158,6 +159,7 @@ onMounted(() => {
         <thead>
           <tr class="bg-primary text-on-primary font-label uppercase text-label">
             <th class="p-3 border-r-[2px] border-outline">Title</th>
+            <th class="p-3 border-r-[2px] border-outline">Test Type</th>
             <th class="p-3 border-r-[2px] border-outline">Priority</th>
             <th class="p-3 border-r-[2px] border-outline">Status</th>
             <th class="p-3 border-r-[2px] border-outline">Created</th>
@@ -170,6 +172,7 @@ onMounted(() => {
           </tr>
           <tr v-for="tc in testCases" :key="tc.id" class="hover:bg-surface-container transition-colors">
             <td class="p-3 border-r-[2px] border-outline font-bold">{{ tc.title }}</td>
+            <td class="p-3 border-r-[2px] border-outline font-label uppercase text-[10px]">{{ tc.testType || 'Functional' }}</td>
             <td class="p-3 border-r-[2px] border-outline">
               <span :class="priorityColors[tc.priority] || 'bg-surface-dim'" class="px-2 py-0.5 border-[2px] border-outline font-label uppercase text-[10px]">{{ tc.priority }}</span>
             </td>
@@ -217,12 +220,20 @@ onMounted(() => {
             </select>
           </div>
         </div>
-        <div class="flex flex-col gap-1">
-          <label class="font-label uppercase text-label">Project</label>
-          <select v-model="newTc.projectId" class="w-full px-3 py-2 bg-surface border-[2px] border-outline font-body focus:outline-none shadow-[2px_2px_0px_#000000]">
-            <option value="">— None —</option>
-            <option v-for="p in projects" :key="p.id" :value="p.id">{{ p.name }}</option>
-          </select>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="flex flex-col gap-1">
+            <label class="font-label uppercase text-label">Project</label>
+            <select v-model="newTc.projectId" class="w-full px-3 py-2 bg-surface border-[2px] border-outline font-body focus:outline-none shadow-[2px_2px_0px_#000000]">
+              <option value="">— None —</option>
+              <option v-for="p in projects" :key="p.id" :value="p.id">{{ p.name }}</option>
+            </select>
+          </div>
+          <div class="flex flex-col gap-1">
+            <label class="font-label uppercase text-label">Test Type</label>
+            <select v-model="newTc.testType" class="w-full px-3 py-2 bg-surface border-[2px] border-outline font-body focus:outline-none shadow-[2px_2px_0px_#000000]">
+              <option>Functional</option><option>Smoke Test</option><option>Regression Test</option>
+            </select>
+          </div>
         </div>
 
         <!-- Automation Fields Section -->
@@ -292,7 +303,21 @@ onMounted(() => {
             </select>
           </div>
         </div>
-
+        <div class="grid grid-cols-2 gap-4">
+          <div class="flex flex-col gap-1">
+            <label class="font-label uppercase text-label">Project</label>
+            <select v-model="editTc.projectId" class="w-full px-3 py-2 bg-surface border-[2px] border-outline font-body focus:outline-none shadow-[2px_2px_0px_#000000]">
+              <option value="">— None —</option>
+              <option v-for="p in projects" :key="p.id" :value="p.id">{{ p.name }}</option>
+            </select>
+          </div>
+          <div class="flex flex-col gap-1">
+            <label class="font-label uppercase text-label">Test Type</label>
+            <select v-model="editTc.testType" class="w-full px-3 py-2 bg-surface border-[2px] border-outline font-body focus:outline-none shadow-[2px_2px_0px_#000000]">
+              <option>Functional</option><option>Smoke Test</option><option>Regression Test</option>
+            </select>
+          </div>
+        </div>
         <!-- Edit Automation Fields Section -->
         <div class="border-t-[2px] border-outline pt-4 mt-4">
           <h3 class="font-label uppercase text-label mb-2">Automation Config</h3>

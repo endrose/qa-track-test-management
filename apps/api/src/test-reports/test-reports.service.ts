@@ -11,11 +11,11 @@ export class TestReportsService {
   ) {}
 
   findAll() {
-    return this.testReportsRepository.find();
+    return this.testReportsRepository.find({ relations: ['project'], order: { createdAt: 'DESC' } });
   }
 
   async findOne(id: string) {
-    const report = await this.testReportsRepository.findOne({ where: { id } });
+    const report = await this.testReportsRepository.findOne({ where: { id }, relations: ['project'] });
     if (!report) throw new NotFoundException('TestReport not found');
     return report;
   }
@@ -25,27 +25,39 @@ export class TestReportsService {
     return this.testReportsRepository.save(report);
   }
 
-  async generateReport(name: string) {
-    // Generate a snapshot report by summing up AutomationRun metrics
-    // In a real scenario, this would aggregate TestExecution and AutomationRun for a specific timeframe/project
-    const runs = await this.testReportsRepository.manager.query(`
+  async generateReport(name: string, projectId?: string) {
+    let query = `
       SELECT 
         SUM(passed) as total_passed, 
         SUM(failed) as total_failed 
       FROM automation_runs
-    `);
+    `;
+    let params: any[] = [];
+
+    if (projectId) {
+      query += ` WHERE "projectId" = $1`;
+      params.push(projectId);
+    }
+
+    const runs = await this.testReportsRepository.manager.query(query, params);
 
     const passed = parseInt(runs[0]?.total_passed || '0', 10);
     const failed = parseInt(runs[0]?.total_failed || '0', 10);
     const summary = `Generated snapshot for ${passed + failed} automation tests.`;
 
-    const report = this.testReportsRepository.create({
+    const reportData: Partial<TestReport> = {
       name,
       summary,
       passed,
       failed,
       skipped: 0
-    });
+    };
+
+    if (projectId) {
+      (reportData as any).project = { id: projectId };
+    }
+
+    const report = this.testReportsRepository.create(reportData);
     return this.testReportsRepository.save(report);
   }
 
