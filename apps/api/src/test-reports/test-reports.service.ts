@@ -11,11 +11,11 @@ export class TestReportsService {
   ) {}
 
   findAll() {
-    return this.testReportsRepository.find({ relations: ['project'], order: { createdAt: 'DESC' } });
+    return this.testReportsRepository.find({ relations: { project: true }, order: { createdAt: 'DESC' } });
   }
 
   async findOne(id: string) {
-    const report = await this.testReportsRepository.findOne({ where: { id }, relations: ['project'] });
+    const report = await this.testReportsRepository.findOne({ where: { id }, relations: { project: true } });
     if (!report) throw new NotFoundException('TestReport not found');
     return report;
   }

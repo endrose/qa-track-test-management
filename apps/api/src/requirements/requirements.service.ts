@@ -11,11 +11,11 @@ export class RequirementsService {
   ) {}
 
   findAll() {
-    return this.requirementsRepository.find();
+    return this.requirementsRepository.find({ relations: { project: true }, order: { createdAt: 'DESC' } });
   }
 
   async findOne(id: string) {
-    const requirement = await this.requirementsRepository.findOne({ where: { id } });
+    const requirement = await this.requirementsRepository.findOne({ where: { id }, relations: { project: true } });
     if (!requirement) throw new NotFoundException('Requirement not found');
     return requirement;
   }

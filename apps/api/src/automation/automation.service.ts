@@ -44,16 +44,39 @@ export class AutomationService {
   }
 
   async executeRun(id: string, framework: string) {
+    const run = await this.automationRepository.findOne({ where: { id }, relations: { project: true } });
+    if (!run) return;
+
     let logOutput = '';
     let passed = 0;
     let failed = 0;
     let status = 'Failed';
+    let command = 'npm run test';
+    const workspacePath = framework === 'Cypress' ? 'cypress' : 'playwright';
+    const cwd = path.resolve(process.cwd(), `../../automation/${workspacePath}`);
+    const allureResultsDir = run.project?.id ? `./allure-results/${run.project.id}` : './allure-results';
 
     try {
-      const workspacePath = framework === 'Cypress' ? 'cypress' : 'playwright';
-      const cwd = path.resolve(process.cwd(), `../../automation/${workspacePath}`);
-      
-      const { stdout, stderr } = await execAsync('npm run test', { cwd });
+      if (run.project) {
+        const testCases = await this.testCasesService.findAll();
+        const projectTestCases = testCases.filter(tc => tc.project?.id === run.project.id && tc.automationType === 'script' && tc.automationScript);
+        
+        if (projectTestCases.length > 0) {
+          const scripts = Array.from(new Set(projectTestCases.map(tc => tc.automationScript)));
+          if (framework === 'Playwright') {
+            command = `npx playwright test ${scripts.join(' ')}`;
+          } else if (framework === 'Cypress') {
+            const specList = scripts.map(s => `cypress/e2e/${s}`).join(',');
+            command = `npx cypress run --spec "${specList}"`;
+          }
+        } else {
+          await this.update(id, { status: 'Failed', log: 'No automated test scripts found for this project.', passed: 0, failed: 0 });
+          return;
+        }
+      }
+
+      const env = { ...process.env, ALLURE_RESULTS_DIR: allureResultsDir };
+      const { stdout, stderr } = await execAsync(command, { cwd, env });
       logOutput = stdout + '\n' + stderr;
       status = 'Passed';
       
@@ -88,7 +111,8 @@ export class AutomationService {
     if (framework === 'Playwright') {
       try {
         const cwd = path.resolve(process.cwd(), '../../automation/playwright');
-        await execAsync('npx allure generate ./allure-results --clean', { cwd });
+        const allureReportDir = run.project?.id ? `./allure-report/${run.project.id}` : './allure-report';
+        await execAsync(`npx allure generate ${allureResultsDir} -o ${allureReportDir} --clean`, { cwd });
       } catch (err) {
         console.error('Failed to generate allure report', err);
       }
@@ -107,6 +131,119 @@ export class AutomationService {
     const run = await this.findOne(id);
     return this.automationRepository.remove(run);
   }
+  async generateScript(body: { title: string; projectName: string; steps: any[] }): Promise<{ filename: string; code: string }> {
+    const slug = body.title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
+    const filename = `${slug}.spec.ts`;
+
+    const selectorStr = (step: any): string => {
+      const { selectorType, selector } = step;
+      if (selectorType === 'text') return `page.getByText(${JSON.stringify(selector)})`;
+      if (selectorType === 'label') return `page.getByLabel(${JSON.stringify(selector)})`;
+      if (selectorType === 'placeholder') return `page.getByPlaceholder(${JSON.stringify(selector)})`;
+      if (selectorType === 'testid') return `page.getByTestId(${JSON.stringify(selector)})`;
+      if (selectorType === 'role') return `page.getByRole(${JSON.stringify(selector)})`;
+      return `page.locator(${JSON.stringify(selector)})`;
+    };
+
+    const lines: string[] = [];
+    for (const step of body.steps) {
+      const loc = selectorStr(step);
+      switch (step.action) {
+        case 'navigate':
+          lines.push(`    // Navigate to URL`);
+          lines.push(`    await page.goto(${JSON.stringify(step.url)});`);
+          break;
+        case 'click':
+          lines.push(`    // Click element`);
+          lines.push(`    await ${loc}.click();`);
+          break;
+        case 'fill':
+          lines.push(`    // Fill "${step.selector}" with value`);
+          lines.push(`    await ${loc}.fill(${JSON.stringify(step.value || '')});`);
+          break;
+        case 'select':
+          lines.push(`    // Select option in dropdown`);
+          lines.push(`    await ${loc}.selectOption(${JSON.stringify(step.value || '')});`);
+          break;
+        case 'check':
+          lines.push(`    // Check checkbox`);
+          lines.push(`    await ${loc}.check();`);
+          break;
+        case 'uncheck':
+          lines.push(`    // Uncheck checkbox`);
+          lines.push(`    await ${loc}.uncheck();`);
+          break;
+        case 'hover':
+          lines.push(`    // Hover over element`);
+          lines.push(`    await ${loc}.hover();`);
+          break;
+        case 'press_key':
+          lines.push(`    // Press key`);
+          lines.push(`    await page.keyboard.press(${JSON.stringify(step.key || 'Enter')});`);
+          break;
+        case 'wait':
+          lines.push(`    // Wait ${step.ms || 1000}ms`);
+          lines.push(`    await page.waitForTimeout(${step.ms || 1000});`);
+          break;
+        case 'screenshot':
+          lines.push(`    // Take screenshot`);
+          lines.push(`    await page.screenshot({ path: 'screenshots/${step.name || 'screenshot'}.png' });`);
+          break;
+        case 'assert_url':
+          lines.push(`    // Assert URL contains pattern`);
+          lines.push(`    await expect(page).toHaveURL(/${step.pattern || ''}/);`);
+          break;
+        case 'assert_title':
+          lines.push(`    // Assert page title`);
+          lines.push(`    await expect(page).toHaveTitle(${JSON.stringify(step.value || '')});`);
+          break;
+        case 'assert_text':
+          lines.push(`    // Assert text is visible on page`);
+          lines.push(`    await expect(page.getByText(${JSON.stringify(step.text || '')})).toBeVisible();`);
+          break;
+        case 'assert_visible':
+          lines.push(`    // Assert element is visible`);
+          lines.push(`    await expect(${loc}).toBeVisible();`);
+          break;
+        case 'assert_not_visible':
+          lines.push(`    // Assert element is not visible`);
+          lines.push(`    await expect(${loc}).not.toBeVisible();`);
+          break;
+        case 'assert_value':
+          lines.push(`    // Assert element value`);
+          lines.push(`    await expect(${loc}).toHaveValue(${JSON.stringify(step.value || '')});`);
+          break;
+        case 'assert_enabled':
+          lines.push(`    // Assert element is enabled`);
+          lines.push(`    await expect(${loc}).toBeEnabled();`);
+          break;
+        case 'assert_disabled':
+          lines.push(`    // Assert element is disabled`);
+          lines.push(`    await expect(${loc}).toBeDisabled();`);
+          break;
+      }
+      lines.push('');
+    }
+
+    const code = [
+      `import { test, expect } from '@playwright/test';`,
+      ``,
+      `test.describe(${JSON.stringify(body.projectName || 'Test Suite')}, () => {`,
+      `  test(${JSON.stringify(body.title)}, async ({ page }) => {`,
+      ...lines.map(l => (l === '' ? '' : l)),
+      `  });`,
+      `});`,
+    ].join('\n');
+
+    const testsDir = path.resolve(process.cwd(), '../../automation/playwright/tests');
+    await fs.writeFile(path.join(testsDir, filename), code, 'utf-8');
+
+    return { filename, code };
+  }
+
   async executeTestCase(testCaseId: string) {
     // 1. Ambil data test case
     const testCase = await this.testCasesService.findOne(testCaseId);
