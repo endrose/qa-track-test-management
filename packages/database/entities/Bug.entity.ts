@@ -22,7 +22,7 @@ export class Bug {
   @ManyToOne(() => Project, { nullable: true })
   project: Project;
 
-  @ManyToOne(() => TestCase, { nullable: true })
+  @ManyToOne(() => TestCase, { nullable: true, onDelete: 'CASCADE' })
   testCase: TestCase;
 
   @CreateDateColumn()

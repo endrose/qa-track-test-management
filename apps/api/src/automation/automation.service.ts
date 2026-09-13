@@ -131,6 +131,79 @@ export class AutomationService {
     const run = await this.findOne(id);
     return this.automationRepository.remove(run);
   }
+
+  async scanUrl(url: string) {
+    try {
+      const scriptPath = path.resolve(process.cwd(), '../../automation/playwright/scripts/scanner.mjs');
+      const cwd = path.resolve(process.cwd(), '../../automation/playwright');
+      const { stdout } = await execAsync(`node ${scriptPath} "${url}"`, { cwd });
+      
+      const selectors = JSON.parse(stdout.trim());
+      return selectors;
+    } catch (e) {
+      console.error('Scan URL failed:', e);
+      return [];
+    }
+  }
+
+  async getScripts(framework: string = 'playwright') {
+    try {
+      const workspacePath = framework === 'cypress' ? 'cypress/e2e' : 'playwright/tests';
+      const testsDir = path.resolve(process.cwd(), `../../automation/${workspacePath}`);
+      const files = await fs.readdir(testsDir);
+      return files.filter(f => f.endsWith('.ts') || f.endsWith('.js'));
+    } catch (e) {
+      console.error('Failed to read scripts:', e);
+      return [];
+    }
+  }
+
+  async getScriptContent(filename: string, framework: string = 'playwright') {
+    try {
+      const workspacePath = framework === 'cypress' ? 'cypress/e2e' : 'playwright/tests';
+      const testsDir = path.resolve(process.cwd(), `../../automation/${workspacePath}`);
+      const filePath = path.join(testsDir, filename);
+      if (!filePath.startsWith(testsDir)) throw new Error('Invalid path');
+      
+      const content = await fs.readFile(filePath, 'utf-8');
+      return { filename, content };
+    } catch (e) {
+      console.error('Failed to read script content:', e);
+      throw new Error('Failed to read file');
+    }
+  }
+
+  async updateScript(filename: string, content: string, framework: string = 'playwright') {
+    try {
+      const workspacePath = framework === 'cypress' ? 'cypress/e2e' : 'playwright/tests';
+      const testsDir = path.resolve(process.cwd(), `../../automation/${workspacePath}`);
+      const filePath = path.join(testsDir, filename);
+      if (!filePath.startsWith(testsDir)) throw new Error('Invalid path');
+      
+      await fs.writeFile(filePath, content, 'utf-8');
+      return { success: true };
+    } catch (e) {
+      console.error('Failed to update script:', e);
+      throw new Error('Failed to update file');
+    }
+  }
+
+  async deleteScript(filename: string, framework: string = 'playwright') {
+    try {
+      const workspacePath = framework === 'cypress' ? 'cypress/e2e' : 'playwright/tests';
+      const testsDir = path.resolve(process.cwd(), `../../automation/${workspacePath}`);
+      const filePath = path.join(testsDir, filename);
+      
+      if (!filePath.startsWith(testsDir)) throw new Error('Invalid path');
+      
+      await fs.unlink(filePath);
+      return { success: true };
+    } catch (e) {
+      console.error('Failed to delete script:', e);
+      throw new Error('Failed to delete file');
+    }
+  }
+
   async generateScript(body: { title: string; projectName: string; steps: any[] }): Promise<{ filename: string; code: string }> {
     const slug = body.title
       .toLowerCase()
@@ -139,7 +212,13 @@ export class AutomationService {
     const filename = `${slug}.spec.ts`;
 
     const selectorStr = (step: any): string => {
-      const { selectorType, selector } = step;
+      let { selectorType, selector } = step;
+      
+      // Auto-correct if user picked a CSS selector from scanner but left type as something else
+      if (selectorType !== 'locator' && (selector.startsWith('[') || selector.startsWith('#') || selector.startsWith('.'))) {
+        selectorType = 'locator';
+      }
+      
       if (selectorType === 'text') return `page.getByText(${JSON.stringify(selector)})`;
       if (selectorType === 'label') return `page.getByLabel(${JSON.stringify(selector)})`;
       if (selectorType === 'placeholder') return `page.getByPlaceholder(${JSON.stringify(selector)})`;
@@ -189,8 +268,8 @@ export class AutomationService {
           lines.push(`    await page.waitForTimeout(${step.ms || 1000});`);
           break;
         case 'screenshot':
-          lines.push(`    // Take screenshot`);
-          lines.push(`    await page.screenshot({ path: 'screenshots/${step.name || 'screenshot'}.png' });`);
+          lines.push(`    // Take screenshot and attach to report`);
+          lines.push(`    await test.info().attach(${JSON.stringify(step.name || 'screenshot')}, { body: await page.screenshot(), contentType: 'image/png' });`);
           break;
         case 'assert_url':
           lines.push(`    // Assert URL contains pattern`);

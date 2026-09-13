@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, DataSource } from 'typeorm';
 import { TestCase } from 'database';
 
 @Injectable()
@@ -8,6 +8,7 @@ export class TestCasesService {
   constructor(
     @InjectRepository(TestCase)
     private testCasesRepository: Repository<TestCase>,
+    private dataSource: DataSource,
   ) {}
 
   findAll() {
@@ -33,6 +34,11 @@ export class TestCasesService {
 
   async remove(id: string) {
     const testCase = await this.findOne(id);
+    
+    // Explicitly delete dependents to bypass any foreign key constraint issues
+    await this.dataSource.query('DELETE FROM bugs WHERE "testCaseId" = $1', [id]);
+    await this.dataSource.query('DELETE FROM test_executions WHERE "testCaseId" = $1', [id]);
+    
     return this.testCasesRepository.remove(testCase);
   }
 }

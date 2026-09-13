@@ -47,6 +47,16 @@ const createExecution = async () => {
   }
 }
 
+const deleteExecution = async (id: string) => {
+  if (!confirm('Delete this execution log?')) return
+  try {
+    const res = await fetch(`http://localhost:3000/api/test-executions/${id}`, { method: 'DELETE' })
+    if (res.ok) fetchData()
+  } catch (err) {
+    console.error('Failed to delete execution', err)
+  }
+}
+
 const statusCount = (status: string) =>
   executions.value.filter(e => e.status === status).length
 
@@ -87,7 +97,8 @@ onMounted(fetchData)
             <th class="p-3 border-r-[2px] border-outline">ID</th>
             <th class="p-3 border-r-[2px] border-outline">Status</th>
             <th class="p-3 border-r-[2px] border-outline">Comments</th>
-            <th class="p-3">Date</th>
+            <th class="p-3 border-r-[2px] border-outline">Date</th>
+            <th class="p-3">Actions</th>
           </tr>
         </thead>
         <tbody class="font-body text-body divide-y-[2px] divide-outline">
@@ -100,7 +111,10 @@ onMounted(fetchData)
               <span :class="statusColors[ex.status] || 'bg-surface-dim'" class="px-2 py-0.5 border-[2px] border-outline font-label uppercase text-[10px]">{{ ex.status }}</span>
             </td>
             <td class="p-3 border-r-[2px] border-outline">{{ ex.comments || '—' }}</td>
-            <td class="p-3">{{ new Date(ex.createdAt).toLocaleDateString() }}</td>
+            <td class="p-3 border-r-[2px] border-outline">{{ new Date(ex.createdAt).toLocaleDateString() }}</td>
+            <td class="p-3">
+              <button @click="deleteExecution(ex.id)" class="px-2 py-1 bg-[#fca5a5] text-on-surface border-[2px] border-outline font-label uppercase text-[10px] hover:bg-error hover:text-white transition-colors shadow-[1px_1px_0px_#000000]">Delete</button>
+            </td>
           </tr>
         </tbody>
       </table>

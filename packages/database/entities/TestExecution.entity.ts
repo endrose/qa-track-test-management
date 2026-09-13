@@ -13,7 +13,7 @@ export class TestExecution {
   @Column({ nullable: true })
   comments: string;
 
-  @ManyToOne(() => TestCase, { nullable: true })
+  @ManyToOne(() => TestCase, { nullable: true, onDelete: 'CASCADE' })
   testCase: TestCase;
 
   @ManyToOne(() => User, { nullable: true })

@@ -4,7 +4,7 @@
       "C:\\Program Files\\nodejs\\node.exe",
       "D:\\Workspace\\vue\\qa-track-test-management\\node_modules\\@playwright\\test\\cli.js",
       "test",
-      "sauce-login.spec.ts"
+      "website-sauce.spec.ts"
     ],
     "configFile": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\playwright.config.ts",
     "rootDir": "D:/Workspace/vue/qa-track-test-management/automation/playwright/tests",
@@ -58,7 +58,7 @@
         "D:\\Workspace\\vue\\qa-track-test-management\\node_modules\\allure-playwright\\dist\\cjs\\index.js",
         {
           "detail": true,
-          "outputFolder": "allure-results",
+          "outputFolder": "./allure-results",
           "suiteTitle": false
         }
       ],
@@ -81,20 +81,20 @@
   },
   "suites": [
     {
-      "title": "sauce-login.spec.ts",
-      "file": "sauce-login.spec.ts",
+      "title": "website-sauce.spec.ts",
+      "file": "website-sauce.spec.ts",
       "column": 0,
       "line": 0,
       "specs": [],
       "suites": [
         {
-          "title": "Website Sauce",
-          "file": "sauce-login.spec.ts",
+          "title": "Test Suite",
+          "file": "website-sauce.spec.ts",
           "line": 3,
           "column": 6,
           "specs": [
             {
-              "title": "Login Sauce",
+              "title": "Website Sauce",
               "ok": true,
               "tags": [],
               "tests": [
@@ -109,12 +109,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 2986,
+                      "duration": 1823,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-11T09:49:11.699Z",
+                      "startTime": "2026-09-13T10:52:09.480Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -122,8 +122,8 @@
                   "status": "expected"
                 }
               ],
-              "id": "0bb8a239395307ceccbc-95e8e411ec178d2ae98b",
-              "file": "sauce-login.spec.ts",
+              "id": "1d855b5855b193a7bf03-6b307e2d89ebcc773325",
+              "file": "website-sauce.spec.ts",
               "line": 4,
               "column": 7
             }
@@ -134,8 +134,8 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-09-11T09:49:11.133Z",
-    "duration": 8218.347000000002,
+    "startTime": "2026-09-13T10:52:08.834Z",
+    "duration": 6685.346,
     "expected": 1,
     "skipped": 0,
     "unexpected": 0,
