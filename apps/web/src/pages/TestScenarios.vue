@@ -37,7 +37,7 @@ const filtered = computed(() =>
 const fetchScenarios = async () => {
   loading.value = true
   try {
-    const res = await fetch('http://localhost:3000/api/test-cases')
+    const res = await fetch('http://127.0.0.1:3000/api/test-cases')
     if (res.ok) scenarios.value = await res.json()
   } finally {
     loading.value = false
@@ -45,12 +45,12 @@ const fetchScenarios = async () => {
 }
 
 const fetchProjects = async () => {
-  const res = await fetch('http://localhost:3000/api/projects')
+  const res = await fetch('http://127.0.0.1:3000/api/projects')
   if (res.ok) projects.value = await res.json()
 }
 
 const fetchRequirements = async () => {
-  const res = await fetch('http://localhost:3000/api/requirements')
+  const res = await fetch('http://127.0.0.1:3000/api/requirements')
   if (res.ok) requirements.value = await res.json()
 }
 
@@ -76,8 +76,8 @@ const openEdit = (s: any) => {
 
 const saveScenario = async () => {
   const url = isEditing.value
-    ? `http://localhost:3000/api/test-cases/${form.value.id}`
-    : 'http://localhost:3000/api/test-cases'
+    ? `http://127.0.0.1:3000/api/test-cases/${form.value.id}`
+    : 'http://127.0.0.1:3000/api/test-cases'
   const method = isEditing.value ? 'PUT' : 'POST'
   const res = await fetch(url, {
     method,
@@ -98,7 +98,7 @@ const saveScenario = async () => {
 
 const deleteScenario = async (id: string) => {
   if (!confirm('Delete this scenario?')) return
-  await fetch(`http://localhost:3000/api/test-cases/${id}`, { method: 'DELETE' })
+  await fetch(`http://127.0.0.1:3000/api/test-cases/${id}`, { method: 'DELETE' })
   await fetchScenarios()
 }
 

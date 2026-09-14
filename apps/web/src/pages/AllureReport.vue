@@ -8,16 +8,16 @@ const selectedProjectId = ref('')
 
 const allureUrl = computed(() => {
   if (selectedProjectId.value) {
-    return `http://localhost:3000/allure/${selectedProjectId.value}/index.html`
+    return `http://127.0.0.1:3000/allure/${selectedProjectId.value}/index.html`
   }
-  return 'http://localhost:3000/allure/index.html'
+  return 'http://127.0.0.1:3000/allure/index.html'
 })
 
 const iframeRef = ref<HTMLIFrameElement | null>(null)
 
 const fetchProjects = async () => {
   try {
-    const res = await fetch('http://localhost:3000/api/projects')
+    const res = await fetch('http://127.0.0.1:3000/api/projects')
     if (res.ok) projects.value = await res.json()
   } catch (err) {
     console.error('Failed to fetch projects', err)

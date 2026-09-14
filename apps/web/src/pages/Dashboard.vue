@@ -45,10 +45,10 @@ const token = localStorage.getItem('token') || ''
 onMounted(async () => {
   try {
     const [tcRes, bugsRes, reqRes, autoRes] = await Promise.all([
-      fetch('http://localhost:3000/api/test-cases', { headers: { Authorization: `Bearer ${token}` } }),
-      fetch('http://localhost:3000/api/bugs', { headers: { Authorization: `Bearer ${token}` } }),
-      fetch('http://localhost:3000/api/requirements', { headers: { Authorization: `Bearer ${token}` } }),
-      fetch('http://localhost:3000/api/automation', { headers: { Authorization: `Bearer ${token}` } }),
+      fetch('http://127.0.0.1:3000/api/test-cases', { headers: { Authorization: `Bearer ${token}` } }),
+      fetch('http://127.0.0.1:3000/api/bugs', { headers: { Authorization: `Bearer ${token}` } }),
+      fetch('http://127.0.0.1:3000/api/requirements', { headers: { Authorization: `Bearer ${token}` } }),
+      fetch('http://127.0.0.1:3000/api/automation', { headers: { Authorization: `Bearer ${token}` } }),
     ])
     if (tcRes.ok) {
       const tc = await tcRes.json()

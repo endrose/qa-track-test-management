@@ -204,120 +204,215 @@ export class AutomationService {
     }
   }
 
-  async generateScript(body: { title: string; projectName: string; steps: any[] }): Promise<{ filename: string; code: string }> {
+  async generateScript(body: { title: string; projectName: string; steps: any[]; framework?: string }): Promise<{ filename: string; code: string }> {
     const slug = body.title
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/(^-|-$)/g, '');
-    const filename = `${slug}.spec.ts`;
+      
+    const framework = body.framework || 'playwright';
+    const filename = framework === 'cypress' ? `${slug}.cy.ts` : `${slug}.spec.ts`;
 
     const selectorStr = (step: any): string => {
       let { selectorType, selector } = step;
-      
-      // Auto-correct if user picked a CSS selector from scanner but left type as something else
       if (selectorType !== 'locator' && (selector.startsWith('[') || selector.startsWith('#') || selector.startsWith('.'))) {
         selectorType = 'locator';
       }
       
-      if (selectorType === 'text') return `page.getByText(${JSON.stringify(selector)})`;
-      if (selectorType === 'label') return `page.getByLabel(${JSON.stringify(selector)})`;
-      if (selectorType === 'placeholder') return `page.getByPlaceholder(${JSON.stringify(selector)})`;
-      if (selectorType === 'testid') return `page.getByTestId(${JSON.stringify(selector)})`;
-      if (selectorType === 'role') return `page.getByRole(${JSON.stringify(selector)})`;
-      return `page.locator(${JSON.stringify(selector)})`;
+      if (framework === 'cypress') {
+        if (selectorType === 'text') return `cy.contains(${JSON.stringify(selector)})`;
+        return `cy.get(${JSON.stringify(selector)})`;
+      } else {
+        if (selectorType === 'text') return `page.getByText(${JSON.stringify(selector)})`;
+        if (selectorType === 'label') return `page.getByLabel(${JSON.stringify(selector)})`;
+        if (selectorType === 'placeholder') return `page.getByPlaceholder(${JSON.stringify(selector)})`;
+        if (selectorType === 'testid') return `page.getByTestId(${JSON.stringify(selector)})`;
+        if (selectorType === 'role') return `page.getByRole(${JSON.stringify(selector)})`;
+        return `page.locator(${JSON.stringify(selector)})`;
+      }
     };
 
     const lines: string[] = [];
     for (const step of body.steps) {
       const loc = selectorStr(step);
-      switch (step.action) {
-        case 'navigate':
-          lines.push(`    // Navigate to URL`);
-          lines.push(`    await page.goto(${JSON.stringify(step.url)});`);
-          break;
-        case 'click':
-          lines.push(`    // Click element`);
-          lines.push(`    await ${loc}.click();`);
-          break;
-        case 'fill':
-          lines.push(`    // Fill "${step.selector}" with value`);
-          lines.push(`    await ${loc}.fill(${JSON.stringify(step.value || '')});`);
-          break;
-        case 'select':
-          lines.push(`    // Select option in dropdown`);
-          lines.push(`    await ${loc}.selectOption(${JSON.stringify(step.value || '')});`);
-          break;
-        case 'check':
-          lines.push(`    // Check checkbox`);
-          lines.push(`    await ${loc}.check();`);
-          break;
-        case 'uncheck':
-          lines.push(`    // Uncheck checkbox`);
-          lines.push(`    await ${loc}.uncheck();`);
-          break;
-        case 'hover':
-          lines.push(`    // Hover over element`);
-          lines.push(`    await ${loc}.hover();`);
-          break;
-        case 'press_key':
-          lines.push(`    // Press key`);
-          lines.push(`    await page.keyboard.press(${JSON.stringify(step.key || 'Enter')});`);
-          break;
-        case 'wait':
-          lines.push(`    // Wait ${step.ms || 1000}ms`);
-          lines.push(`    await page.waitForTimeout(${step.ms || 1000});`);
-          break;
-        case 'screenshot':
-          lines.push(`    // Take screenshot and attach to report`);
-          lines.push(`    await test.info().attach(${JSON.stringify(step.name || 'screenshot')}, { body: await page.screenshot(), contentType: 'image/png' });`);
-          break;
-        case 'assert_url':
-          lines.push(`    // Assert URL contains pattern`);
-          lines.push(`    await expect(page).toHaveURL(/${step.pattern || ''}/);`);
-          break;
-        case 'assert_title':
-          lines.push(`    // Assert page title`);
-          lines.push(`    await expect(page).toHaveTitle(${JSON.stringify(step.value || '')});`);
-          break;
-        case 'assert_text':
-          lines.push(`    // Assert text is visible on page`);
-          lines.push(`    await expect(page.getByText(${JSON.stringify(step.text || '')})).toBeVisible();`);
-          break;
-        case 'assert_visible':
-          lines.push(`    // Assert element is visible`);
-          lines.push(`    await expect(${loc}).toBeVisible();`);
-          break;
-        case 'assert_not_visible':
-          lines.push(`    // Assert element is not visible`);
-          lines.push(`    await expect(${loc}).not.toBeVisible();`);
-          break;
-        case 'assert_value':
-          lines.push(`    // Assert element value`);
-          lines.push(`    await expect(${loc}).toHaveValue(${JSON.stringify(step.value || '')});`);
-          break;
-        case 'assert_enabled':
-          lines.push(`    // Assert element is enabled`);
-          lines.push(`    await expect(${loc}).toBeEnabled();`);
-          break;
-        case 'assert_disabled':
-          lines.push(`    // Assert element is disabled`);
-          lines.push(`    await expect(${loc}).toBeDisabled();`);
-          break;
+      
+      if (framework === 'cypress') {
+        switch (step.action) {
+          case 'navigate':
+            lines.push(`    // Navigate to URL`);
+            lines.push(`    cy.visit(${JSON.stringify(step.url)});`);
+            break;
+          case 'click':
+            lines.push(`    // Click element`);
+            lines.push(`    ${loc}.click();`);
+            break;
+          case 'fill':
+            lines.push(`    // Fill "${step.selector}" with value`);
+            lines.push(`    ${loc}.type(${JSON.stringify(step.value || '')});`);
+            break;
+          case 'select':
+            lines.push(`    // Select option in dropdown`);
+            lines.push(`    ${loc}.select(${JSON.stringify(step.value || '')});`);
+            break;
+          case 'check':
+            lines.push(`    // Check checkbox`);
+            lines.push(`    ${loc}.check();`);
+            break;
+          case 'uncheck':
+            lines.push(`    // Uncheck checkbox`);
+            lines.push(`    ${loc}.uncheck();`);
+            break;
+          case 'hover':
+            lines.push(`    // Hover over element`);
+            lines.push(`    ${loc}.trigger('mouseover');`);
+            break;
+          case 'press_key':
+            lines.push(`    // Press key`);
+            lines.push(`    cy.focused().type('{${step.key || 'enter'}}');`);
+            break;
+          case 'wait':
+            lines.push(`    // Wait ${step.ms || 1000}ms`);
+            lines.push(`    cy.wait(${step.ms || 1000});`);
+            break;
+          case 'screenshot':
+            lines.push(`    // Take screenshot`);
+            lines.push(`    cy.screenshot(${JSON.stringify(step.name || 'screenshot')});`);
+            break;
+          case 'assert_url':
+            lines.push(`    // Assert URL contains pattern`);
+            lines.push(`    cy.url().should('include', ${JSON.stringify(step.pattern || '')});`);
+            break;
+          case 'assert_title':
+            lines.push(`    // Assert page title`);
+            lines.push(`    cy.title().should('eq', ${JSON.stringify(step.value || '')});`);
+            break;
+          case 'assert_text':
+            lines.push(`    // Assert text is visible on page`);
+            lines.push(`    cy.contains(${JSON.stringify(step.text || '')}).should('be.visible');`);
+            break;
+          case 'assert_visible':
+            lines.push(`    // Assert element is visible`);
+            lines.push(`    ${loc}.should('be.visible');`);
+            break;
+          case 'assert_not_visible':
+            lines.push(`    // Assert element is not visible`);
+            lines.push(`    ${loc}.should('not.be.visible');`);
+            break;
+          case 'assert_value':
+            lines.push(`    // Assert element value`);
+            lines.push(`    ${loc}.should('have.value', ${JSON.stringify(step.value || '')});`);
+            break;
+          case 'assert_enabled':
+            lines.push(`    // Assert element is enabled`);
+            lines.push(`    ${loc}.should('be.enabled');`);
+            break;
+          case 'assert_disabled':
+            lines.push(`    // Assert element is disabled`);
+            lines.push(`    ${loc}.should('be.disabled');`);
+            break;
+        }
+      } else {
+        switch (step.action) {
+          case 'navigate':
+            lines.push(`    // Navigate to URL`);
+            lines.push(`    await page.goto(${JSON.stringify(step.url)});`);
+            break;
+          case 'click':
+            lines.push(`    // Click element`);
+            lines.push(`    await ${loc}.click();`);
+            break;
+          case 'fill':
+            lines.push(`    // Fill "${step.selector}" with value`);
+            lines.push(`    await ${loc}.fill(${JSON.stringify(step.value || '')});`);
+            break;
+          case 'select':
+            lines.push(`    // Select option in dropdown`);
+            lines.push(`    await ${loc}.selectOption(${JSON.stringify(step.value || '')});`);
+            break;
+          case 'check':
+            lines.push(`    // Check checkbox`);
+            lines.push(`    await ${loc}.check();`);
+            break;
+          case 'uncheck':
+            lines.push(`    // Uncheck checkbox`);
+            lines.push(`    await ${loc}.uncheck();`);
+            break;
+          case 'hover':
+            lines.push(`    // Hover over element`);
+            lines.push(`    await ${loc}.hover();`);
+            break;
+          case 'press_key':
+            lines.push(`    // Press key`);
+            lines.push(`    await page.keyboard.press(${JSON.stringify(step.key || 'Enter')});`);
+            break;
+          case 'wait':
+            lines.push(`    // Wait ${step.ms || 1000}ms`);
+            lines.push(`    await page.waitForTimeout(${step.ms || 1000});`);
+            break;
+          case 'screenshot':
+            lines.push(`    // Take screenshot and attach to report`);
+            lines.push(`    await test.info().attach(${JSON.stringify(step.name || 'screenshot')}, { body: await page.screenshot(), contentType: 'image/png' });`);
+            break;
+          case 'assert_url':
+            lines.push(`    // Assert URL contains pattern`);
+            lines.push(`    await expect(page).toHaveURL(/${step.pattern || ''}/);`);
+            break;
+          case 'assert_title':
+            lines.push(`    // Assert page title`);
+            lines.push(`    await expect(page).toHaveTitle(${JSON.stringify(step.value || '')});`);
+            break;
+          case 'assert_text':
+            lines.push(`    // Assert text is visible on page`);
+            lines.push(`    await expect(page.getByText(${JSON.stringify(step.text || '')})).toBeVisible();`);
+            break;
+          case 'assert_visible':
+            lines.push(`    // Assert element is visible`);
+            lines.push(`    await expect(${loc}).toBeVisible();`);
+            break;
+          case 'assert_not_visible':
+            lines.push(`    // Assert element is not visible`);
+            lines.push(`    await expect(${loc}).not.toBeVisible();`);
+            break;
+          case 'assert_value':
+            lines.push(`    // Assert element value`);
+            lines.push(`    await expect(${loc}).toHaveValue(${JSON.stringify(step.value || '')});`);
+            break;
+          case 'assert_enabled':
+            lines.push(`    // Assert element is enabled`);
+            lines.push(`    await expect(${loc}).toBeEnabled();`);
+            break;
+          case 'assert_disabled':
+            lines.push(`    // Assert element is disabled`);
+            lines.push(`    await expect(${loc}).toBeDisabled();`);
+            break;
+        }
       }
       lines.push('');
     }
 
-    const code = [
-      `import { test, expect } from '@playwright/test';`,
-      ``,
-      `test.describe(${JSON.stringify(body.projectName || 'Test Suite')}, () => {`,
-      `  test(${JSON.stringify(body.title)}, async ({ page }) => {`,
-      ...lines.map(l => (l === '' ? '' : l)),
-      `  });`,
-      `});`,
-    ].join('\n');
+    let code = '';
+    if (framework === 'cypress') {
+      code = [
+        `describe(${JSON.stringify(body.projectName || 'Test Suite')}, () => {`,
+        `  it(${JSON.stringify(body.title)}, () => {`,
+        ...lines.map(l => (l === '' ? '' : l)),
+        `  });`,
+        `});`,
+      ].join('\n');
+    } else {
+      code = [
+        `import { test, expect } from '@playwright/test';`,
+        ``,
+        `test.describe(${JSON.stringify(body.projectName || 'Test Suite')}, () => {`,
+        `  test(${JSON.stringify(body.title)}, async ({ page }) => {`,
+        ...lines.map(l => (l === '' ? '' : l)),
+        `  });`,
+        `});`,
+      ].join('\n');
+    }
 
-    const testsDir = path.resolve(process.cwd(), '../../automation/playwright/tests');
+    const workspacePath = framework === 'cypress' ? 'cypress/e2e' : 'playwright/tests';
+    const testsDir = path.resolve(process.cwd(), `../../automation/${workspacePath}`);
     await fs.writeFile(path.join(testsDir, filename), code, 'utf-8');
 
     return { filename, code };

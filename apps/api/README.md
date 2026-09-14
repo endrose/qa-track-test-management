@@ -1,41 +1,43 @@
-# QA Track - API Backend
+# QA Track API Backend
 
-The backend REST API for the QA Track Test Management system.
+The backend application for QA Track Test Management, built with NestJS and TypeORM.
 
-## Tech Stack
+## ✨ Key Features
 
-- **Framework**: [NestJS](https://nestjs.com/)
-- **Database ORM**: TypeORM
-- **Database**: PostgreSQL
-- **Testing**: Vitest & Supertest
+- **RESTful API**: Serves endpoints for Projects, Test Cases, Bugs, Reports, and Users.
+- **TypeORM + SQLite**: Lightweight, zero-config local database for easy setup and persistent storage.
+- **Automation Engine Integration**: 
+  - Uses Node's `child_process` to trigger Playwright and Cypress test suites locally.
+  - Generates `.spec.ts` (Playwright) and `.cy.ts` (Cypress) scripts dynamically based on JSON payloads from the frontend Visual Step Builder.
+  - Automatically handles Allure Report generation after test runs.
+- **Auto-Bug Creation**: Detects failed automation runs and automatically files bug tickets linked to the test case and project.
+- **Smart Scanner Proxy**: Acts as a bridge to execute `scanner.mjs` (a Playwright-based headless browser script) to extract DOM locators for external URLs.
 
-## ✨ Features
+## 🛠 Tech Stack
 
-- 🔒 **Authentication**: Local authentication with default users, and dynamic team member invitations via the API.
-- 🗄️ **Database Integration**: TypeORM connected to PostgreSQL with entities for Users, AutomationRuns, TestExecutions, and TestReports.
-- 🤖 **Automation Service**: Endpoints to trigger local child processes (Cypress/Playwright) and parse JSON output.
-- 📈 **Reporting & Metrics**: Data aggregation for dashboard widgets and report snapshots.
+- **Framework**: NestJS
+- **ORM**: TypeORM
+- **Database**: SQLite (Stored locally in the `packages/database` directory)
+- **Language**: TypeScript
 
-## Getting Started
+## 🚀 Development
 
-From this directory, you can run the API locally:
+Start the development server:
 
 ```bash
-# Start in development mode
+# Run from the workspace root:
+npm run dev --filter api
+
+# Or from this directory:
 npm run start:dev
-
-# Start in watch mode with debugging
-npm run start:debug
-
-# Build the application
-npm run build
 ```
 
-## Available Scripts
+The API will be available at `http://127.0.0.1:3000`. 
+**Note:** It binds to `127.0.0.1` (IPv4) instead of `localhost` to ensure consistent connectivity with the Vue frontend.
 
-- `npm run lint` - Lint the codebase using Oxlint.
-- `npm run test` - Run unit tests with Vitest.
-- `npm run test:e2e` - Run end-to-end tests.
-- `npm run format` - Format code with Prettier.
+## 📁 Directory Structure
 
-> Note: Make sure your PostgreSQL database is running and configured correctly in your environment variables before starting the server.
+- `src/` - NestJS Modules, Controllers, and Services.
+  - `automation/` - Logic for script generation and CLI execution of tests.
+  - `test-cases/` - Test case CRUD logic.
+  - `projects/`, `bugs/`, `test-reports/` - Core entity management.

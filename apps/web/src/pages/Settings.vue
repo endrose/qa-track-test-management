@@ -39,7 +39,7 @@ const roles = ['Admin', 'QA Lead', 'Tester', 'Developer', 'Viewer']
 
 const fetchUsers = async () => {
   try {
-    const res = await fetch('http://localhost:3000/api/auth/users')
+    const res = await fetch('http://127.0.0.1:3000/api/auth/users')
     if (res.ok) {
       teamMembers.value = await res.json()
     }
@@ -64,7 +64,7 @@ const inviteMember = async () => {
   if (!inviteEmail.value) return
   
   try {
-    const res = await fetch('http://localhost:3000/api/auth/users/invite', {
+    const res = await fetch('http://127.0.0.1:3000/api/auth/users/invite', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: inviteEmail.value, role: inviteRole.value }),
@@ -85,7 +85,7 @@ const inviteMember = async () => {
 const removeMember = async (id: string) => {
   if (confirm('Are you sure you want to remove this member?')) {
     try {
-      await fetch(`http://localhost:3000/api/auth/users/${id}`, { method: 'DELETE' })
+      await fetch(`http://127.0.0.1:3000/api/auth/users/${id}`, { method: 'DELETE' })
       fetchUsers()
     } catch (error) {
       console.error('Failed to remove user', error)

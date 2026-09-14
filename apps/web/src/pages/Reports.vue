@@ -8,7 +8,7 @@ const selectedProjectId = ref('')
 
 const fetchReports = async () => {
   try {
-    const res = await fetch('http://localhost:3000/api/reports')
+    const res = await fetch('http://127.0.0.1:3000/api/reports')
     if (res.ok) {
       reports.value = await res.json()
     }
@@ -19,7 +19,7 @@ const fetchReports = async () => {
 
 const fetchProjects = async () => {
   try {
-    const res = await fetch('http://localhost:3000/api/projects')
+    const res = await fetch('http://127.0.0.1:3000/api/projects')
     if (res.ok) projects.value = await res.json()
   } catch (err) {
     console.error('Failed to fetch projects', err)
@@ -30,7 +30,7 @@ const generateReport = async () => {
   isGenerating.value = true
   try {
     const reportName = `Snapshot - ${new Date().toLocaleDateString()}`
-    const res = await fetch('http://localhost:3000/api/reports/generate', {
+    const res = await fetch('http://127.0.0.1:3000/api/reports/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

@@ -21,7 +21,7 @@ export class AutomationController {
   }
 
   @Post('generate-script')
-  generateScript(@Body() body: { title: string; projectName: string; steps: any[] }) {
+  generateScript(@Body() body: { title: string; projectName: string; steps: any[]; framework?: string }) {
     return this.automationService.generateScript(body);
   }
 

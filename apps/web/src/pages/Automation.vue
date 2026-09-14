@@ -18,8 +18,8 @@ const statusColors: Record<string, string> = {
 const fetchData = async () => {
   try {
     const [rRes, pRes] = await Promise.all([
-      fetch('http://localhost:3000/api/automation'),
-      fetch('http://localhost:3000/api/projects'),
+      fetch('http://127.0.0.1:3000/api/automation'),
+      fetch('http://127.0.0.1:3000/api/projects'),
     ])
     if (rRes.ok) runs.value = await rRes.json()
     if (pRes.ok) projects.value = await pRes.json()
@@ -30,7 +30,7 @@ const fetchData = async () => {
 
 const triggerRun = async () => {
   try {
-    const res = await fetch('http://localhost:3000/api/automation', {
+    const res = await fetch('http://127.0.0.1:3000/api/automation', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -51,7 +51,7 @@ const triggerRun = async () => {
 }
 
 const deleteRun = async (id: string) => {
-  await fetch(`http://localhost:3000/api/automation/${id}`, { method: 'DELETE' })
+  await fetch(`http://127.0.0.1:3000/api/automation/${id}`, { method: 'DELETE' })
   fetchData()
 }
 
@@ -75,7 +75,7 @@ onMounted(() => {
     </div>
     <div class="flex items-center gap-3">
       <a
-        href="http://localhost:3000/allure/index.html"
+        href="http://127.0.0.1:3000/allure/index.html"
         target="_blank"
         class="px-4 py-2 bg-[#a78bfa] text-white font-label uppercase border-[2px] border-outline shadow-[3px_3px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all flex items-center gap-2"
       >
@@ -143,7 +143,7 @@ onMounted(() => {
             <td class="p-3">
               <a
                 v-if="(run.framework || '').toLowerCase() === 'playwright' && run.status !== 'Running'"
-                href="http://localhost:3000/allure/index.html"
+                href="http://127.0.0.1:3000/allure/index.html"
                 target="_blank"
                 class="px-2 py-1 bg-[#a78bfa] text-white font-label uppercase text-[10px] border-[2px] border-outline hover:translate-x-[1px] hover:translate-y-[1px] transition-all flex items-center gap-1 w-fit"
               >

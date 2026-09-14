@@ -11,7 +11,7 @@ const selectedProject = ref('Select Project')
 
 onMounted(async () => {
   try {
-    const res = await fetch('http://localhost:3000/api/projects')
+    const res = await fetch('http://127.0.0.1:3000/api/projects')
     if (res.ok) {
       projects.value = await res.json()
       if (projects.value.length > 0) {

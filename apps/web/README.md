@@ -1,39 +1,48 @@
-# QA Track - Web Frontend
+# QA Track Web Frontend
 
-The main user interface for the QA Track Test Management system.
+The frontend application for QA Track Test Management, built with Vue 3 and Vite.
 
-## Tech Stack
+## 🎨 Design System
 
-- **Framework**: [Vue 3](https://vuejs.org/)
-- **Build Tool**: [Vite](https://vitejs.dev/)
-- **Styling**: Tailwind CSS v4
-- **State Management**: Pinia
+This application features a **Neo-Brutalist** design aesthetic characterized by:
+- High contrast borders (`border-[2px]` or `border-[3px]`)
+- Harsh box shadows (`shadow-[4px_4px_0px_#000000]`)
+- Distinct, vibrant colors (Tailwind CSS custom config)
+- Distinctive typography (`Outfit` for headlines, `Space Mono` for monospace)
+- Interactive hover states (`hover:-translate-y-[2px]`, `hover:shadow-[6px_6px_0px_#000000]`)
+
+## ✨ Key Features
+
+- **Dynamic Dashboards**: Visualize testing metrics.
+- **Visual Test Builder**: A drag-and-drop / select interface for creating automation scripts without coding.
+- **Smart Element Scanner**: Integrated UI for fetching DOM locators from external URLs.
+- **In-Browser IDE**: Monaco-like lightweight script editor with Playwright/Cypress autocomplete and dictionaries.
+- **Test Execution Runner**: Trigger runs and view real-time log outputs directly in the UI.
+
+## 🛠 Tech Stack
+
+- **Framework**: Vue 3 (Composition API, `<script setup>`)
+- **Build Tool**: Vite
 - **Routing**: Vue Router
+- **Styling**: Tailwind CSS v4
 
-## Getting Started
+## 🚀 Development
 
-From this directory, you can start the local development server:
+Start the development server:
 
 ```bash
-# Start development server
+# Run from the workspace root:
+npm run dev --filter web
+
+# Or from this directory:
 npm run dev
-
-# Build for production
-npm run build
-
-# Preview production build locally
-npm run preview
 ```
 
-## ✨ Features
+The app will be available at `http://localhost:5173`. It expects the API backend to be running on `http://127.0.0.1:3000`.
 
-- 🎨 **Neo-brutalist Design**: Unique, bold UI using high-contrast borders and vibrant colors
-- 📊 **Dynamic Dashboard**: Live analytics fetching from PostgreSQL backend
-- 🤖 **Automation Interface**: Trigger local Cypress & Playwright tests directly from UI and view JSON results
-- 👥 **Role-Based Access Control (RBAC)**: Custom menu and permissions based on user role (Admin, QA Lead, Tester, Developer, Viewer).
-- 📈 **Advanced Reporting**: Generate testing snapshots and view history.
-- 📱 **Responsive Layout**: Works seamlessly on desktop and tablet devices
+## 📁 Directory Structure
 
-## Architecture
-
-This frontend is configured to consume the backend API and utilizes a modern Neobrutalism design system configured via Tailwind CSS. Components are built using the Vue 3 `<script setup>` syntax for better performance and developer experience.
+- `src/components/` - Reusable UI components (Sidebar, Modals, Forms).
+- `src/pages/` - Main route views (Dashboard, TestCases, Projects, Bugs, Reports).
+- `src/router/` - Vue Router configuration.
+- `src/assets/` - Global CSS and fonts (`index.css`).

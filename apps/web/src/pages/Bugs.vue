@@ -23,7 +23,7 @@ const statusColors: Record<string, string> = {
 
 const fetchBugs = async () => {
   try {
-    const res = await fetch('http://localhost:3000/api/bugs')
+    const res = await fetch('http://127.0.0.1:3000/api/bugs')
     if (res.ok) bugs.value = await res.json()
   } catch (err) {
     console.error('Failed to fetch bugs', err)
@@ -32,7 +32,7 @@ const fetchBugs = async () => {
 
 const fetchProjects = async () => {
   try {
-    const res = await fetch('http://localhost:3000/api/projects')
+    const res = await fetch('http://127.0.0.1:3000/api/projects')
     if (res.ok) projects.value = await res.json()
   } catch (err) {
     console.error('Failed to fetch projects', err)
@@ -41,7 +41,7 @@ const fetchProjects = async () => {
 
 const createBug = async () => {
   try {
-    const res = await fetch('http://localhost:3000/api/bugs', {
+    const res = await fetch('http://127.0.0.1:3000/api/bugs', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -66,7 +66,7 @@ const openEdit = (bug: any) => {
 
 const updateBug = async () => {
   try {
-    const res = await fetch(`http://localhost:3000/api/bugs/${editBug.value.id}`, {
+    const res = await fetch(`http://127.0.0.1:3000/api/bugs/${editBug.value.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -89,7 +89,7 @@ const updateBug = async () => {
 
 const deleteBug = async (id: string) => {
   if (!confirm('Delete this bug?')) return
-  await fetch(`http://localhost:3000/api/bugs/${id}`, { method: 'DELETE' })
+  await fetch(`http://127.0.0.1:3000/api/bugs/${id}`, { method: 'DELETE' })
   fetchBugs()
 }
 

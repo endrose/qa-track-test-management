@@ -16,8 +16,8 @@ const statusColors: Record<string, string> = {
 const fetchData = async () => {
   try {
     const [exRes, tcRes] = await Promise.all([
-      fetch('http://localhost:3000/api/test-executions'),
-      fetch('http://localhost:3000/api/test-cases'),
+      fetch('http://127.0.0.1:3000/api/test-executions'),
+      fetch('http://127.0.0.1:3000/api/test-cases'),
     ])
     if (exRes.ok) executions.value = await exRes.json()
     if (tcRes.ok) testCases.value = await tcRes.json()
@@ -28,7 +28,7 @@ const fetchData = async () => {
 
 const createExecution = async () => {
   try {
-    const res = await fetch('http://localhost:3000/api/test-executions', {
+    const res = await fetch('http://127.0.0.1:3000/api/test-executions', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -50,7 +50,7 @@ const createExecution = async () => {
 const deleteExecution = async (id: string) => {
   if (!confirm('Delete this execution log?')) return
   try {
-    const res = await fetch(`http://localhost:3000/api/test-executions/${id}`, { method: 'DELETE' })
+    const res = await fetch(`http://127.0.0.1:3000/api/test-executions/${id}`, { method: 'DELETE' })
     if (res.ok) fetchData()
   } catch (err) {
     console.error('Failed to delete execution', err)

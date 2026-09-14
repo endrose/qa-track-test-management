@@ -8,7 +8,7 @@ const newReq = ref({ title: '', description: '', projectId: '' })
 
 const fetchRequirements = async () => {
   try {
-    const res = await fetch('http://localhost:3000/api/requirements')
+    const res = await fetch('http://127.0.0.1:3000/api/requirements')
     if (res.ok) requirements.value = await res.json()
   } catch (error) {
     console.error('Failed to fetch requirements', error)
@@ -17,7 +17,7 @@ const fetchRequirements = async () => {
 
 const fetchProjects = async () => {
   try {
-    const res = await fetch('http://localhost:3000/api/projects')
+    const res = await fetch('http://127.0.0.1:3000/api/projects')
     if (res.ok) projects.value = await res.json()
   } catch (error) {
     console.error('Failed to fetch projects', error)
@@ -26,7 +26,7 @@ const fetchProjects = async () => {
 
 const createRequirement = async () => {
   try {
-    const res = await fetch('http://localhost:3000/api/requirements', {
+    const res = await fetch('http://127.0.0.1:3000/api/requirements', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -47,7 +47,7 @@ const createRequirement = async () => {
 
 const deleteRequirement = async (id: string) => {
   if (!confirm('Delete this requirement?')) return
-  await fetch(`http://localhost:3000/api/requirements/${id}`, { method: 'DELETE' })
+  await fetch(`http://127.0.0.1:3000/api/requirements/${id}`, { method: 'DELETE' })
   fetchRequirements()
 }
 

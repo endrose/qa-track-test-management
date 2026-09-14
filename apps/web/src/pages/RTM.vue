@@ -24,8 +24,8 @@ onMounted(async () => {
   loading.value = true
   try {
     const [reqRes, tcRes] = await Promise.all([
-      fetch('http://localhost:3000/api/requirements', { headers: { Authorization: `Bearer ${token}` } }),
-      fetch('http://localhost:3000/api/test-cases', { headers: { Authorization: `Bearer ${token}` } })
+      fetch('http://127.0.0.1:3000/api/requirements', { headers: { Authorization: `Bearer ${token}` } }),
+      fetch('http://127.0.0.1:3000/api/test-cases', { headers: { Authorization: `Bearer ${token}` } })
     ])
     if (reqRes.ok) requirements.value = await reqRes.json()
     if (tcRes.ok) testCases.value = await tcRes.json()
