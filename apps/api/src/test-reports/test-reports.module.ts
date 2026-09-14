@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TestReport } from 'database';
+import { TestReport, TestCase } from 'database';
 import { TestReportsController } from './test-reports.controller.js';
 import { TestReportsService } from './test-reports.service.js';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([TestReport])],
+  imports: [TypeOrmModule.forFeature([TestReport, TestCase])],
   controllers: [TestReportsController],
   providers: [TestReportsService],
 })

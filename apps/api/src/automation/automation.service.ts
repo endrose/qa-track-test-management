@@ -52,7 +52,7 @@ export class AutomationService {
     let failed = 0;
     let status = 'Failed';
     let command = 'npm run test';
-    const workspacePath = framework === 'Cypress' ? 'cypress' : 'playwright';
+    const workspacePath = framework === 'Cypress' ? 'cypress/cypress' : 'playwright';
     const cwd = path.resolve(process.cwd(), `../../automation/${workspacePath}`);
     const allureResultsDir = run.project?.id ? `./allure-results/${run.project.id}` : './allure-results';
 
@@ -148,10 +148,10 @@ export class AutomationService {
 
   async getScripts(framework: string = 'playwright') {
     try {
-      const workspacePath = framework === 'cypress' ? 'cypress/e2e' : 'playwright/tests';
+      const workspacePath = framework === 'cypress' ? 'cypress/cypress/e2e' : 'playwright/tests';
       const testsDir = path.resolve(process.cwd(), `../../automation/${workspacePath}`);
       const files = await fs.readdir(testsDir);
-      return files.filter(f => f.endsWith('.ts') || f.endsWith('.js'));
+      return files.filter(f => f.endsWith('.ts') || f.endsWith('.js') || f.endsWith('.cy.ts') || f.endsWith('.cy.js'));
     } catch (e) {
       console.error('Failed to read scripts:', e);
       return [];
@@ -160,7 +160,7 @@ export class AutomationService {
 
   async getScriptContent(filename: string, framework: string = 'playwright') {
     try {
-      const workspacePath = framework === 'cypress' ? 'cypress/e2e' : 'playwright/tests';
+      const workspacePath = framework === 'cypress' ? 'cypress/cypress/e2e' : 'playwright/tests';
       const testsDir = path.resolve(process.cwd(), `../../automation/${workspacePath}`);
       const filePath = path.join(testsDir, filename);
       if (!filePath.startsWith(testsDir)) throw new Error('Invalid path');
@@ -175,7 +175,7 @@ export class AutomationService {
 
   async updateScript(filename: string, content: string, framework: string = 'playwright') {
     try {
-      const workspacePath = framework === 'cypress' ? 'cypress/e2e' : 'playwright/tests';
+      const workspacePath = framework === 'cypress' ? 'cypress/cypress/e2e' : 'playwright/tests';
       const testsDir = path.resolve(process.cwd(), `../../automation/${workspacePath}`);
       const filePath = path.join(testsDir, filename);
       if (!filePath.startsWith(testsDir)) throw new Error('Invalid path');
@@ -190,7 +190,7 @@ export class AutomationService {
 
   async deleteScript(filename: string, framework: string = 'playwright') {
     try {
-      const workspacePath = framework === 'cypress' ? 'cypress/e2e' : 'playwright/tests';
+      const workspacePath = framework === 'cypress' ? 'cypress/cypress/e2e' : 'playwright/tests';
       const testsDir = path.resolve(process.cwd(), `../../automation/${workspacePath}`);
       const filePath = path.join(testsDir, filename);
       
@@ -411,7 +411,7 @@ export class AutomationService {
       ].join('\n');
     }
 
-    const workspacePath = framework === 'cypress' ? 'cypress/e2e' : 'playwright/tests';
+    const workspacePath = framework === 'cypress' ? 'cypress/cypress/e2e' : 'playwright/tests';
     const testsDir = path.resolve(process.cwd(), `../../automation/${workspacePath}`);
     await fs.writeFile(path.join(testsDir, filename), code, 'utf-8');
 
@@ -427,7 +427,7 @@ export class AutomationService {
     }
 
     const framework = testCase.automationTool || 'playwright';
-    const workspacePath = framework === 'cypress' ? 'cypress' : 'playwright';
+    const workspacePath = framework === 'cypress' ? 'cypress/cypress' : 'playwright';
     const cwd = path.resolve(process.cwd(), `../../automation/${workspacePath}`);
     
     let command = 'npm run test';

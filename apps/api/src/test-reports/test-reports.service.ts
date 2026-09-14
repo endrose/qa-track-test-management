@@ -1,13 +1,15 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { TestReport } from 'database';
+import { TestReport, TestCase } from 'database';
 
 @Injectable()
 export class TestReportsService {
   constructor(
     @InjectRepository(TestReport)
     private testReportsRepository: Repository<TestReport>,
+    @InjectRepository(TestCase)
+    private testCasesRepository: Repository<TestCase>,
   ) {}
 
   findAll() {
@@ -26,31 +28,32 @@ export class TestReportsService {
   }
 
   async generateReport(name: string, projectId?: string) {
-    let query = `
-      SELECT 
-        SUM(passed) as total_passed, 
-        SUM(failed) as total_failed 
-      FROM automation_runs
-    `;
-    let params: any[] = [];
-
+    // Get test cases (optionally filtered by project)
+    const where: any = {};
     if (projectId) {
-      query += ` WHERE "projectId" = $1`;
-      params.push(projectId);
+      where.project = { id: projectId };
     }
 
-    const runs = await this.testReportsRepository.manager.query(query, params);
+    const testCases = await this.testCasesRepository.find({
+      where: Object.keys(where).length ? where : undefined,
+      relations: { project: true },
+    });
 
-    const passed = parseInt(runs[0]?.total_passed || '0', 10);
-    const failed = parseInt(runs[0]?.total_failed || '0', 10);
-    const summary = `Generated snapshot for ${passed + failed} automation tests.`;
+    // Count statuses based on test case status field
+    const passed = testCases.filter(tc => tc.status === 'Passed').length;
+    const failed = testCases.filter(tc => tc.status === 'Failed').length;
+    const draft = testCases.filter(tc => tc.status === 'Draft').length;
+    const ready = testCases.filter(tc => tc.status === 'Ready').length;
+    const total = testCases.length;
+
+    const summary = `${total} test case(s) — ${passed} Passed, ${failed} Failed, ${ready} Ready, ${draft} Draft.`;
 
     const reportData: Partial<TestReport> = {
       name,
       summary,
       passed,
       failed,
-      skipped: 0
+      skipped: ready + draft,
     };
 
     if (projectId) {
