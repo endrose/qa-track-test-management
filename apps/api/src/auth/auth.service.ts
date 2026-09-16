@@ -2,6 +2,9 @@ import { Injectable, OnModuleInit } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from 'database';
+import * as bcrypt from 'bcrypt';
+
+const SALT_ROUNDS = 12;
 
 @Injectable()
 export class AuthService implements OnModuleInit {
@@ -10,29 +13,56 @@ export class AuthService implements OnModuleInit {
     private usersRepository: Repository<User>,
   ) {}
 
-  // Create a default admin user on startup
+  // Create a default admin user on startup (with bcrypt-hashed password)
   async onModuleInit() {
     const admin = await this.usersRepository.findOne({ where: { email: 'admin@qatrack.com' } });
     if (!admin) {
+      const passwordHash = await bcrypt.hash('password', SALT_ROUNDS);
       await this.usersRepository.save({
         email: 'admin@qatrack.com',
-        passwordHash: 'password', // In real app, this should be hashed
+        passwordHash,
         name: 'Admin User',
-        role: 'Admin'
+        role: 'Admin',
+        status: 'Active',
       });
+    } else if (!admin.passwordHash.startsWith('$2')) {
+      // Migrate plaintext password to bcrypt hash on next startup
+      admin.passwordHash = await bcrypt.hash(admin.passwordHash, SALT_ROUNDS);
+      await this.usersRepository.save(admin);
     }
   }
 
   async validateUser(email: string, pass: string): Promise<User | null> {
     const user = await this.usersRepository.findOne({ where: { email } });
-    if (user && user.passwordHash === pass) {
-      return user;
+    if (!user) return null;
+
+    // Support both bcrypt hashed and legacy plaintext (migration period)
+    let isValid = false;
+    if (user.passwordHash.startsWith('$2')) {
+      isValid = await bcrypt.compare(pass, user.passwordHash);
+    } else {
+      // Legacy plaintext comparison — then migrate to hash
+      isValid = user.passwordHash === pass;
+      if (isValid) {
+        user.passwordHash = await bcrypt.hash(pass, SALT_ROUNDS);
+        await this.usersRepository.save(user);
+      }
     }
-    return null;
+
+    return isValid ? user : null;
   }
 
   async getUsers() {
-    return this.usersRepository.find({ order: { createdAt: 'DESC' } });
+    const users = await this.usersRepository.find({ order: { createdAt: 'DESC' } });
+    // Never expose passwordHash to the client
+    return users.map(u => ({
+      id: u.id,
+      email: u.email,
+      name: u.name,
+      role: u.role,
+      status: u.status,
+      createdAt: u.createdAt,
+    }));
   }
 
   async inviteUser(email: string, role: string) {
@@ -40,17 +70,31 @@ export class AuthService implements OnModuleInit {
     if (existing) {
       throw new Error('User already exists');
     }
-    
-    // Create new user with default password
+
+    const defaultPassword = 'password123';
+    const passwordHash = await bcrypt.hash(defaultPassword, SALT_ROUNDS);
+
     const user = this.usersRepository.create({
       email,
       name: email.split('@')[0],
       role,
-      passwordHash: 'password123', // Default password as per Option A
+      passwordHash,
       status: 'Pending',
     });
-    
+
     return this.usersRepository.save(user);
+  }
+
+  async changePassword(id: string, currentPassword: string, newPassword: string) {
+    const user = await this.usersRepository.findOne({ where: { id } });
+    if (!user) throw new Error('User not found');
+
+    const isValid = await bcrypt.compare(currentPassword, user.passwordHash);
+    if (!isValid) throw new Error('Current password is incorrect');
+
+    user.passwordHash = await bcrypt.hash(newPassword, SALT_ROUNDS);
+    await this.usersRepository.save(user);
+    return { success: true };
   }
 
   async removeUser(id: string) {
