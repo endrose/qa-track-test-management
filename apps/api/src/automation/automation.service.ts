@@ -204,7 +204,7 @@ export class AutomationService {
     }
   }
 
-  async generateScript(body: { title: string; projectName: string; steps: any[]; framework?: string }): Promise<{ filename: string; code: string }> {
+  async generateScript(body: { title: string; projectName: string; steps: any[]; framework?: string; gherkin?: string }): Promise<{ filename: string; code: string }> {
     const slug = body.title
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
@@ -213,27 +213,48 @@ export class AutomationService {
     const framework = body.framework || 'playwright';
     const filename = framework === 'cypress' ? `${slug}.cy.ts` : `${slug}.spec.ts`;
 
-    const selectorStr = (step: any): string => {
-      let { selectorType, selector } = step;
-      if (selectorType !== 'locator' && (selector.startsWith('[') || selector.startsWith('#') || selector.startsWith('.'))) {
-        selectorType = 'locator';
-      }
-      
-      if (framework === 'cypress') {
-        if (selectorType === 'text') return `cy.contains(${JSON.stringify(selector)})`;
-        return `cy.get(${JSON.stringify(selector)})`;
-      } else {
-        if (selectorType === 'text') return `page.getByText(${JSON.stringify(selector)})`;
-        if (selectorType === 'label') return `page.getByLabel(${JSON.stringify(selector)})`;
-        if (selectorType === 'placeholder') return `page.getByPlaceholder(${JSON.stringify(selector)})`;
-        if (selectorType === 'testid') return `page.getByTestId(${JSON.stringify(selector)})`;
-        if (selectorType === 'role') return `page.getByRole(${JSON.stringify(selector)})`;
-        return `page.locator(${JSON.stringify(selector)})`;
-      }
-    };
-
     const lines: string[] = [];
-    for (const step of body.steps) {
+
+    if (body.gherkin) {
+      // Gherkin mode
+      const gherkinLines = body.gherkin.split('\n').map(l => l.trim()).filter(l => l);
+      for (const line of gherkinLines) {
+        if (line.startsWith('Feature:') || line.startsWith('Scenario:')) continue; // handled in suite/test description below
+        
+        if (line.match(/^(Given|When|Then|And|But)\b/i)) {
+          if (framework === 'cypress') {
+            lines.push(`    cy.log(${JSON.stringify(line)});`);
+            lines.push(`    // TODO: implement step`);
+          } else {
+            lines.push(`    await test.step(${JSON.stringify(line)}, async () => {`);
+            lines.push(`      // TODO: implement step`);
+            lines.push(`    });`);
+          }
+          lines.push('');
+        }
+      }
+    } else {
+      // No-Code builder mode
+      const selectorStr = (step: any): string => {
+        let { selectorType, selector } = step;
+        if (selectorType !== 'locator' && (selector.startsWith('[') || selector.startsWith('#') || selector.startsWith('.'))) {
+          selectorType = 'locator';
+        }
+        
+        if (framework === 'cypress') {
+          if (selectorType === 'text') return `cy.contains(${JSON.stringify(selector)})`;
+          return `cy.get(${JSON.stringify(selector)})`;
+        } else {
+          if (selectorType === 'text') return `page.getByText(${JSON.stringify(selector)})`;
+          if (selectorType === 'label') return `page.getByLabel(${JSON.stringify(selector)})`;
+          if (selectorType === 'placeholder') return `page.getByPlaceholder(${JSON.stringify(selector)})`;
+          if (selectorType === 'testid') return `page.getByTestId(${JSON.stringify(selector)})`;
+          if (selectorType === 'role') return `page.getByRole(${JSON.stringify(selector)})`;
+          return `page.locator(${JSON.stringify(selector)})`;
+        }
+      };
+
+      for (const step of body.steps) {
       const loc = selectorStr(step);
       
       if (framework === 'cypress') {
@@ -389,6 +410,7 @@ export class AutomationService {
       }
       lines.push('');
     }
+    } // End of No-Code builder mode
 
     let code = '';
     if (framework === 'cypress') {

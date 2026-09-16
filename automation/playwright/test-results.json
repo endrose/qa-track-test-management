@@ -4,7 +4,7 @@
       "C:\\Program Files\\nodejs\\node.exe",
       "D:\\Workspace\\vue\\qa-track-test-management\\node_modules\\@playwright\\test\\cli.js",
       "test",
-      "website-sauce.spec.ts"
+      "sauce-login.spec.ts"
     ],
     "configFile": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\playwright.config.ts",
     "rootDir": "D:/Workspace/vue/qa-track-test-management/automation/playwright/tests",
@@ -81,20 +81,20 @@
   },
   "suites": [
     {
-      "title": "website-sauce.spec.ts",
-      "file": "website-sauce.spec.ts",
+      "title": "sauce-login.spec.ts",
+      "file": "sauce-login.spec.ts",
       "column": 0,
       "line": 0,
       "specs": [],
       "suites": [
         {
-          "title": "Test Suite",
-          "file": "website-sauce.spec.ts",
+          "title": "Website Sauce",
+          "file": "sauce-login.spec.ts",
           "line": 3,
           "column": 6,
           "specs": [
             {
-              "title": "Website Sauce",
+              "title": "Sauce Login",
               "ok": true,
               "tags": [],
               "tests": [
@@ -109,12 +109,26 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 22776,
+                      "duration": 15371,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-14T10:08:23.782Z",
+                      "steps": [
+                        {
+                          "title": "Given  I navigate to the login page https://www.saucedemo.com/",
+                          "duration": 1
+                        },
+                        {
+                          "title": "When I enter valid credentials username : standard_user password : secret_sauce",
+                          "duration": 0
+                        },
+                        {
+                          "title": "Then I should see dashboard https://www.saucedemo.com/inventory.html and title Swag Labs",
+                          "duration": 0
+                        }
+                      ],
+                      "startTime": "2026-09-15T10:40:44.871Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -122,8 +136,8 @@
                   "status": "expected"
                 }
               ],
-              "id": "1d855b5855b193a7bf03-6b307e2d89ebcc773325",
-              "file": "website-sauce.spec.ts",
+              "id": "0bb8a239395307ceccbc-9cb49318bdd79416d253",
+              "file": "sauce-login.spec.ts",
               "line": 4,
               "column": 7
             }
@@ -134,8 +148,8 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-09-14T10:08:22.490Z",
-    "duration": 30381.869999999995,
+    "startTime": "2026-09-15T10:40:43.199Z",
+    "duration": 23641.585,
     "expected": 1,
     "skipped": 0,
     "unexpected": 0,

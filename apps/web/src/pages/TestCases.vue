@@ -12,6 +12,16 @@ const newTc = ref({
   automationType: 'none', automationTool: 'playwright', automationScript: '', automationConfig: ''
 })
 
+const parseConfigForBackend = (type: string, config: any) => {
+  if (type === 'data-driven' && config) {
+    try { return JSON.parse(config) } catch(e) { return null }
+  }
+  if (type === 'bdd' && config) {
+    return { gherkin: config }
+  }
+  return null
+}
+
 const scriptDictionary: Record<string, {label: string, desc: string}[]> = {
   playwright: [
     { label: 'page.goto(\'url\')', desc: 'Navigate to URL' },
@@ -76,6 +86,7 @@ const handleGenerateScript = async (tcObj: any) => {
         title: tcObj.title,
         projectName: project ? project.name : 'Test Suite',
         steps: builderSteps.value,
+        gherkin: tcObj.automationType === 'bdd' ? tcObj.automationConfig : undefined,
         framework: tcObj.automationTool || 'playwright'
       })
     })
@@ -290,7 +301,7 @@ const createTestCase = async () => {
       body: JSON.stringify({
         ...newTc.value,
         project: newTc.value.projectId ? { id: newTc.value.projectId } : null,
-        automationConfig: newTc.value.automationType === 'data-driven' && newTc.value.automationConfig ? JSON.parse(newTc.value.automationConfig) : null
+        automationConfig: parseConfigForBackend(newTc.value.automationType, newTc.value.automationConfig)
       }),
     })
     if (res.ok) {
@@ -304,10 +315,14 @@ const createTestCase = async () => {
 }
 
 const openEdit = (tc: any) => {
+  let configStr = ''
+  if (tc.automationType === 'data-driven') configStr = tc.automationConfig ? JSON.stringify(tc.automationConfig, null, 2) : ''
+  if (tc.automationType === 'bdd') configStr = tc.automationConfig?.gherkin || ''
+  
   editTc.value = { 
     ...tc, 
     projectId: tc.project?.id || '',
-    automationConfig: tc.automationConfig ? JSON.stringify(tc.automationConfig, null, 2) : ''
+    automationConfig: configStr
   }
   isEditOpen.value = true
 }
@@ -327,7 +342,7 @@ const updateTestCase = async () => {
         automationType: editTc.value.automationType,
         automationTool: editTc.value.automationTool,
         automationScript: editTc.value.automationScript,
-        automationConfig: editTc.value.automationType === 'data-driven' && editTc.value.automationConfig ? JSON.parse(editTc.value.automationConfig) : null
+        automationConfig: parseConfigForBackend(editTc.value.automationType, editTc.value.automationConfig)
       }),
     })
     if (res.ok) {
@@ -588,6 +603,12 @@ onUnmounted(() => {
             <select v-model="newTc.testType" class="w-full px-3 py-2 bg-surface border-[2px] border-outline font-body focus:outline-none shadow-[2px_2px_0px_#000000]">
               <option>Functional</option><option>Smoke Test</option><option>Regression Test</option>
             </select>
+            <div v-if="newTc.testType === 'Smoke Test'" class="mt-1 text-[10px] text-on-surface-variant font-label uppercase bg-[#93c5fd]/20 p-2 border-[1px] border-[#93c5fd] rounded-sm">
+              💡 Example: Verify critical paths like user login, API health, or checkout button.
+            </div>
+            <div v-if="newTc.testType === 'Regression Test'" class="mt-1 text-[10px] text-on-surface-variant font-label uppercase bg-[#fca5a5]/20 p-2 border-[1px] border-[#fca5a5] rounded-sm">
+              💡 Example: End-to-end verification of an entire module, ensuring previous bugs stay fixed.
+            </div>
           </div>
         </div>
 
@@ -602,6 +623,7 @@ onUnmounted(() => {
                 <option value="script">Script Mapping</option>
                 <option value="data-driven">Data-Driven (API)</option>
                 <option value="no-code">Step Builder (No-Code)</option>
+                <option value="bdd">BDD (Gherkin)</option>
               </select>
             </div>
             <div v-if="newTc.automationType !== 'none'" class="flex flex-col gap-1">
@@ -677,6 +699,15 @@ onUnmounted(() => {
             <label class="font-label uppercase text-[10px]">Configuration (JSON payload)</label>
             <textarea v-model="newTc.automationConfig" class="w-full px-3 py-2 bg-surface border-[2px] border-outline font-body text-xs font-mono focus:outline-none shadow-[2px_2px_0px_#000000]" rows="4" placeholder='{"method": "GET", "url": "https://api.example.com", "expectedStatus": 200}'></textarea>
           </div>
+          
+          <div v-if="newTc.automationType === 'bdd'" class="flex flex-col gap-1 mt-2">
+            <label class="font-label uppercase text-[10px]">Gherkin Script (Feature / Scenario)</label>
+            <textarea v-model="newTc.automationConfig" class="w-full px-3 py-2 bg-surface border-[2px] border-outline font-body text-xs font-mono focus:outline-none shadow-[2px_2px_0px_#000000]" rows="6" placeholder="Feature: Login&#10;  Scenario: Successful Login&#10;    Given I navigate to the login page&#10;    When I enter valid credentials&#10;    Then I should see the dashboard"></textarea>
+            <button type="button" @click="handleGenerateScript(newTc)" :disabled="isGeneratingScript || !newTc.automationConfig" class="mt-2 py-1 bg-[#86efac] border-[2px] border-outline font-label uppercase text-[10px] hover:bg-[#4ade80] shadow-[2px_2px_0px_#000000] disabled:opacity-50 flex justify-center items-center gap-1 w-fit px-4">
+              <span v-if="isGeneratingScript" class="material-symbols-outlined text-[12px] animate-spin">refresh</span>
+              Generate Script Skeleton
+            </button>
+          </div>
         </div>
 
         <div class="flex justify-end gap-3 mt-4">
@@ -727,6 +758,12 @@ onUnmounted(() => {
             <select v-model="editTc.testType" class="w-full px-3 py-2 bg-surface border-[2px] border-outline font-body focus:outline-none shadow-[2px_2px_0px_#000000]">
               <option>Functional</option><option>Smoke Test</option><option>Regression Test</option>
             </select>
+            <div v-if="editTc.testType === 'Smoke Test'" class="mt-1 text-[10px] text-on-surface-variant font-label uppercase bg-[#93c5fd]/20 p-2 border-[1px] border-[#93c5fd] rounded-sm">
+              💡 Example: Verify critical paths like user login, API health, or checkout button.
+            </div>
+            <div v-if="editTc.testType === 'Regression Test'" class="mt-1 text-[10px] text-on-surface-variant font-label uppercase bg-[#fca5a5]/20 p-2 border-[1px] border-[#fca5a5] rounded-sm">
+              💡 Example: End-to-end verification of an entire module, ensuring previous bugs stay fixed.
+            </div>
           </div>
         </div>
         <!-- Edit Automation Fields Section -->
@@ -740,6 +777,7 @@ onUnmounted(() => {
                 <option value="script">Script Mapping</option>
                 <option value="data-driven">Data-Driven (API)</option>
                 <option value="no-code">Step Builder (No-Code)</option>
+                <option value="bdd">BDD (Gherkin)</option>
               </select>
             </div>
             <div v-if="editTc.automationType !== 'none'" class="flex flex-col gap-1">
@@ -814,6 +852,15 @@ onUnmounted(() => {
           <div v-if="editTc.automationType === 'data-driven'" class="flex flex-col gap-1 mt-2">
             <label class="font-label uppercase text-[10px]">Configuration (JSON payload)</label>
             <textarea v-model="editTc.automationConfig" class="w-full px-3 py-2 bg-surface border-[2px] border-outline font-body text-xs font-mono focus:outline-none shadow-[2px_2px_0px_#000000]" rows="4"></textarea>
+          </div>
+          
+          <div v-if="editTc.automationType === 'bdd'" class="flex flex-col gap-1 mt-2">
+            <label class="font-label uppercase text-[10px]">Gherkin Script (Feature / Scenario)</label>
+            <textarea v-model="editTc.automationConfig" class="w-full px-3 py-2 bg-surface border-[2px] border-outline font-body text-xs font-mono focus:outline-none shadow-[2px_2px_0px_#000000]" rows="6" placeholder="Feature: Login&#10;  Scenario: Successful Login&#10;    Given I navigate to the login page&#10;    When I enter valid credentials&#10;    Then I should see the dashboard"></textarea>
+            <button type="button" @click="handleGenerateScript(editTc)" :disabled="isGeneratingScript || !editTc.automationConfig" class="mt-2 py-1 bg-[#86efac] border-[2px] border-outline font-label uppercase text-[10px] hover:bg-[#4ade80] shadow-[2px_2px_0px_#000000] disabled:opacity-50 flex justify-center items-center gap-1 w-fit px-4">
+              <span v-if="isGeneratingScript" class="material-symbols-outlined text-[12px] animate-spin">refresh</span>
+              Generate Script Skeleton
+            </button>
           </div>
         </div>
 

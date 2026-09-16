@@ -6,3 +6,4 @@ build
 .env
 coverage
 automation\playwright\test-results
+docs
