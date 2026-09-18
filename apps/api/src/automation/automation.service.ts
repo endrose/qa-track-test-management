@@ -148,19 +148,60 @@ export class AutomationService {
 
   async getScripts(framework: string = 'playwright') {
     try {
-      const workspacePath = framework === 'cypress' ? 'cypress/cypress/e2e' : 'playwright/tests';
+      let workspacePath = framework === 'cypress' ? 'cypress/cypress/e2e' : 'playwright/tests';
+      if (framework === 'jmeter') workspacePath = 'jmeter/scripts';
+      
       const testsDir = path.resolve(process.cwd(), `../../automation/${workspacePath}`);
       const files = await fs.readdir(testsDir);
-      return files.filter(f => f.endsWith('.ts') || f.endsWith('.js') || f.endsWith('.cy.ts') || f.endsWith('.cy.js'));
+      return files.filter(f => f.endsWith('.ts') || f.endsWith('.js') || f.endsWith('.cy.ts') || f.endsWith('.cy.js') || f.endsWith('.jmx'));
     } catch (e) {
       console.error('Failed to read scripts:', e);
       return [];
     }
   }
 
+  async getJmeterResults() {
+    try {
+      const resultsDir = path.resolve(process.cwd(), '../../automation/jmeter/results');
+      const files = await fs.readdir(resultsDir);
+      return files.filter(f => f.endsWith('.jtl')).sort().reverse();
+    } catch (e) {
+      console.error('Failed to read jmeter results:', e);
+      return [];
+    }
+  }
+
+  async getJmeterResultDetail(filename: string) {
+    try {
+      const resultsDir = path.resolve(process.cwd(), '../../automation/jmeter/results');
+      const filePath = path.join(resultsDir, filename);
+      if (!filePath.startsWith(resultsDir)) throw new Error('Invalid path');
+      
+      const content = await fs.readFile(filePath, 'utf-8');
+      const lines = content.split('\n').map(l => l.trim()).filter(l => l);
+      if (lines.length === 0) return [];
+
+      const headers = lines[0].split(',');
+      const results = lines.slice(1).map(line => {
+        const values = line.split(',');
+        const row: any = {};
+        headers.forEach((h, i) => {
+          row[h] = values[i];
+        });
+        return row;
+      });
+      return results;
+    } catch (e) {
+      console.error('Failed to read jmeter result detail:', e);
+      throw new Error('Failed to read file');
+    }
+  }
+
   async getScriptContent(filename: string, framework: string = 'playwright') {
     try {
-      const workspacePath = framework === 'cypress' ? 'cypress/cypress/e2e' : 'playwright/tests';
+      let workspacePath = framework === 'cypress' ? 'cypress/cypress/e2e' : 'playwright/tests';
+      if (framework === 'jmeter') workspacePath = 'jmeter/scripts';
+      
       const testsDir = path.resolve(process.cwd(), `../../automation/${workspacePath}`);
       const filePath = path.join(testsDir, filename);
       if (!filePath.startsWith(testsDir)) throw new Error('Invalid path');
@@ -175,7 +216,9 @@ export class AutomationService {
 
   async updateScript(filename: string, content: string, framework: string = 'playwright') {
     try {
-      const workspacePath = framework === 'cypress' ? 'cypress/cypress/e2e' : 'playwright/tests';
+      let workspacePath = framework === 'cypress' ? 'cypress/cypress/e2e' : 'playwright/tests';
+      if (framework === 'jmeter') workspacePath = 'jmeter/scripts';
+      
       const testsDir = path.resolve(process.cwd(), `../../automation/${workspacePath}`);
       const filePath = path.join(testsDir, filename);
       if (!filePath.startsWith(testsDir)) throw new Error('Invalid path');
@@ -190,7 +233,9 @@ export class AutomationService {
 
   async deleteScript(filename: string, framework: string = 'playwright') {
     try {
-      const workspacePath = framework === 'cypress' ? 'cypress/cypress/e2e' : 'playwright/tests';
+      let workspacePath = framework === 'cypress' ? 'cypress/cypress/e2e' : 'playwright/tests';
+      if (framework === 'jmeter') workspacePath = 'jmeter/scripts';
+      
       const testsDir = path.resolve(process.cwd(), `../../automation/${workspacePath}`);
       const filePath = path.join(testsDir, filename);
       
@@ -211,6 +256,109 @@ export class AutomationService {
       .replace(/(^-|-$)/g, '');
       
     const framework = body.framework || 'playwright';
+
+    // ─── JMeter .jmx generation ──────────────────────────────────────────────
+    if (framework === 'jmeter') {
+      const filename = `${slug}.jmx`;
+      const samplers: string[] = [];
+
+      for (const step of body.steps) {
+        if (step.action === 'navigate' && step.url) {
+          const url = new URL(step.url.startsWith('http') ? step.url : `http://${step.url}`);
+          const protocol = url.protocol.replace(':', '');
+          const port = url.port || (protocol === 'https' ? '443' : '80');
+          samplers.push(`
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET ${url.pathname || '/'}" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments"><collectionProp name="Arguments.arguments"/></elementProp>
+          <stringProp name="HTTPSampler.domain">${url.hostname}</stringProp>
+          <stringProp name="HTTPSampler.port">${port}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
+          <stringProp name="HTTPSampler.path">${url.pathname || '/'}</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert: HTTP 200" enabled="true">
+            <collectionProp name="Asserion.test_strings"><stringProp name="49586">200</stringProp></collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">8</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>`);
+        } else if (step.action === 'assert_text' && step.text) {
+          samplers.push(`
+        <!-- Assert text: "${step.text}" -->
+        <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert: Page contains '${step.text}'" enabled="true">
+          <collectionProp name="Asserion.test_strings"><stringProp name="49586">${step.text}</stringProp></collectionProp>
+          <stringProp name="Assertion.custom_message">Page must contain: ${step.text}</stringProp>
+          <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+          <boolProp name="Assertion.assume_success">false</boolProp>
+          <intProp name="Assertion.test_type">2</intProp>
+        </ResponseAssertion>
+        <hashTree/>`);
+        } else if (step.action === 'wait') {
+          samplers.push(`
+        <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Think Time: ${step.ms || 1000}ms" enabled="true">
+          <stringProp name="ConstantTimer.delay">${step.ms || 1000}</stringProp>
+        </ConstantTimer>
+        <hashTree/>`);
+        }
+      }
+
+      const code = `<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="${body.projectName || 'Test Suite'} - ${body.title}" enabled="true">
+      <stringProp name="TestPlan.comments">Generated by QATrack for: ${body.title}</stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.tearDown_on_shutdown">true</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group - 10 Users" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">10</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">5</stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+      </ThreadGroup>
+      <hashTree>${samplers.join('\n')}
+
+        <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time><latency>true</latency><timestamp>true</timestamp>
+              <success>true</success><label>true</label><code>true</code>
+              <message>true</message><threadName>true</threadName>
+              <bytes>true</bytes><sentBytes>true</sentBytes>
+              <url>true</url><fieldNames>true</fieldNames>
+            </value>
+          </objProp>
+          <stringProp name="filename">results/${slug}-summary.jtl</stringProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>`;
+
+      const testsDir = path.resolve(process.cwd(), '../../automation/jmeter/scripts');
+      await fs.writeFile(path.join(testsDir, filename), code, 'utf-8');
+      return { filename, code };
+    }
+    // ─────────────────────────────────────────────────────────────────────────
+
     const filename = framework === 'cypress' ? `${slug}.cy.ts` : `${slug}.spec.ts`;
 
     const lines: string[] = [];
@@ -449,7 +597,8 @@ export class AutomationService {
     }
 
     const framework = testCase.automationTool || 'playwright';
-    const workspacePath = framework === 'cypress' ? 'cypress/cypress' : 'playwright';
+    let workspacePath = framework === 'cypress' ? 'cypress/cypress' : 'playwright';
+    if (framework === 'jmeter') workspacePath = 'jmeter';
     const cwd = path.resolve(process.cwd(), `../../automation/${workspacePath}`);
     
     let command = 'npm run test';
@@ -460,8 +609,31 @@ export class AutomationService {
         command = `npx playwright test ${testCase.automationScript}`;
       } else if (framework === 'cypress') {
         command = `npx cypress run --spec "cypress/e2e/${testCase.automationScript}"`;
+      } else if (framework === 'jmeter') {
+        const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+        const jmeterBin = process.env.JMETER_PATH || 'D:\\Program Files\\apache-jmeter-5.6.3\\bin\\jmeter.bat';
+        command = `"${jmeterBin}" -n -t "scripts/${testCase.automationScript}" -l "results/run_${timestamp}.jtl"`;
       }
-    } 
+    }
+    // Jika jmeter tanpa script spesifik, jalankan semua .jmx di folder scripts
+    else if (framework === 'jmeter') {
+      const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+      const jmeterBin = process.env.JMETER_PATH || 'D:\\Program Files\\apache-jmeter-5.6.3\\bin\\jmeter.bat';
+      const scriptsDir = path.resolve(process.cwd(), '../../automation/jmeter/scripts');
+      let jmxFiles: string[] = [];
+      try {
+        const files = await fs.readdir(scriptsDir);
+        jmxFiles = files.filter(f => f.endsWith('.jmx'));
+      } catch (e) { /* ignore */ }
+
+      if (jmxFiles.length === 0) {
+        return { status: 'Failed', log: 'No .jmx script files found in automation/jmeter/scripts/' };
+      }
+      // Jalankan setiap file .jmx secara berurutan
+      command = jmxFiles
+        .map(f => `"${jmeterBin}" -n -t "scripts/${f}" -l "results/run_${f}_${timestamp}.jtl"`)
+        .join(' && ');
+    }
     // Jika data-driven, lemparkan config ke generic script
     else if (testCase.automationType === 'data-driven' && testCase.automationConfig) {
       if (framework === 'playwright') {

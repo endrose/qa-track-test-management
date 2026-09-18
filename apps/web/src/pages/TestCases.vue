@@ -3,7 +3,7 @@ import { ref, onMounted, onUnmounted, computed } from 'vue'
 
 const testCases = ref<any[]>([])
 const projects = ref<any[]>([])
-const filterProjectId = ref('')
+const filterProjectId = ref(localStorage.getItem('selectedProjectId') || '')
 const isModalOpen = ref(false)
 const isEditOpen = ref(false)
 const editTc = ref<any>(null)
@@ -417,11 +417,21 @@ const closeExecutionPanel = () => {
 onMounted(() => {
   fetchTestCases()
   fetchProjects()
+  // Dengarkan event switch project dari TopBar
+  window.addEventListener('project-switched', handleProjectSwitched)
 })
 
 onUnmounted(() => {
   clearInterval(pollInterval)
+  window.removeEventListener('project-switched', handleProjectSwitched)
 })
+
+const handleProjectSwitched = (e: Event) => {
+  const detail = (e as CustomEvent).detail
+  if (detail?.id) {
+    filterProjectId.value = detail.id
+  }
+}
 </script>
 
 <template>
@@ -631,6 +641,7 @@ onUnmounted(() => {
               <select v-model="newTc.automationTool" class="w-full px-3 py-1 bg-surface border-[2px] border-outline font-body focus:outline-none text-sm shadow-[2px_2px_0px_#000000]">
                 <option value="playwright">Playwright</option>
                 <option value="cypress">Cypress</option>
+                <option value="jmeter">JMeter (Performance)</option>
               </select>
             </div>
           </div>
@@ -785,6 +796,7 @@ onUnmounted(() => {
               <select v-model="editTc.automationTool" class="w-full px-3 py-1 bg-surface border-[2px] border-outline font-body focus:outline-none text-sm shadow-[2px_2px_0px_#000000]">
                 <option value="playwright">Playwright</option>
                 <option value="cypress">Cypress</option>
+                <option value="jmeter">JMeter (Performance)</option>
               </select>
             </div>
           </div>
@@ -890,6 +902,9 @@ onUnmounted(() => {
           </label>
           <label class="flex items-center gap-2 font-label uppercase text-sm">
             <input type="radio" value="cypress" v-model="scriptsFramework" @change="fetchScripts"> Cypress
+          </label>
+          <label class="flex items-center gap-2 font-label uppercase text-sm">
+            <input type="radio" value="jmeter" v-model="scriptsFramework" @change="fetchScripts"> JMeter
           </label>
         </div>
 

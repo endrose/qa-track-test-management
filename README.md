@@ -12,10 +12,10 @@
 | **Step Builder (No-Code)** | Buat automation script tanpa menulis kode menggunakan visual step builder |
 | **BDD (Gherkin)** | Tulis test dalam format Given/When/Then dan generate skeleton script otomatis |
 | **Smart UI Scanner** | Scan URL manapun untuk mengekstrak locators (CSS, ID, XPath, Text) menggunakan Playwright headless |
-| **Playwright & Cypress** | Generate dan jalankan test dengan framework pilihan langsung dari dashboard |
-| **Script Editor Terintegrasi** | Edit script di browser dengan syntax autocomplete dan kamus fungsi Playwright/Cypress |
+| **Playwright, Cypress, & JMeter** | Generate dan jalankan test E2E atau Performance Test (`.jmx`) langsung dari dashboard |
+| **Script Editor Terintegrasi** | Edit script di browser dengan syntax autocomplete dan kamus fungsi |
 | **Eksekusi Lokal** | Jalankan test dan pantau output real-time langsung dari UI |
-| **Test Reports & PDF Export** | Lihat status live test cases, generate snapshot, dan export laporan ke PDF |
+| **Test Reports & Viewer** | Lihat live status, export PDF, dan parse JMeter `.jtl` reports langsung ke dalam tabel UI |
 | **Bug Tracker** | Bug otomatis dibuat saat test gagal, lengkap dengan log dan screenshot |
 | **Allure Reports** | Generate dan serve Allure Report setelah eksekusi test |
 | **Auth & User Management** | Login dengan bcrypt-encrypted password, invite user, atur role |
@@ -28,7 +28,7 @@
 |---|---|
 | **Frontend** | Vue 3 (Composition API), Vite, Tailwind CSS, Vue Router |
 | **Backend** | NestJS, TypeORM, PostgreSQL, bcrypt |
-| **Automation** | Playwright, Cypress, Allure CLI |
+| **Automation** | Playwright, Cypress, JMeter, Allure CLI |
 | **Monorepo** | Turborepo, npm Workspaces |
 
 ---
@@ -39,7 +39,8 @@
 - **Node.js** v18 atau lebih baru
 - **npm** v9 atau lebih baru
 - **PostgreSQL** — database yang digunakan untuk menyimpan data
-- **Java** — diperlukan untuk generate Allure Report
+- **Java** — diperlukan untuk generate Allure Report dan menjalankan JMeter
+- **Apache JMeter** — (Opsional) diperlukan jika ingin menjalankan skrip Performance Test (`.jmx`)
 
 ### 1. Clone & Install
 
@@ -102,12 +103,12 @@ Saat backend pertama kali dijalankan, akun admin otomatis dibuat:
 ```
 1. Buat / Edit Test Case
 2. Pilih Automation Type: "Step Builder (No-Code)"
-3. Pilih Framework: Playwright atau Cypress
+3. Pilih Framework: Playwright, Cypress, atau JMeter
 4. (Opsional) Masukkan URL → klik "Scan" untuk auto-detect locators
 5. Tambah langkah: Navigate, Click, Fill, Assert, dll.
-6. Klik "Generate Script" → file .spec.ts / .cy.ts otomatis dibuat
+6. Klik "Generate Script" → file .spec.ts / .cy.ts / .jmx otomatis dibuat
 7. Klik "Run" pada test case untuk menjalankan test
-8. Pantau output di Execution Panel
+8. Pantau output di Execution Panel atau Report Viewer
 ```
 
 ### Alur Kerja Automation — BDD (Gherkin)
@@ -129,17 +130,19 @@ Saat backend pertama kali dijalankan, akun admin otomatis dibuat:
 7. Klik "Run" untuk mengeksekusi
 ```
 
-### Alur Kerja Automation — Script Mapping
+### Alur Kerja Automation — Script Mapping (Termasuk JMeter)
 
 ```
 1. Tulis test script manual di folder:
-   - Playwright: automation/playwright/tests/
-   - Cypress:    automation/cypress/cypress/e2e/
-2. Buka "Manage Scripts" untuk melihat daftar file
-3. Edit script langsung dari browser (dengan autocomplete)
-4. Pada Test Case, pilih Automation Type: "Script Mapping"
-5. Isi nama file script (misal: login.spec.ts)
+   - Playwright: `automation/playwright/tests/`
+   - Cypress:    `automation/cypress/cypress/e2e/`
+   - JMeter:     `automation/jmeter/scripts/`
+2. Buka "Manage Scripts" untuk melihat daftar file (Edit fitur didukung)
+3. Pada Test Case, pilih Automation Type: "Script Mapping"
+4. Pilih Tool yang sesuai (misal: JMeter (Performance))
+5. Isi nama file script (misal: `login-performance-test.jmx`)
 6. Klik "Run" untuk menjalankan
+7. Hasil JMeter (`.jtl`) bisa dibaca langsung melalui modal Report di menu **Automation**
 ```
 
 ### Generate & Export Report
@@ -178,10 +181,13 @@ qa-track-test-management/
 │   │   ├── scripts/            # Scanner & utilities
 │   │   ├── allure-results/     # Output Allure
 │   │   └── playwright.config.ts
-│   └── cypress/
-│       └── cypress/
-│           ├── e2e/            # ← Simpan file .cy.ts di sini
-│           └── fixtures/
+│   ├── cypress/
+│   │   └── cypress/
+│   │       ├── e2e/            # ← Simpan file .cy.ts di sini
+│   │       └── fixtures/
+│   └── jmeter/
+│       ├── scripts/            # ← Simpan file .jmx di sini
+│       └── results/            # Output laporan .jtl
 ├── packages/
 │   └── database/
 │       └── entities/           # TypeORM entities (User, TestCase, Bug, dll.)

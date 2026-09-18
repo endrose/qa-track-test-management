@@ -3,9 +3,13 @@ import { ref, onMounted } from 'vue'
 
 const runs = ref<any[]>([])
 const projects = ref<any[]>([])
+const jmeterResults = ref<string[]>([])
 const isModalOpen = ref(false)
 const isLogModalOpen = ref(false)
+const isJmeterModalOpen = ref(false)
 const currentLog = ref('')
+const currentJmeterData = ref<any[]>([])
+const currentJmeterFile = ref('')
 const newRun = ref({ suiteName: '', projectId: '', framework: 'Playwright' })
 
 const statusColors: Record<string, string> = {
@@ -17,12 +21,14 @@ const statusColors: Record<string, string> = {
 
 const fetchData = async () => {
   try {
-    const [rRes, pRes] = await Promise.all([
+    const [rRes, pRes, jRes] = await Promise.all([
       fetch('http://127.0.0.1:3000/api/automation'),
       fetch('http://127.0.0.1:3000/api/projects'),
+      fetch('http://127.0.0.1:3000/api/automation/jmeter-results')
     ])
     if (rRes.ok) runs.value = await rRes.json()
     if (pRes.ok) projects.value = await pRes.json()
+    if (jRes.ok) jmeterResults.value = await jRes.json()
   } catch (err) {
     console.error('Failed to fetch', err)
   }
@@ -58,6 +64,19 @@ const deleteRun = async (id: string) => {
 const viewLog = (log: string) => {
   currentLog.value = log || 'No logs available.'
   isLogModalOpen.value = true
+}
+
+const viewJmeterReport = async (filename: string) => {
+  try {
+    const res = await fetch(`http://127.0.0.1:3000/api/automation/jmeter-results/${filename}`)
+    if (res.ok) {
+      currentJmeterData.value = await res.json()
+      currentJmeterFile.value = filename
+      isJmeterModalOpen.value = true
+    }
+  } catch (err) {
+    console.error('Failed to fetch jmeter results', err)
+  }
 }
 
 onMounted(() => {
@@ -149,6 +168,17 @@ onMounted(() => {
               >
                 <span class="material-symbols-outlined text-[12px]">bar_chart_4_bars</span> Allure
               </a>
+              <div v-else-if="(run.framework || '').toLowerCase() === 'jmeter' && run.status !== 'Running'" class="flex flex-col gap-1">
+                <button
+                  v-for="jtl in jmeterResults"
+                  :key="jtl"
+                  @click="viewJmeterReport(jtl)"
+                  class="px-2 py-1 bg-secondary text-on-secondary font-label uppercase text-[10px] border-[2px] border-outline hover:translate-x-[1px] hover:translate-y-[1px] transition-all flex items-center gap-1 w-fit whitespace-nowrap"
+                >
+                  <span class="material-symbols-outlined text-[12px]">speed</span> JTL: {{ jtl }}
+                </button>
+                <span v-if="jmeterResults.length === 0" class="text-[10px] text-on-surface-variant">No .jtl files</span>
+              </div>
               <span v-else class="text-on-surface-variant text-[10px] font-label">—</span>
             </td>
           </tr>
@@ -171,6 +201,7 @@ onMounted(() => {
           <select v-model="newRun.framework" class="w-full px-3 py-2 bg-surface border-[2px] border-outline font-body focus:outline-none shadow-[2px_2px_0px_#000000]">
             <option value="Playwright">Playwright</option>
             <option value="Cypress">Cypress</option>
+            <option value="JMeter">JMeter</option>
           </select>
         </div>
         <div class="flex flex-col gap-1">
@@ -197,6 +228,48 @@ onMounted(() => {
       </div>
       <div class="flex-1 overflow-y-auto bg-[#1e1e1e] p-4 border-[2px] border-outline">
         <pre class="font-mono text-[12px] text-[#d4d4d4] whitespace-pre-wrap">{{ currentLog }}</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- JMeter Report Modal -->
+  <div v-if="isJmeterModalOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+    <div class="w-full max-w-6xl max-h-[90vh] flex flex-col bg-surface-container-lowest border-[3px] border-outline p-gutter shadow-[4px_4px_0px_#000000]">
+      <div class="flex items-center justify-between mb-4 border-b-[2px] border-outline pb-2">
+        <h2 class="font-headline text-headline uppercase flex items-center gap-2">
+          <span class="material-symbols-outlined">speed</span> JMeter Report: {{ currentJmeterFile }}
+        </h2>
+        <button @click="isJmeterModalOpen = false" class="material-symbols-outlined hover:text-error transition-colors">close</button>
+      </div>
+      <div class="flex-1 overflow-y-auto border-[2px] border-outline">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-primary text-on-primary font-label uppercase text-[10px] tracking-wider">
+              <th class="p-2 border-b-[2px] border-outline">Time</th>
+              <th class="p-2 border-b-[2px] border-outline">Label</th>
+              <th class="p-2 border-b-[2px] border-outline">Response Code</th>
+              <th class="p-2 border-b-[2px] border-outline">Message</th>
+              <th class="p-2 border-b-[2px] border-outline">Thread Name</th>
+              <th class="p-2 border-b-[2px] border-outline">Success</th>
+              <th class="p-2 border-b-[2px] border-outline">Bytes</th>
+              <th class="p-2 border-b-[2px] border-outline">Latency (ms)</th>
+            </tr>
+          </thead>
+          <tbody class="font-body text-[12px] divide-y-[1px] divide-outline bg-surface">
+            <tr v-for="(row, idx) in currentJmeterData" :key="idx" class="hover:bg-surface-container-highest transition-colors">
+              <td class="p-2">{{ new Date(Number(row.timeStamp)).toLocaleString() }}</td>
+              <td class="p-2">{{ row.label }}</td>
+              <td class="p-2">
+                <span :class="row.responseCode === '200' ? 'text-green-600 font-bold' : 'text-error font-bold'">{{ row.responseCode }}</span>
+              </td>
+              <td class="p-2">{{ row.responseMessage }}</td>
+              <td class="p-2 text-[10px]">{{ row.threadName }}</td>
+              <td class="p-2 font-bold" :class="row.success === 'true' ? 'text-green-600' : 'text-error'">{{ row.success }}</td>
+              <td class="p-2">{{ row.bytes }}</td>
+              <td class="p-2">{{ row.Latency }}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

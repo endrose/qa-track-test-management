@@ -35,6 +35,16 @@ export class AutomationController {
     return this.automationService.getScripts(framework);
   }
 
+  @Get('jmeter-results')
+  getJmeterResults() {
+    return this.automationService.getJmeterResults();
+  }
+
+  @Get('jmeter-results/:filename')
+  getJmeterResultDetail(@Param('filename') filename: string) {
+    return this.automationService.getJmeterResultDetail(filename);
+  }
+
   @Get('scripts/:filename')
   getScriptContent(@Param('filename') filename: string, @Query('framework') framework: string) {
     return this.automationService.getScriptContent(filename, framework);
