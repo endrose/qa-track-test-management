@@ -52,9 +52,15 @@ export class AutomationService {
     let failed = 0;
     let status = 'Failed';
     let command = 'npm run test';
-    const workspacePath = framework === 'Cypress' ? 'cypress/cypress' : 'playwright';
+    
+    let workspacePath = 'playwright';
+    if (framework.toLowerCase() === 'cypress') workspacePath = 'cypress/cypress';
+    else if (framework.toLowerCase() === 'jmeter') workspacePath = 'jmeter';
     const cwd = path.resolve(process.cwd(), `../../automation/${workspacePath}`);
     const allureResultsDir = run.project?.id ? `./allure-results/${run.project.id}` : './allure-results';
+    // timeout 5 menit untuk mencegah stuck
+    const EXEC_TIMEOUT = 5 * 60 * 1000;
+
 
     try {
       if (run.project) {
@@ -89,13 +95,15 @@ export class AutomationService {
         }
       }
 
-      const htmlReportDir = run.project?.id ? `./playwright-report/${run.project.id}` : './playwright-report';
+      const htmlReportDir = framework.toLowerCase() === 'cypress'
+        ? (run.project?.id ? `./cypress-report/${run.project.id}` : './cypress-report')
+        : (run.project?.id ? `./playwright-report/${run.project.id}` : './playwright-report');
       const env = { 
         ...process.env, 
         ALLURE_RESULTS_DIR: allureResultsDir,
         HTML_REPORT_DIR: htmlReportDir
       };
-      const { stdout, stderr } = await execAsync(command, { cwd, env });
+      const { stdout, stderr } = await execAsync(command, { cwd, env, timeout: EXEC_TIMEOUT });
       logOutput = stdout + '\n' + stderr;
       status = 'Passed';
       

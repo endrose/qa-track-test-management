@@ -37,6 +37,10 @@ import { join } from 'path';
       rootPath: join(process.cwd(), '..', '..', 'automation', 'playwright', 'playwright-report'),
       serveRoot: '/html-report',
     }),
+    ServeStaticModule.forRoot({
+      rootPath: join(process.cwd(), '..', '..', 'automation', 'cypress', 'cypress-report'),
+      serveRoot: '/cypress-report',
+    }),
     ProjectsModule,
     RequirementsModule,
     TestExecutionsModule,

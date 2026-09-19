@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 
 const selectedProjectId = ref(localStorage.getItem('selectedProjectId') || '')
+const selectedFramework = ref<'playwright' | 'cypress'>('playwright')
 
 const htmlReportUrl = computed(() => {
+  const base = selectedFramework.value === 'cypress' ? 'cypress-report' : 'html-report'
   if (selectedProjectId.value) {
-    return `http://127.0.0.1:3000/html-report/${selectedProjectId.value}/index.html`
+    return `http://127.0.0.1:3000/${base}/${selectedProjectId.value}/index.html`
   }
-  return 'http://127.0.0.1:3000/html-report/index.html'
+  return `http://127.0.0.1:3000/${base}/index.html`
 })
 
 const iframeRef = ref<HTMLIFrameElement | null>(null)
@@ -35,6 +37,20 @@ const refreshReport = () => {
 const openInNewTab = () => {
   window.open(htmlReportUrl.value, '_blank')
 }
+
+// Reload iframe when framework changes
+watch(selectedFramework, () => {
+  iframeLoading.value = true
+  iframeError.value = false
+})
+
+// Listen for project changes from TopBar
+window.addEventListener('storage', (e) => {
+  if (e.key === 'selectedProjectId') {
+    selectedProjectId.value = e.newValue || ''
+    refreshReport()
+  }
+})
 </script>
 
 <template>
@@ -42,14 +58,32 @@ const openInNewTab = () => {
     <!-- Header -->
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-surface-container-lowest border-[3px] border-outline p-gutter shadow-[4px_4px_0px_#000000]">
       <div class="flex flex-col gap-1">
-        <span class="px-2 py-0.5 bg-[#f97316] text-white font-label uppercase text-[10px] tracking-widest border-[2px] border-outline w-fit">Playwright</span>
+        <span class="px-2 py-0.5 bg-[#f97316] text-white font-label uppercase text-[10px] tracking-widest border-[2px] border-outline w-fit">E2E</span>
         <h1 class="font-display text-display text-on-surface tracking-tight uppercase">HTML Report</h1>
       </div>
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-3 flex-wrap">
+        <!-- Framework Toggle -->
+        <div class="flex border-[2px] border-outline overflow-hidden shadow-[2px_2px_0px_#000000]">
+          <button
+            @click="selectedFramework = 'playwright'"
+            :class="selectedFramework === 'playwright' ? 'bg-[#f97316] text-white' : 'bg-surface text-on-surface hover:bg-surface-dim'"
+            class="px-3 py-1.5 font-label uppercase text-[10px] tracking-widest transition-colors flex items-center gap-1"
+          >
+            <span class="material-symbols-outlined text-[12px]">smart_toy</span> Playwright
+          </button>
+          <button
+            @click="selectedFramework = 'cypress'"
+            :class="selectedFramework === 'cypress' ? 'bg-[#22c55e] text-white' : 'bg-surface text-on-surface hover:bg-surface-dim'"
+            class="px-3 py-1.5 font-label uppercase text-[10px] tracking-widest transition-colors border-l-[2px] border-outline flex items-center gap-1"
+          >
+            <span class="material-symbols-outlined text-[12px]">bug_report</span> Cypress
+          </button>
+        </div>
+
         <button @click="refreshReport" class="px-3 py-2 bg-surface text-on-surface font-label uppercase border-[2px] border-outline shadow-[3px_3px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all flex items-center gap-2">
           <span class="material-symbols-outlined text-[18px]">refresh</span> Refresh
         </button>
-        <button @click="openInNewTab" class="px-3 py-2 bg-[#f97316] text-white font-label uppercase border-[2px] border-outline shadow-[3px_3px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all flex items-center gap-2">
+        <button @click="openInNewTab" :class="selectedFramework === 'cypress' ? 'bg-[#22c55e]' : 'bg-[#f97316]'" class="px-3 py-2 text-white font-label uppercase border-[2px] border-outline shadow-[3px_3px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all flex items-center gap-2">
           <span class="material-symbols-outlined text-[18px]">open_in_new</span> Open in New Tab
         </button>
       </div>
@@ -76,7 +110,7 @@ const openInNewTab = () => {
       <!-- Loading State -->
       <div v-if="iframeLoading" class="absolute inset-0 top-[37px] flex flex-col items-center justify-center bg-surface-container-lowest z-10">
         <span class="material-symbols-outlined animate-spin text-[32px] text-primary mb-2">sync</span>
-        <span class="font-label uppercase text-label">Loading HTML Report...</span>
+        <span class="font-label uppercase text-label">Loading {{ selectedFramework === 'cypress' ? 'Cypress' : 'Playwright' }} HTML Report...</span>
       </div>
 
       <!-- Error State -->
@@ -84,7 +118,7 @@ const openInNewTab = () => {
         <span class="material-symbols-outlined text-[48px] text-error mb-2">error</span>
         <h2 class="font-headline text-headline uppercase mb-2">Report Not Found</h2>
         <p class="font-body text-body text-center max-w-md text-on-surface-variant mb-4">
-          HTML Report belum di-generate atau API backend tidak berjalan.
+          {{ selectedFramework === 'cypress' ? 'Cypress' : 'Playwright' }} HTML Report belum di-generate atau API backend tidak berjalan.
         </p>
         <button @click="refreshReport" class="px-4 py-2 bg-surface border-[2px] border-outline font-label uppercase text-[12px] hover:bg-surface-dim">
           Try Again
@@ -97,7 +131,7 @@ const openInNewTab = () => {
         class="w-full h-full border-none"
         @load="onIframeLoad"
         @error="onIframeError"
-        title="Playwright HTML Report"
+        :title="`${selectedFramework === 'cypress' ? 'Cypress' : 'Playwright'} HTML Report`"
       ></iframe>
     </div>
   </div>
