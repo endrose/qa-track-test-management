@@ -17,7 +17,7 @@
 | **Eksekusi Lokal** | Jalankan test dan pantau output real-time langsung dari UI |
 | **Test Reports & Viewer** | Lihat live status, export PDF, dan parse JMeter `.jtl` reports langsung ke dalam tabel UI |
 | **Bug Tracker** | Bug otomatis dibuat saat test gagal, lengkap dengan log dan screenshot |
-| **Allure Reports** | Generate dan serve Allure Report setelah eksekusi test |
+| **Allure & HTML Reports** | Generate dan serve Allure & Native Playwright HTML Report terisolasi per-project setelah eksekusi test |
 | **Auth & User Management** | Login dengan bcrypt-encrypted password, invite user, atur role |
 
 ---
@@ -153,6 +153,15 @@ Saat backend pertama kali dijalankan, akun admin otomatis dibuat:
 3. Lihat Live Status — Passed, Failed, Ready, Draft secara real-time
 4. Klik "Generate Snapshot" untuk menyimpan state saat ini ke history
 5. Klik "Export PDF" untuk mengunduh laporan lengkap dalam format PDF
+```
+
+### Memantau Test Automation Report (Per Project)
+
+```
+Aplikasi kini menyediakan halaman laporan khusus yang terisolasi secara otomatis berdasarkan project yang sedang kamu pilih di top-bar:
+- Allure Report: Laporan eksekusi interaktif (Sidebar > Allure Report)
+- HTML Report: Laporan native Playwright HTML (Sidebar > HTML Report)
+- JMeter Report: Parsing hasil .jtl performa ke dalam tabel metrik (Sidebar > JMeter Report)
 ```
 
 ---

@@ -36,13 +36,13 @@ export class AutomationController {
   }
 
   @Get('jmeter-results')
-  getJmeterResults() {
-    return this.automationService.getJmeterResults();
+  getJmeterResults(@Query('projectId') projectId?: string) {
+    return this.automationService.getJmeterResults(projectId);
   }
 
   @Get('jmeter-results/:filename')
-  getJmeterResultDetail(@Param('filename') filename: string) {
-    return this.automationService.getJmeterResultDetail(filename);
+  getJmeterResultDetail(@Param('filename') filename: string, @Query('projectId') projectId?: string) {
+    return this.automationService.getJmeterResultDetail(filename, projectId);
   }
 
   @Get('scripts/:filename')

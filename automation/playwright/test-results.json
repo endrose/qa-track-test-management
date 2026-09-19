@@ -3,8 +3,7 @@
     "argv": [
       "C:\\Program Files\\nodejs\\node.exe",
       "D:\\Workspace\\vue\\qa-track-test-management\\node_modules\\@playwright\\test\\cli.js",
-      "test",
-      "sauce-login.spec.ts"
+      "test"
     ],
     "configFile": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\playwright.config.ts",
     "rootDir": "D:/Workspace/vue/qa-track-test-management/automation/playwright/tests",
@@ -50,7 +49,7 @@
       [
         "html",
         {
-          "outputFolder": "playwright-report",
+          "outputFolder": "./playwright-report/e4c8c3a8-cc88-4184-b126-15010959199e",
           "open": "never"
         }
       ],
@@ -58,7 +57,7 @@
         "D:\\Workspace\\vue\\qa-track-test-management\\node_modules\\allure-playwright\\dist\\cjs\\index.js",
         {
           "detail": true,
-          "outputFolder": "./allure-results",
+          "outputFolder": "./allure-results/e4c8c3a8-cc88-4184-b126-15010959199e",
           "suiteTitle": false
         }
       ],
@@ -80,6 +79,57 @@
     "webServer": null
   },
   "suites": [
+    {
+      "title": "cypress-sauce.spec.ts",
+      "file": "cypress-sauce.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Test Suite",
+          "file": "cypress-sauce.spec.ts",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Cypress Sauce",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 21568,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-19T08:48:01.190Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f5df60a0f83b3eaf7405-14e89deb779ed6cb0cfc",
+              "file": "cypress-sauce.spec.ts",
+              "line": 4,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
     {
       "title": "sauce-login.spec.ts",
       "file": "sauce-login.spec.ts",
@@ -109,7 +159,7 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 15371,
+                      "duration": 248,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
@@ -125,10 +175,10 @@
                         },
                         {
                           "title": "Then I should see dashboard https://www.saucedemo.com/inventory.html and title Swag Labs",
-                          "duration": 0
+                          "duration": 1
                         }
                       ],
-                      "startTime": "2026-09-15T10:40:44.871Z",
+                      "startTime": "2026-09-19T08:48:28.345Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -144,13 +194,64 @@
           ]
         }
       ]
+    },
+    {
+      "title": "website-sauce.spec.ts",
+      "file": "website-sauce.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Test Suite",
+          "file": "website-sauce.spec.ts",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Website Sauce",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3593,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-19T08:48:28.656Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1d855b5855b193a7bf03-6b307e2d89ebcc773325",
+              "file": "website-sauce.spec.ts",
+              "line": 4,
+              "column": 7
+            }
+          ]
+        }
+      ]
     }
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-09-15T10:40:43.199Z",
-    "duration": 23641.585,
-    "expected": 1,
+    "startTime": "2026-09-19T08:47:59.963Z",
+    "duration": 33177.534,
+    "expected": 3,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0

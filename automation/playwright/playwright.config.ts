@@ -8,7 +8,7 @@ export default defineConfig({
   workers: 1,
   reporter: [
     ['json', { outputFile: 'test-results.json' }],
-    ['html', { outputFolder: 'playwright-report', open: 'never' }],
+    ['html', { outputFolder: process.env.HTML_REPORT_DIR || 'playwright-report', open: 'never' }],
     ['allure-playwright', { detail: true, outputFolder: process.env.ALLURE_RESULTS_DIR || 'allure-results', suiteTitle: false }],
     ['line'],
   ],

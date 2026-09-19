@@ -33,6 +33,10 @@ import { join } from 'path';
       rootPath: join(process.cwd(), '..', '..', 'automation', 'playwright', 'allure-report'),
       serveRoot: '/allure',
     }),
+    ServeStaticModule.forRoot({
+      rootPath: join(process.cwd(), '..', '..', 'automation', 'playwright', 'playwright-report'),
+      serveRoot: '/html-report',
+    }),
     ProjectsModule,
     RequirementsModule,
     TestExecutionsModule,

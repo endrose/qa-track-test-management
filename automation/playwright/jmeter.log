@@ -1,0 +1,30 @@
+2026-09-19 16:22:33,934 INFO o.a.j.u.JMeterUtils: Setting Locale to en_EN
+2026-09-19 16:22:33,967 INFO o.a.j.JMeter: Loading user properties from: D:\Program Files\apache-jmeter-5.6.3\bin\user.properties
+2026-09-19 16:22:33,967 INFO o.a.j.JMeter: Loading system properties from: D:\Program Files\apache-jmeter-5.6.3\bin\system.properties
+2026-09-19 16:22:33,978 INFO o.a.j.JMeter: Copyright (c) 1998-2024 The Apache Software Foundation
+2026-09-19 16:22:33,979 INFO o.a.j.JMeter: Version 5.6.3
+2026-09-19 16:22:33,979 INFO o.a.j.JMeter: java.version=17.0.17
+2026-09-19 16:22:33,979 INFO o.a.j.JMeter: java.vm.name=OpenJDK 64-Bit Server VM
+2026-09-19 16:22:33,979 INFO o.a.j.JMeter: os.name=Windows 11
+2026-09-19 16:22:33,979 INFO o.a.j.JMeter: os.arch=amd64
+2026-09-19 16:22:33,979 INFO o.a.j.JMeter: os.version=10.0
+2026-09-19 16:22:33,979 INFO o.a.j.JMeter: file.encoding=Cp1252
+2026-09-19 16:22:33,980 INFO o.a.j.JMeter: java.awt.headless=true
+2026-09-19 16:22:33,980 INFO o.a.j.JMeter: Max memory     =1073741824
+2026-09-19 16:22:33,980 INFO o.a.j.JMeter: Available Processors =8
+2026-09-19 16:22:33,997 INFO o.a.j.JMeter: Default Locale=English (EN)
+2026-09-19 16:22:33,998 INFO o.a.j.JMeter: JMeter  Locale=English (EN)
+2026-09-19 16:22:33,998 INFO o.a.j.JMeter: JMeterHome=D:\Program Files\apache-jmeter-5.6.3
+2026-09-19 16:22:33,998 INFO o.a.j.JMeter: user.dir  =D:\Workspace\vue\qa-track-test-management\automation\playwright
+2026-09-19 16:22:33,999 INFO o.a.j.JMeter: PWD       =D:\Workspace\vue\qa-track-test-management\automation\playwright
+2026-09-19 16:22:34,007 INFO o.a.j.JMeter: IP: 192.168.1.18 Name: Armstrong FullName: Armstrong
+2026-09-19 16:22:34,029 ERROR o.a.j.JMeter: An error occurred: 
+org.apache.jmeter.report.config.ConfigurationException: The file D:\Workspace\vue\qa-track-test-management\automation\playwright\scripts\login-web-sauce.jmx doesn't exist or can't be opened
+	at org.apache.jmeter.JMeter.runNonGui(JMeter.java:950) ~[ApacheJMeter_core.jar:5.6.3]
+	at org.apache.jmeter.JMeter.startNonGui(JMeter.java:940) ~[ApacheJMeter_core.jar:5.6.3]
+	at org.apache.jmeter.JMeter.start(JMeter.java:508) [ApacheJMeter_core.jar:5.6.3]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[?:?]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[?:?]
+	at org.apache.jmeter.NewDriver.main(NewDriver.java:259) [ApacheJMeter.jar:5.6.3]

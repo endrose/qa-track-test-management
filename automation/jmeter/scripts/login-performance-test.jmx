@@ -111,11 +111,12 @@ Skenario: 50 user concurrent login bersamaan, 3 iterasi masing-masing (150 total
           <hashTree/>
 
           <!-- JSON Extractor: ambil token untuk request berikutnya -->
-          <JSONPathExtractor guiclass="JSONPathExtractorGui" testclass="JSONPathExtractor" testname="Extract: auth_token" enabled="true">
-            <stringProp name="JSONPathExtractor.referenceNames">auth_token</stringProp>
-            <stringProp name="JSONPathExtractor.jsonPathExprs">$.token</stringProp>
-            <stringProp name="JSONPathExtractor.defaultValues">NOT_FOUND</stringProp>
-          </JSONPathExtractor>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract: auth_token" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">auth_token</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.token</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+            <stringProp name="JSONPostProcessor.defaultValues">NOT_FOUND</stringProp>
+          </JSONPostProcessor>
           <hashTree/>
         </hashTree>
 

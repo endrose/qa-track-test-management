@@ -14,6 +14,8 @@ import TestScenarios from '../pages/TestScenarios.vue'
 import RTM from '../pages/RTM.vue'
 import Settings from '../pages/Settings.vue'
 import AllureReport from '../pages/AllureReport.vue'
+import HtmlReport from '../pages/HtmlReport.vue'
+import JMeterReport from '../pages/JMeterReport.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -93,21 +95,29 @@ const router = createRouter({
           path: 'allure-report',
           name: 'AllureReport',
           component: AllureReport
+        },
+        {
+          path: 'html-report',
+          name: 'HtmlReport',
+          component: HtmlReport
+        },
+        {
+          path: 'jmeter-report',
+          name: 'JMeterReport',
+          component: JMeterReport
         }
       ]
     }
   ]
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, from) => {
   const token = localStorage.getItem('token')
   
   if (to.meta.requiresAuth && !token) {
-    next('/login')
+    return '/login'
   } else if (to.path === '/login' && token) {
-    next('/')
-  } else {
-    next()
+    return '/'
   }
 })
 

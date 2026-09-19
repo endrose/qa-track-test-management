@@ -16,7 +16,7 @@ export class TestCasesService {
   }
 
   async findOne(id: string) {
-    const testCase = await this.testCasesRepository.findOne({ where: { id } });
+    const testCase = await this.testCasesRepository.findOne({ where: { id }, relations: { project: true } });
     if (!testCase) throw new NotFoundException('TestCase not found');
     return testCase;
   }

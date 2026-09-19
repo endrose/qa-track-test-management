@@ -59,23 +59,42 @@ export class AutomationService {
     try {
       if (run.project) {
         const testCases = await this.testCasesService.findAll();
-        const projectTestCases = testCases.filter(tc => tc.project?.id === run.project.id && tc.automationType === 'script' && tc.automationScript);
+        const projectTestCases = testCases.filter(tc => 
+          tc.project?.id === run.project.id && 
+          tc.automationType === 'script' && 
+          tc.automationScript && 
+          tc.automationTool?.toLowerCase() === framework.toLowerCase()
+        );
         
         if (projectTestCases.length > 0) {
           const scripts = Array.from(new Set(projectTestCases.map(tc => tc.automationScript)));
-          if (framework === 'Playwright') {
+          if (framework.toLowerCase() === 'playwright') {
             command = `npx playwright test ${scripts.join(' ')}`;
-          } else if (framework === 'Cypress') {
+          } else if (framework.toLowerCase() === 'cypress') {
             const specList = scripts.map(s => `cypress/e2e/${s}`).join(',');
             command = `npx cypress run --spec "${specList}"`;
+          } else if (framework.toLowerCase() === 'jmeter') {
+            const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+            const jmeterBin = process.env.JMETER_PATH ? process.env.JMETER_PATH.replace('jmeter.bat', 'jmeter-n.cmd') : 'D:\\Program Files\\apache-jmeter-5.6.3\\bin\\jmeter-n.cmd';
+            const projectPath = run.project?.id ? `${run.project.id}/` : '';
+            const resultsDir = path.resolve(process.cwd(), `../../automation/jmeter/results/${run.project?.id || ''}`);
+            try { await fs.mkdir(resultsDir, { recursive: true }); } catch (e) {}
+            command = scripts
+              .map(f => `"${jmeterBin}" -t "scripts/${f}" -l "results/${projectPath}run_${f}_${timestamp}.jtl"`)
+              .join(' && ');
           }
         } else {
-          await this.update(id, { status: 'Failed', log: 'No automated test scripts found for this project.', passed: 0, failed: 0 });
+          await this.update(id, { status: 'Failed', log: 'No automated test scripts found for this project matching the selected framework.', passed: 0, failed: 0 });
           return;
         }
       }
 
-      const env = { ...process.env, ALLURE_RESULTS_DIR: allureResultsDir };
+      const htmlReportDir = run.project?.id ? `./playwright-report/${run.project.id}` : './playwright-report';
+      const env = { 
+        ...process.env, 
+        ALLURE_RESULTS_DIR: allureResultsDir,
+        HTML_REPORT_DIR: htmlReportDir
+      };
       const { stdout, stderr } = await execAsync(command, { cwd, env });
       logOutput = stdout + '\n' + stderr;
       status = 'Passed';
@@ -160,9 +179,13 @@ export class AutomationService {
     }
   }
 
-  async getJmeterResults() {
+  async getJmeterResults(projectId?: string) {
     try {
-      const resultsDir = path.resolve(process.cwd(), '../../automation/jmeter/results');
+      const baseDir = path.resolve(process.cwd(), '../../automation/jmeter/results');
+      const resultsDir = projectId ? path.join(baseDir, projectId) : baseDir;
+      // Ensure dir exists
+      try { await fs.access(resultsDir); } catch { return []; }
+      
       const files = await fs.readdir(resultsDir);
       return files.filter(f => f.endsWith('.jtl')).sort().reverse();
     } catch (e) {
@@ -171,11 +194,12 @@ export class AutomationService {
     }
   }
 
-  async getJmeterResultDetail(filename: string) {
+  async getJmeterResultDetail(filename: string, projectId?: string) {
     try {
-      const resultsDir = path.resolve(process.cwd(), '../../automation/jmeter/results');
+      const baseDir = path.resolve(process.cwd(), '../../automation/jmeter/results');
+      const resultsDir = projectId ? path.join(baseDir, projectId) : baseDir;
       const filePath = path.join(resultsDir, filename);
-      if (!filePath.startsWith(resultsDir)) throw new Error('Invalid path');
+      if (!filePath.startsWith(baseDir)) throw new Error('Invalid path');
       
       const content = await fs.readFile(filePath, 'utf-8');
       const lines = content.split('\n').map(l => l.trim()).filter(l => l);
@@ -611,14 +635,17 @@ export class AutomationService {
         command = `npx cypress run --spec "cypress/e2e/${testCase.automationScript}"`;
       } else if (framework === 'jmeter') {
         const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-        const jmeterBin = process.env.JMETER_PATH || 'D:\\Program Files\\apache-jmeter-5.6.3\\bin\\jmeter.bat';
-        command = `"${jmeterBin}" -n -t "scripts/${testCase.automationScript}" -l "results/run_${timestamp}.jtl"`;
+        const jmeterBin = process.env.JMETER_PATH ? process.env.JMETER_PATH.replace('jmeter.bat', 'jmeter-n.cmd') : 'D:\\Program Files\\apache-jmeter-5.6.3\\bin\\jmeter-n.cmd';
+        const projectPath = testCase.project?.id ? `${testCase.project.id}/` : '';
+        const resultsDir = path.resolve(process.cwd(), `../../automation/jmeter/results/${testCase.project?.id || ''}`);
+        try { await fs.mkdir(resultsDir, { recursive: true }); } catch (e) {}
+        command = `"${jmeterBin}" -t "scripts/${testCase.automationScript}" -l "results/${projectPath}run_${timestamp}.jtl"`;
       }
     }
     // Jika jmeter tanpa script spesifik, jalankan semua .jmx di folder scripts
     else if (framework === 'jmeter') {
       const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-      const jmeterBin = process.env.JMETER_PATH || 'D:\\Program Files\\apache-jmeter-5.6.3\\bin\\jmeter.bat';
+      const jmeterBin = process.env.JMETER_PATH ? process.env.JMETER_PATH.replace('jmeter.bat', 'jmeter-n.cmd') : 'D:\\Program Files\\apache-jmeter-5.6.3\\bin\\jmeter-n.cmd';
       const scriptsDir = path.resolve(process.cwd(), '../../automation/jmeter/scripts');
       let jmxFiles: string[] = [];
       try {
@@ -629,9 +656,14 @@ export class AutomationService {
       if (jmxFiles.length === 0) {
         return { status: 'Failed', log: 'No .jmx script files found in automation/jmeter/scripts/' };
       }
+      
+      const projectPath = testCase.project?.id ? `${testCase.project.id}/` : '';
+      const jmeterResultsDir = path.resolve(process.cwd(), `../../automation/jmeter/results/${testCase.project?.id || ''}`);
+      try { await fs.mkdir(jmeterResultsDir, { recursive: true }); } catch (e) {}
+
       // Jalankan setiap file .jmx secara berurutan
       command = jmxFiles
-        .map(f => `"${jmeterBin}" -n -t "scripts/${f}" -l "results/run_${f}_${timestamp}.jtl"`)
+        .map(f => `"${jmeterBin}" -t "scripts/${f}" -l "results/${projectPath}run_${f}_${timestamp}.jtl"`)
         .join(' && ');
     }
     // Jika data-driven, lemparkan config ke generic script
@@ -646,10 +678,12 @@ export class AutomationService {
     
     try {
       const allureResultsDir = testCase.project?.id ? `./allure-results/${testCase.project.id}` : './allure-results';
+      const htmlReportDir = testCase.project?.id ? `./playwright-report/${testCase.project.id}` : './playwright-report';
       const env = { 
         ...process.env, 
         TEST_CASE_CONFIG: JSON.stringify(testCase.automationConfig || {}),
-        ALLURE_RESULTS_DIR: allureResultsDir
+        ALLURE_RESULTS_DIR: allureResultsDir,
+        HTML_REPORT_DIR: htmlReportDir
       };
       
       const { stdout, stderr } = await execAsync(command, { cwd, env });

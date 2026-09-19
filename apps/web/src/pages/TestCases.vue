@@ -24,26 +24,72 @@ const parseConfigForBackend = (type: string, config: any) => {
 
 const scriptDictionary: Record<string, {label: string, desc: string}[]> = {
   playwright: [
-    { label: 'page.goto(\'url\')', desc: 'Navigate to URL' },
-    { label: 'page.locator(\'selector\').click()', desc: 'Click an element' },
-    { label: 'page.locator(\'selector\').fill(\'value\')', desc: 'Fill input' },
-    { label: 'page.locator(\'selector\').check()', desc: 'Check a checkbox' },
-    { label: 'page.locator(\'selector\').selectOption(\'value\')', desc: 'Select dropdown option' },
-    { label: 'expect(page.locator(\'selector\')).toBeVisible()', desc: 'Assert element is visible' },
-    { label: 'expect(page.locator(\'selector\')).toHaveText(\'text\')', desc: 'Assert element text' },
-    { label: 'page.pause()', desc: 'Pause execution for debugging' },
-    { label: 'page.screenshot({ path: \'screenshot.png\' })', desc: 'Take screenshot' },
+    // Core Actions
+    { label: 'await page.goto(\'url\')', desc: 'Navigate to URL' },
+    { label: 'await page.getByRole(\'button\', { name: \'Submit\' }).click()', desc: 'Click button by role' },
+    { label: 'await page.getByLabel(\'Email\').fill(\'text\')', desc: 'Fill input by label' },
+    { label: 'await page.getByPlaceholder(\'Search\').fill(\'text\')', desc: 'Fill input by placeholder' },
+    { label: 'await page.getByTestId(\'submit-btn\').click()', desc: 'Click by Test ID' },
+    { label: 'await page.locator(\'selector\').check()', desc: 'Check a checkbox or radio' },
+    { label: 'await page.locator(\'selector\').selectOption(\'value\')', desc: 'Select dropdown option' },
+    // Advanced Actions
+    { label: 'await page.locator(\'selector\').hover()', desc: 'Hover over an element' },
+    { label: 'await page.locator(\'selector\').dragTo(target)', desc: 'Drag and drop' },
+    { label: 'await page.keyboard.press(\'Enter\')', desc: 'Press a keyboard key' },
+    // Assertions
+    { label: 'await expect(page).toHaveURL(/.*dashboard/)', desc: 'Assert URL matches regex' },
+    { label: 'await expect(page).toHaveTitle(\'Title\')', desc: 'Assert page title' },
+    { label: 'await expect(page.locator(\'selector\')).toBeVisible()', desc: 'Assert element is visible' },
+    { label: 'await expect(page.locator(\'selector\')).toHaveText(\'text\')', desc: 'Assert exact text' },
+    { label: 'await expect(page.locator(\'selector\')).toContainText(\'text\')', desc: 'Assert partial text' },
+    { label: 'await expect(page.locator(\'selector\')).toBeEnabled()', desc: 'Assert element is enabled' },
+    { label: 'await expect(page.locator(\'selector\')).toBeDisabled()', desc: 'Assert element is disabled' },
+    // Utilities
+    { label: 'await page.waitForTimeout(1000)', desc: 'Wait for 1000ms' },
+    { label: 'await page.pause()', desc: 'Pause execution for debugging' },
+    { label: 'await page.screenshot({ path: \'shot.png\' })', desc: 'Take a screenshot' },
   ],
   cypress: [
+    // Core Actions
     { label: 'cy.visit(\'url\')', desc: 'Visit a URL' },
     { label: 'cy.get(\'selector\').click()', desc: 'Click a DOM element' },
-    { label: 'cy.get(\'selector\').type(\'value\')', desc: 'Type into an element' },
-    { label: 'cy.get(\'selector\').check()', desc: 'Check a checkbox' },
+    { label: 'cy.contains(\'text\').click()', desc: 'Click element containing text' },
+    { label: 'cy.get(\'selector\').type(\'value\')', desc: 'Type into an input' },
+    { label: 'cy.get(\'selector\').clear()', desc: 'Clear an input' },
+    { label: 'cy.get(\'selector\').check()', desc: 'Check a checkbox or radio' },
     { label: 'cy.get(\'selector\').select(\'value\')', desc: 'Select dropdown option' },
+    // Advanced Actions
+    { label: 'cy.get(\'selector\').trigger(\'mouseover\')', desc: 'Hover over an element' },
+    { label: 'cy.get(\'selector\').type(\'{enter}\')', desc: 'Press Enter key' },
+    { label: 'cy.intercept(\'GET\', \'/api/*\')', desc: 'Intercept network request' },
+    // Assertions
+    { label: 'cy.url().should(\'include\', \'/dashboard\')', desc: 'Assert URL includes text' },
     { label: 'cy.get(\'selector\').should(\'be.visible\')', desc: 'Assert element is visible' },
+    { label: 'cy.get(\'selector\').should(\'not.exist\')', desc: 'Assert element does not exist' },
     { label: 'cy.get(\'selector\').should(\'contain\', \'text\')', desc: 'Assert element contains text' },
+    { label: 'cy.get(\'selector\').should(\'have.value\', \'val\')', desc: 'Assert input value' },
+    { label: 'cy.get(\'selector\').should(\'be.disabled\')', desc: 'Assert element is disabled' },
+    // Utilities
+    { label: 'cy.wait(1000)', desc: 'Wait for 1000ms' },
     { label: 'cy.pause()', desc: 'Pause execution for debugging' },
-    { label: 'cy.screenshot()', desc: 'Take screenshot' },
+    { label: 'cy.screenshot()', desc: 'Take a screenshot' },
+  ],
+  jmeter: [
+    // Components
+    { label: '<TestPlan>', desc: 'Root element of JMeter test' },
+    { label: '<ThreadGroup>', desc: 'Simulates concurrent users' },
+    { label: '<HTTPSamplerProxy>', desc: 'HTTP Request Sampler' },
+    { label: '<HeaderManager>', desc: 'Manage HTTP Headers' },
+    { label: '<CookieManager>', desc: 'Manage HTTP Cookies' },
+    // Assertions & Listeners
+    { label: '<ResponseAssertion>', desc: 'Assert response code/text' },
+    { label: '<JSONPathAssertion>', desc: 'Assert JSON response body' },
+    { label: '<ResultCollector>', desc: 'Listener for test results' },
+    // Variables & Functions
+    { label: '${VAR_NAME}', desc: 'Reference a variable' },
+    { label: '${__time()}', desc: 'Current time in ms' },
+    { label: '${__UUID()}', desc: 'Generate a UUID' },
+    { label: '${__Random(1,100)}', desc: 'Generate a random number' },
   ]
 }
 
