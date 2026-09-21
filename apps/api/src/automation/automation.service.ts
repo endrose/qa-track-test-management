@@ -6,8 +6,11 @@ import { exec } from 'child_process';
 import { promisify } from 'util';
 import * as path from 'path';
 import * as fs from 'fs/promises';
-import { BugsService } from '../bugs/bugs.service.js';
+import { ProjectsService } from '../projects/projects.service.js';
 import { TestCasesService } from '../test-cases/test-cases.service.js';
+import { NotificationsService } from '../notifications/notifications.service.js';
+import { BugsService } from '../bugs/bugs.service.js';
+import { AppConfigService } from '../app-config/app-config.service.js';
 
 const execAsync = promisify(exec);
 
@@ -18,6 +21,8 @@ export class AutomationService {
     private automationRepository: Repository<AutomationRun>,
     private testCasesService: TestCasesService,
     private bugsService: BugsService,
+    private notificationsService: NotificationsService,
+    private appConfigService: AppConfigService,
   ) {}
 
   findAll() {
@@ -61,6 +66,15 @@ export class AutomationService {
     // timeout 5 menit untuk mencegah stuck
     const EXEC_TIMEOUT = 5 * 60 * 1000;
 
+    // Send Telegram Notification (Start)
+    await this.sendTelegramNotif(`🚀 *[START]* Automation Run Berjalan\n\n*Framework:* ${framework}\n*Suite:* ${run.suiteName}\n*Project:* ${run.project?.name || '-'}`);
+    
+    // Save to Database Notification
+    await this.notificationsService.create(
+      'Automation Started',
+      `Run for ${framework} suite ${run.suiteName} is starting...`,
+      'info'
+    );
 
     try {
       if (run.project) {
@@ -81,12 +95,12 @@ export class AutomationService {
             command = `npx cypress run --spec "${specList}"`;
           } else if (framework.toLowerCase() === 'jmeter') {
             const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-            const jmeterBin = process.env.JMETER_PATH ? process.env.JMETER_PATH.replace('jmeter.bat', 'jmeter-n.cmd') : 'D:\\Program Files\\apache-jmeter-5.6.3\\bin\\jmeter-n.cmd';
+            const jmeterBin = process.env.JMETER_PATH ? process.env.JMETER_PATH.replace('jmeter-n.cmd', 'jmeter.bat') : 'D:\\Program Files\\apache-jmeter-5.6.3\\bin\\jmeter.bat';
             const projectPath = run.project?.id ? `${run.project.id}/` : '';
             const resultsDir = path.resolve(process.cwd(), `../../automation/jmeter/results/${run.project?.id || ''}`);
             try { await fs.mkdir(resultsDir, { recursive: true }); } catch (e) {}
             command = scripts
-              .map(f => `"${jmeterBin}" -t "scripts/${f}" -l "results/${projectPath}run_${f}_${timestamp}.jtl"`)
+              .map(f => `"${jmeterBin}" -n -t "scripts/${f}" -l "results/${projectPath}run_${f}_${timestamp}.jtl" < NUL`)
               .join(' && ');
           }
         } else {
@@ -146,6 +160,53 @@ export class AutomationService {
     }
 
     await this.update(id, { status, log: logOutput, passed, failed });
+    
+    // Send Telegram Notification (End)
+    if (status === 'Passed') {
+      await this.sendTelegramNotif(`✅ *[SUCCESS]* Automation Run Selesai\n\n*Framework:* ${framework}\n*Suite:* ${run.suiteName}\n*Passed:* ${passed}\n*Failed:* ${failed}\n*Project:* ${run.project?.name || '-'}`);
+      await this.notificationsService.create(
+        'Automation Success',
+        `Run for ${framework} suite ${run.suiteName} completed successfully. Passed: ${passed}, Failed: ${failed}.`,
+        'success'
+      );
+    } else {
+      await this.sendTelegramNotif(`❌ *[ERROR]* Automation Run Gagal\n\n*Framework:* ${framework}\n*Suite:* ${run.suiteName}\n*Passed:* ${passed}\n*Failed:* ${failed}\n*Project:* ${run.project?.name || '-'}`);
+      await this.notificationsService.create(
+        'Automation Failed',
+        `Run for ${framework} suite ${run.suiteName} failed. Passed: ${passed}, Failed: ${failed}.`,
+        'error'
+      );
+    }
+  }
+
+  private async sendTelegramNotif(message: string) {
+    // DB takes priority, fall back to .env
+    const dbEnabled = await this.appConfigService.get('telegram_enabled');
+    const dbToken = await this.appConfigService.get('telegram_token');
+    const dbChatId = await this.appConfigService.get('telegram_chat_id');
+
+    const isBotEnabled = dbEnabled ?? process.env.QA_NOTIF_BOT;
+    const token = (dbToken && dbToken.trim()) ? dbToken : process.env.QA_NOTIF_TOKEN;
+    const chatId = (dbChatId && dbChatId.trim()) ? dbChatId : (process.env.QA_NOTIF_CHAT_ID || process.env.QA_CHAT_ID || process.env.QA_NOTIF_BOT);
+
+    if (!isBotEnabled || isBotEnabled === 'false' || isBotEnabled === 'off' || !token) {
+      return;
+    }
+
+    try {
+      const url = `https://api.telegram.org/bot${token}/sendMessage`;
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: chatId, text: message, parse_mode: 'Markdown' })
+      });
+      if (!res.ok) {
+        const errText = await res.text();
+        console.error(`Telegram API Error (${res.status}):`, errText);
+      }
+    } catch (e) {
+      console.error('Failed to send Telegram notif:', e);
+    }
   }
 
   async update(id: string, data: Partial<AutomationRun>) {
@@ -643,17 +704,17 @@ export class AutomationService {
         command = `npx cypress run --spec "cypress/e2e/${testCase.automationScript}"`;
       } else if (framework === 'jmeter') {
         const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-        const jmeterBin = process.env.JMETER_PATH ? process.env.JMETER_PATH.replace('jmeter.bat', 'jmeter-n.cmd') : 'D:\\Program Files\\apache-jmeter-5.6.3\\bin\\jmeter-n.cmd';
+        const jmeterBin = process.env.JMETER_PATH ? process.env.JMETER_PATH.replace('jmeter-n.cmd', 'jmeter.bat') : 'D:\\Program Files\\apache-jmeter-5.6.3\\bin\\jmeter.bat';
         const projectPath = testCase.project?.id ? `${testCase.project.id}/` : '';
         const resultsDir = path.resolve(process.cwd(), `../../automation/jmeter/results/${testCase.project?.id || ''}`);
         try { await fs.mkdir(resultsDir, { recursive: true }); } catch (e) {}
-        command = `"${jmeterBin}" -t "scripts/${testCase.automationScript}" -l "results/${projectPath}run_${timestamp}.jtl"`;
+        command = `"${jmeterBin}" -n -t "scripts/${testCase.automationScript}" -l "results/${projectPath}run_${timestamp}.jtl" < NUL`;
       }
     }
     // Jika jmeter tanpa script spesifik, jalankan semua .jmx di folder scripts
     else if (framework === 'jmeter') {
       const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-      const jmeterBin = process.env.JMETER_PATH ? process.env.JMETER_PATH.replace('jmeter.bat', 'jmeter-n.cmd') : 'D:\\Program Files\\apache-jmeter-5.6.3\\bin\\jmeter-n.cmd';
+      const jmeterBin = process.env.JMETER_PATH ? process.env.JMETER_PATH.replace('jmeter-n.cmd', 'jmeter.bat') : 'D:\\Program Files\\apache-jmeter-5.6.3\\bin\\jmeter.bat';
       const scriptsDir = path.resolve(process.cwd(), '../../automation/jmeter/scripts');
       let jmxFiles: string[] = [];
       try {
@@ -671,7 +732,7 @@ export class AutomationService {
 
       // Jalankan setiap file .jmx secara berurutan
       command = jmxFiles
-        .map(f => `"${jmeterBin}" -t "scripts/${f}" -l "results/${projectPath}run_${f}_${timestamp}.jtl"`)
+        .map(f => `"${jmeterBin}" -n -t "scripts/${f}" -l "results/${projectPath}run_${f}_${timestamp}.jtl" < NUL`)
         .join(' && ');
     }
     // Jika data-driven, lemparkan config ke generic script

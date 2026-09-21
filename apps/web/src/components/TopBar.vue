@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -100,14 +100,52 @@ const handleKeydown = (e: KeyboardEvent) => {
   }
 }
 
+import { io } from 'socket.io-client'
+
+const notifications = ref<any[]>([])
+const unreadCount = computed(() => notifications.value.filter(n => !n.isRead).length)
+const showNotifications = ref(false)
+let socket: any = null
+
+const fetchNotifications = async () => {
+  try {
+    const res = await fetch('http://127.0.0.1:3000/api/notifications')
+    if (res.ok) notifications.value = await res.json()
+  } catch (err) {
+    console.error('Failed to fetch notifications', err)
+  }
+}
+
+const markAsRead = async (id: string) => {
+  try {
+    await fetch(`http://127.0.0.1:3000/api/notifications/${id}/read`, { method: 'PUT' })
+    const notif = notifications.value.find(n => n.id === id)
+    if (notif) notif.isRead = true
+  } catch (err) {}
+}
+
+const markAllAsRead = async () => {
+  try {
+    await fetch(`http://127.0.0.1:3000/api/notifications/read-all`, { method: 'PUT' })
+    notifications.value.forEach(n => n.isRead = true)
+  } catch (err) {}
+}
+
 onMounted(() => {
   window.addEventListener('keydown', handleKeydown)
   fetchTestCases()
+  fetchNotifications()
+
+  // Socket.io connection
+  socket = io('http://127.0.0.1:3000')
+  socket.on('new-notification', (notif: any) => {
+    notifications.value.unshift(notif)
+  })
 })
 
-import { onUnmounted } from 'vue'
 onUnmounted(() => {
   window.removeEventListener('keydown', handleKeydown)
+  if (socket) socket.disconnect()
 })
 
 const navigateToItem = (type: string) => {
@@ -217,9 +255,51 @@ const navigateToItem = (type: string) => {
           </div>
         </div>
       </div>
-      <button class="p-2 bg-surface border-[2px] border-outline shadow-[2px_2px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">
-        <span class="material-symbols-outlined text-[20px]">notifications</span>
-      </button>
+      <div class="relative">
+        <button 
+          @click="showNotifications = !showNotifications"
+          class="relative p-2 bg-surface border-[2px] border-outline shadow-[2px_2px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all"
+        >
+          <span class="material-symbols-outlined text-[20px]">notifications</span>
+          <span v-if="unreadCount > 0" class="absolute -top-2 -right-2 bg-error text-on-error text-[10px] font-bold px-1.5 py-0.5 rounded-full border-[2px] border-outline shadow-[1px_1px_0px_#000000]">
+            {{ unreadCount > 99 ? '99+' : unreadCount }}
+          </span>
+        </button>
+
+        <div v-if="showNotifications" class="absolute right-0 top-full mt-2 w-80 bg-surface border-[3px] border-outline shadow-[4px_4px_0px_#000000] z-50 max-h-96 flex flex-col">
+          <div class="flex items-center justify-between px-3 py-2 border-b-[2px] border-outline bg-surface-container">
+            <span class="font-label uppercase text-label text-on-surface-variant">Notifications</span>
+            <button v-if="unreadCount > 0" @click="markAllAsRead" class="text-[10px] font-bold text-primary hover:underline">Mark all read</button>
+          </div>
+          <div class="overflow-y-auto flex-1">
+            <div v-if="notifications.length === 0" class="p-4 text-center text-sm text-on-surface-variant">
+              No notifications
+            </div>
+            <div 
+              v-for="notif in notifications" 
+              :key="notif.id"
+              class="px-3 py-3 border-b-[2px] border-outline hover:bg-surface-dim transition-colors cursor-pointer"
+              :class="notif.isRead ? 'opacity-70' : 'bg-[#e0e7ff]'"
+              @click="markAsRead(notif.id)"
+            >
+              <div class="flex items-start gap-2">
+                <span class="material-symbols-outlined text-[16px] mt-0.5" 
+                  :class="notif.type === 'error' ? 'text-error' : notif.type === 'success' ? 'text-[#22c55e]' : 'text-primary'">
+                  {{ notif.type === 'error' ? 'error' : notif.type === 'success' ? 'check_circle' : 'info' }}
+                </span>
+                <div class="flex-1">
+                  <p class="font-bold text-sm leading-tight">{{ notif.title }}</p>
+                  <p class="text-xs text-on-surface-variant mt-1 line-clamp-2">{{ notif.message }}</p>
+                  <p class="text-[10px] text-on-surface-variant mt-1">{{ new Date(notif.createdAt).toLocaleTimeString() }}</p>
+                </div>
+                <div v-if="!notif.isRead" class="w-2 h-2 rounded-full bg-primary mt-1"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div v-if="showNotifications" class="fixed inset-0 z-40" @click="showNotifications = false" />
+      </div>
 
       <!-- User avatar + dropdown -->
       <div class="relative">

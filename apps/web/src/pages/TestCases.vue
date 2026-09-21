@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed } from 'vue'
+import ConfirmModal from '../components/ConfirmModal.vue'
 
 const testCases = ref<any[]>([])
 const projects = ref<any[]>([])
@@ -167,8 +168,36 @@ const openScriptsModal = () => {
   fetchScripts()
 }
 
+const confirmState = ref({
+  show: false,
+  title: 'Confirm',
+  message: '',
+  onConfirm: () => {},
+  onCancel: () => {}
+})
+
+const requireConfirm = (title: string, message: string): Promise<boolean> => {
+  return new Promise((resolve) => {
+    confirmState.value = {
+      show: true,
+      title,
+      message,
+      onConfirm: () => {
+        confirmState.value.show = false
+        resolve(true)
+      },
+      onCancel: () => {
+        confirmState.value.show = false
+        resolve(false)
+      }
+    }
+  })
+}
+
 const deleteScript = async (filename: string) => {
-  if (!confirm(`Delete ${filename}? This action cannot be undone.`)) return
+  const confirmed = await requireConfirm('Delete Script', `Delete ${filename}? This action cannot be undone.`)
+  if (!confirmed) return
+  
   try {
     await fetch(`http://127.0.0.1:3000/api/automation/scripts/${filename}?framework=${scriptsFramework.value}`, { method: 'DELETE' })
     fetchScripts()
@@ -402,7 +431,9 @@ const updateTestCase = async () => {
 }
 
 const deleteTestCase = async (id: string) => {
-  if (!confirm('Delete this test case?')) return
+  const confirmed = await requireConfirm('Delete Test Case', 'Are you sure you want to delete this test case?')
+  if (!confirmed) return
+  
   await fetch(`http://127.0.0.1:3000/api/test-cases/${id}`, { method: 'DELETE' })
   fetchTestCases()
 }
@@ -450,9 +481,10 @@ const executeAutomation = async (tc: any) => {
   }
 }
 
-const closeExecutionPanel = () => {
+const closeExecutionPanel = async () => {
   if (executionState.value === 'running') {
-    if (!confirm('Test is still running. Close panel anyway?')) return
+    const confirmed = await requireConfirm('Close Panel', 'Test is still running. Close panel anyway?')
+    if (!confirmed) return
     clearInterval(pollInterval)
   }
   showExecutionPanel.value = false
@@ -481,6 +513,14 @@ const handleProjectSwitched = (e: Event) => {
 </script>
 
 <template>
+  <ConfirmModal 
+    :show="confirmState.show"
+    :title="confirmState.title"
+    :message="confirmState.message"
+    @confirm="confirmState.onConfirm"
+    @cancel="confirmState.onCancel"
+  />
+
   <!-- Header -->
   <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-surface-container-lowest border-[3px] border-outline p-gutter shadow-[4px_4px_0px_#000000]">
     <div class="flex flex-col gap-1">

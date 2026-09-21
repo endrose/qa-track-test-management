@@ -18,7 +18,8 @@
 | **Test Reports & Viewer** | Lihat live status, export PDF, dan parse JMeter `.jtl` reports langsung ke dalam tabel UI |
 | **Bug Tracker** | Bug otomatis dibuat saat test gagal, lengkap dengan log dan screenshot |
 | **Allure & HTML Reports** | Generate dan serve Allure & Native Playwright HTML Report terisolasi per-project setelah eksekusi test |
-| **Auth & User Management** | Login dengan bcrypt-encrypted password, invite user, atur role |
+| **Telegram & In-App Notifications** | Notifikasi *real-time* via Telegram Bot & Web UI Socket.io setiap kali Automation Run selesai/gagal |
+| **Auth & User Management** | Login dengan bcrypt-encrypted password, invite user, atur role, dan kelola integrasi pihak ketiga |
 
 ---
 
@@ -162,6 +163,18 @@ Aplikasi kini menyediakan halaman laporan khusus yang terisolasi secara otomatis
 - Allure Report: Laporan eksekusi interaktif (Sidebar > Allure Report)
 - HTML Report: Laporan native Playwright HTML (Sidebar > HTML Report)
 - JMeter Report: Parsing hasil .jtl performa ke dalam tabel metrik (Sidebar > JMeter Report)
+```
+
+### Setup Integrasi Notifikasi (Telegram)
+
+```
+Aplikasi mendukung pengiriman notifikasi saat Automation Run gagal atau sukses.
+1. Buka halaman Settings -> Tab Integrations
+2. Nyalakan Toggle Telegram Bot Integration
+3. Isi Bot Token (dari @BotFather, contoh: 1234567890:AAHfRK...)
+4. Isi Chat ID (Group/Channel ID, contoh: -100123456789)
+5. Klik Save Telegram Config
+Data akan otomatis tersimpan di database dan langsung berlaku (tanpa merestart server).
 ```
 
 ---

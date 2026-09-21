@@ -11,10 +11,13 @@ import { BugsModule } from './bugs/bugs.module.js';
 import { TestCasesModule } from './test-cases/test-cases.module.js';
 import { TestReportsModule } from './test-reports/test-reports.module.js';
 import { AuthModule } from './auth/auth.module.js';
-import { Project, Requirement, TestExecution, AutomationRun, Bug, TestCase, TestReport, User } from 'database';
+import { Project, Requirement, TestExecution, AutomationRun, Bug, TestCase, TestReport, User, Notification, AppConfig } from 'database';
 
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { NotificationsModule } from './notifications/notifications.module.js';
+import { NotificationsGateway } from './notifications/notifications.gateway.js';
+import { AppConfigModule } from './app-config/app-config.module.js';
 
 @Module({
   imports: [
@@ -25,7 +28,7 @@ import { join } from 'path';
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
         url: configService.get<string>('DATABASE_URL'),
-        entities: [Project, Requirement, TestExecution, AutomationRun, Bug, TestCase, TestReport, User],
+        entities: [Project, Requirement, TestExecution, AutomationRun, Bug, TestCase, TestReport, User, Notification, AppConfig],
         synchronize: true, 
       }),
     }),
@@ -49,8 +52,10 @@ import { join } from 'path';
     TestCasesModule,
     TestReportsModule,
     AuthModule,
+    NotificationsModule,
+    AppConfigModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, NotificationsGateway],
 })
 export class AppModule {}

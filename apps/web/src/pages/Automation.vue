@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import ConfirmModal from '../components/ConfirmModal.vue'
 
 const runs = ref<any[]>([])
 const projects = ref<any[]>([])
@@ -50,8 +51,19 @@ const triggerRun = async () => {
   }
 }
 
-const deleteRun = async (id: string) => {
-  await fetch(`http://127.0.0.1:3000/api/automation/${id}`, { method: 'DELETE' })
+const runToDelete = ref<any>(null)
+const isDeleteModalOpen = ref(false)
+
+const confirmDelete = (run: any) => {
+  runToDelete.value = run
+  isDeleteModalOpen.value = true
+}
+
+const deleteRun = async () => {
+  if (!runToDelete.value) return
+  await fetch(`http://127.0.0.1:3000/api/automation/${runToDelete.value.id}`, { method: 'DELETE' })
+  isDeleteModalOpen.value = false
+  runToDelete.value = null
   fetchData()
 }
 
@@ -145,7 +157,7 @@ onMounted(() => {
               <button @click="viewLog(run.log)" class="px-2 py-1 bg-[#fde047] text-on-surface font-label uppercase text-[10px] border-[2px] border-outline hover:translate-x-[1px] hover:translate-y-[1px] transition-all">
                 Logs
               </button>
-              <button @click="deleteRun(run.id)" class="px-2 py-1 bg-[#fca5a5] text-on-surface font-label uppercase text-[10px] border-[2px] border-outline hover:translate-x-[1px] hover:translate-y-[1px] transition-all">
+              <button @click="confirmDelete(run)" class="px-2 py-1 bg-[#fca5a5] text-on-surface font-label uppercase text-[10px] border-[2px] border-outline hover:translate-x-[1px] hover:translate-y-[1px] transition-all">
                 Delete
               </button>
             </td>
@@ -225,6 +237,15 @@ onMounted(() => {
       </div>
     </div>
   </div>
+
+  <!-- Delete Confirmation Modal -->
+  <ConfirmModal
+    :show="isDeleteModalOpen"
+    title="Delete Automation Run"
+    :message="`Are you sure you want to delete run '${runToDelete?.suiteName}'? This action cannot be undone.`"
+    @confirm="deleteRun"
+    @cancel="isDeleteModalOpen = false"
+  />
 
 </template>
 

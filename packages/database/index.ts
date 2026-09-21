@@ -6,3 +6,5 @@ export * from './entities/User.entity.js';
 export * from './entities/Requirement.entity.js';
 export * from './entities/TestExecution.entity.js';
 export * from './entities/AutomationRun.entity.js';
+export * from './entities/Notification.entity.js';
+export * from './entities/AppConfig.entity.js';
