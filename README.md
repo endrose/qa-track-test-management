@@ -56,12 +56,17 @@ npm install
 
 ### 2. Setup Database
 
-Buat database PostgreSQL dan buat file `.env` di `apps/api/`:
+Buat database PostgreSQL kosong dan sesuaikan konfigurasi di `.env` (gunakan file `.env.example` sebagai referensi):
 
 ```bash
-# apps/api/.env
+# Copy file env example
+cp apps/api/.env.example apps/api/.env
+
+# Edit apps/api/.env dan sesuaikan dengan kredensial database Anda
 DATABASE_URL=postgresql://username:password@localhost:5432/qatrack
 ```
+
+> **Catatan Database:** Anda hanya perlu membuat database kosong. Seluruh *table* dan struktur data akan dibuat secara otomatis oleh NestJS (TypeORM `synchronize`) ketika *backend* dijalankan pertama kali.
 
 ### 3. Jalankan Dev Server
 
@@ -172,7 +177,11 @@ Aplikasi mendukung pengiriman notifikasi saat Automation Run gagal atau sukses.
 1. Buka halaman Settings -> Tab Integrations
 2. Nyalakan Toggle Telegram Bot Integration
 3. Isi Bot Token (dari @BotFather, contoh: 1234567890:AAHfRK...)
-4. Isi Chat ID (Group/Channel ID, contoh: -100123456789)
+4. Isi Chat ID. Untuk mendapatkan Chat ID:
+   - Buat grup Telegram dan masukkan Bot Anda ke grup tersebut
+   - Masukkan bot @RawDataBot ke dalam grup tersebut
+   - @RawDataBot akan membalas dengan sebuah JSON. Cari nilai id pada bagian "chat": { "id": -100123456789, ... }
+   - Masukkan nilai id tersebut (termasuk tanda minus jika ada) ke field Chat ID
 5. Klik Save Telegram Config
 Data akan otomatis tersimpan di database dan langsung berlaku (tanpa merestart server).
 ```
