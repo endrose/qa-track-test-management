@@ -694,6 +694,8 @@ export class AutomationService {
     if (framework === 'jmeter') workspacePath = 'jmeter';
     const cwd = path.resolve(process.cwd(), `../../automation/${workspacePath}`);
     
+    await this.sendTelegramNotif(`🚀 *[START]* Automation Run Berjalan\n\n*Framework:* ${framework}\n*Suite:* ${testCase.title}\n*Project:* ${testCase.project?.name || '-'}`);
+
     let command = 'npm run test';
     
     // Jika type adalah script, jalankan script yang spesifik
@@ -801,6 +803,25 @@ export class AutomationService {
       log: logOutput,
       project: testCase.project,
     });
+
+    // Send Telegram & In-App Notification (End)
+    const passed = status === 'Passed' ? 1 : 0;
+    const failed = status === 'Failed' ? 1 : 0;
+    if (status === 'Passed') {
+      await this.sendTelegramNotif(`✅ *[SUCCESS]* Automation Run Selesai\n\n*Framework:* ${framework}\n*Suite:* ${testCase.title}\n*Passed:* ${passed}\n*Failed:* ${failed}\n*Project:* ${testCase.project?.name || '-'}`);
+      await this.notificationsService.create(
+        'Automation Success',
+        `Run for ${framework} suite ${testCase.title} completed successfully. Passed: ${passed}, Failed: ${failed}.`,
+        'success'
+      );
+    } else {
+      await this.sendTelegramNotif(`❌ *[ERROR]* Automation Run Gagal\n\n*Framework:* ${framework}\n*Suite:* ${testCase.title}\n*Passed:* ${passed}\n*Failed:* ${failed}\n*Project:* ${testCase.project?.name || '-'}`);
+      await this.notificationsService.create(
+        'Automation Failed',
+        `Run for ${framework} suite ${testCase.title} failed. Passed: ${passed}, Failed: ${failed}.`,
+        'error'
+      );
+    }
 
     return { status, log: logOutput };
   }

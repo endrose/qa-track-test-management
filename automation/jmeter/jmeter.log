@@ -1,152 +1,71 @@
-2026-09-21 17:31:53,293 INFO o.a.j.u.JMeterUtils: Setting Locale to en_EN
-2026-09-21 17:31:53,321 INFO o.a.j.JMeter: Loading user properties from: D:\Program Files\apache-jmeter-5.6.3\bin\user.properties
-2026-09-21 17:31:53,321 INFO o.a.j.JMeter: Loading system properties from: D:\Program Files\apache-jmeter-5.6.3\bin\system.properties
-2026-09-21 17:31:53,332 INFO o.a.j.JMeter: Copyright (c) 1998-2024 The Apache Software Foundation
-2026-09-21 17:31:53,332 INFO o.a.j.JMeter: Version 5.6.3
-2026-09-21 17:31:53,332 INFO o.a.j.JMeter: java.version=17.0.17
-2026-09-21 17:31:53,332 INFO o.a.j.JMeter: java.vm.name=OpenJDK 64-Bit Server VM
-2026-09-21 17:31:53,332 INFO o.a.j.JMeter: os.name=Windows 11
-2026-09-21 17:31:53,332 INFO o.a.j.JMeter: os.arch=amd64
-2026-09-21 17:31:53,333 INFO o.a.j.JMeter: os.version=10.0
-2026-09-21 17:31:53,333 INFO o.a.j.JMeter: file.encoding=Cp1252
-2026-09-21 17:31:53,333 INFO o.a.j.JMeter: java.awt.headless=true
-2026-09-21 17:31:53,333 INFO o.a.j.JMeter: Max memory     =1073741824
-2026-09-21 17:31:53,333 INFO o.a.j.JMeter: Available Processors =8
-2026-09-21 17:31:53,345 INFO o.a.j.JMeter: Default Locale=English (EN)
-2026-09-21 17:31:53,346 INFO o.a.j.JMeter: JMeter  Locale=English (EN)
-2026-09-21 17:31:53,346 INFO o.a.j.JMeter: JMeterHome=D:\Program Files\apache-jmeter-5.6.3
-2026-09-21 17:31:53,346 INFO o.a.j.JMeter: user.dir  =D:\Workspace\vue\qa-track-test-management\automation\jmeter
-2026-09-21 17:31:53,346 INFO o.a.j.JMeter: PWD       =D:\Workspace\vue\qa-track-test-management\automation\jmeter
-2026-09-21 17:31:53,352 INFO o.a.j.JMeter: IP: 192.168.1.23 Name: Armstrong FullName: Armstrong
-2026-09-21 17:31:53,371 INFO o.a.j.s.FileServer: Default base='D:\Workspace\vue\qa-track-test-management\automation\jmeter'
-2026-09-21 17:31:53,375 INFO o.a.j.s.FileServer: Set new base='D:\Workspace\vue\qa-track-test-management\automation\jmeter\scripts'
-2026-09-21 17:31:53,656 INFO o.a.j.s.SaveService: Testplan (JMX) version: 2.2. Testlog (JTL) version: 2.2
-2026-09-21 17:31:53,693 INFO o.a.j.s.SaveService: Using SaveService properties version 5.0
-2026-09-21 17:31:53,697 INFO o.a.j.s.SaveService: Using SaveService properties file encoding UTF-8
-2026-09-21 17:31:53,702 INFO o.a.j.s.SaveService: Loading file: scripts\sauce-login-performance.jmx
-2026-09-21 17:31:53,763 INFO o.a.j.p.h.c.CookieManager: Settings: Delete null: true Check: true Allow variable: true Save: false Prefix: COOKIE_
-2026-09-21 17:31:53,812 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/html is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
-2026-09-21 17:31:53,812 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xhtml+xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
-2026-09-21 17:31:53,812 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
-2026-09-21 17:31:53,813 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
-2026-09-21 17:31:53,813 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/vnd.wap.wml is org.apache.jmeter.protocol.http.parser.RegexpHTMLParser
-2026-09-21 17:31:53,813 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/css is org.apache.jmeter.protocol.http.parser.CssParser
-2026-09-21 17:31:53,870 INFO o.a.j.JMeter: Creating summariser <summary>
-2026-09-21 17:31:53,885 INFO o.a.j.e.StandardJMeterEngine: Running the test!
-2026-09-21 17:31:53,886 INFO o.a.j.s.SampleEvent: List of sample_variables: []
-2026-09-21 17:31:53,886 INFO o.a.j.s.SampleEvent: List of sample_variables: []
-2026-09-21 17:31:53,893 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must contain the string: '.functions.'
-2026-09-21 17:31:53,893 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must not contain the string: '.gui.'
-2026-09-21 17:31:54,113 INFO o.a.j.JMeter: Running test (1789986714113)
-2026-09-21 17:31:54,150 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 1 : Sauce Login - 30 Concurrent Users
-2026-09-21 17:31:54,150 INFO o.a.j.e.StandardJMeterEngine: Starting 30 threads for group Sauce Login - 30 Concurrent Users.
-2026-09-21 17:31:54,150 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
-2026-09-21 17:31:54,152 INFO o.a.j.t.ThreadGroup: Starting thread group... number=1 threads=30 ramp-up=5 delayedStart=false
-2026-09-21 17:31:54,168 INFO o.a.j.t.JMeterThread: Thread started: Sauce Login - 30 Concurrent Users 1-1
-2026-09-21 17:31:54,217 INFO o.a.j.t.ThreadGroup: Started thread group number 1
-2026-09-21 17:31:54,217 INFO o.a.j.e.StandardJMeterEngine: All thread groups have been started
-2026-09-21 17:31:54,325 INFO o.a.j.t.JMeterThread: Thread started: Sauce Login - 30 Concurrent Users 1-2
-2026-09-21 17:31:54,490 INFO o.a.j.t.JMeterThread: Thread started: Sauce Login - 30 Concurrent Users 1-3
-2026-09-21 17:31:54,658 INFO o.a.j.t.JMeterThread: Thread started: Sauce Login - 30 Concurrent Users 1-4
-2026-09-21 17:31:54,826 INFO o.a.j.t.JMeterThread: Thread started: Sauce Login - 30 Concurrent Users 1-5
-2026-09-21 17:31:54,993 INFO o.a.j.t.JMeterThread: Thread started: Sauce Login - 30 Concurrent Users 1-6
-2026-09-21 17:31:55,166 INFO o.a.j.t.JMeterThread: Thread started: Sauce Login - 30 Concurrent Users 1-7
-2026-09-21 17:31:55,213 INFO o.a.j.p.h.s.HTTPHCAbstractImpl: Local host = Armstrong
-2026-09-21 17:31:55,225 INFO o.a.j.p.h.s.HTTPHC4Impl: HTTP request retry count = 0
-2026-09-21 17:31:55,229 INFO o.a.j.s.SampleResult: Note: Sample TimeStamps are START times
-2026-09-21 17:31:55,229 INFO o.a.j.s.SampleResult: sampleresult.default.encoding is set to UTF-8
-2026-09-21 17:31:55,229 INFO o.a.j.s.SampleResult: sampleresult.useNanoTime=true
-2026-09-21 17:31:55,229 INFO o.a.j.s.SampleResult: sampleresult.nanoThreadSleep=5000
-2026-09-21 17:31:55,336 INFO o.a.j.t.JMeterThread: Thread started: Sauce Login - 30 Concurrent Users 1-8
-2026-09-21 17:31:55,507 INFO o.a.j.t.JMeterThread: Thread started: Sauce Login - 30 Concurrent Users 1-9
-2026-09-21 17:31:55,664 INFO o.a.j.t.JMeterThread: Thread started: Sauce Login - 30 Concurrent Users 1-10
-2026-09-21 17:31:55,837 INFO o.a.j.t.JMeterThread: Thread started: Sauce Login - 30 Concurrent Users 1-11
-2026-09-21 17:31:56,008 INFO o.a.j.t.JMeterThread: Thread started: Sauce Login - 30 Concurrent Users 1-12
-2026-09-21 17:31:56,096 INFO o.a.j.p.h.s.h.LazyLayeredConnectionSocketFactory: Setting up HTTPS TrustAll Socket Factory
-2026-09-21 17:31:56,110 INFO o.a.j.u.JsseSSLManager: Using default SSL protocol: TLS
-2026-09-21 17:31:56,111 INFO o.a.j.u.JsseSSLManager: SSL session context: per-thread
-2026-09-21 17:31:56,163 INFO o.a.j.t.JMeterThread: Thread started: Sauce Login - 30 Concurrent Users 1-13
-2026-09-21 17:31:56,301 INFO o.a.j.u.SSLManager: JmeterKeyStore Location:  type JKS
-2026-09-21 17:31:56,310 INFO o.a.j.u.SSLManager: KeyStore created OK
-2026-09-21 17:31:56,310 WARN o.a.j.u.SSLManager: Keystore file not found, loading empty keystore
-2026-09-21 17:31:56,350 INFO o.a.j.t.JMeterThread: Thread started: Sauce Login - 30 Concurrent Users 1-14
-2026-09-21 17:31:56,504 INFO o.a.j.t.JMeterThread: Thread started: Sauce Login - 30 Concurrent Users 1-15
-2026-09-21 17:31:56,659 INFO o.a.j.t.JMeterThread: Thread started: Sauce Login - 30 Concurrent Users 1-16
-2026-09-21 17:31:56,830 INFO o.a.j.t.JMeterThread: Thread started: Sauce Login - 30 Concurrent Users 1-17
-2026-09-21 17:31:57,002 INFO o.a.j.t.JMeterThread: Thread started: Sauce Login - 30 Concurrent Users 1-18
-2026-09-21 17:31:57,172 INFO o.a.j.t.JMeterThread: Thread started: Sauce Login - 30 Concurrent Users 1-19
-2026-09-21 17:31:57,346 INFO o.a.j.t.JMeterThread: Thread started: Sauce Login - 30 Concurrent Users 1-20
-2026-09-21 17:31:57,502 INFO o.a.j.t.JMeterThread: Thread started: Sauce Login - 30 Concurrent Users 1-21
-2026-09-21 17:31:57,663 INFO o.a.j.t.JMeterThread: Thread started: Sauce Login - 30 Concurrent Users 1-22
-2026-09-21 17:31:57,831 INFO o.a.j.t.JMeterThread: Thread started: Sauce Login - 30 Concurrent Users 1-23
-2026-09-21 17:31:58,000 INFO o.a.j.t.JMeterThread: Thread started: Sauce Login - 30 Concurrent Users 1-24
-2026-09-21 17:31:58,170 INFO o.a.j.t.JMeterThread: Thread started: Sauce Login - 30 Concurrent Users 1-25
-2026-09-21 17:31:58,342 INFO o.a.j.t.JMeterThread: Thread started: Sauce Login - 30 Concurrent Users 1-26
-2026-09-21 17:31:58,497 INFO o.a.j.t.JMeterThread: Thread started: Sauce Login - 30 Concurrent Users 1-27
-2026-09-21 17:31:58,669 INFO o.a.j.t.JMeterThread: Thread started: Sauce Login - 30 Concurrent Users 1-28
-2026-09-21 17:31:58,838 INFO o.a.j.t.JMeterThread: Thread started: Sauce Login - 30 Concurrent Users 1-29
-2026-09-21 17:31:58,851 INFO o.a.j.t.JMeterThread: Thread is done: Sauce Login - 30 Concurrent Users 1-6
-2026-09-21 17:31:58,852 INFO o.a.j.t.JMeterThread: Thread is done: Sauce Login - 30 Concurrent Users 1-11
-2026-09-21 17:31:58,852 INFO o.a.j.t.JMeterThread: Thread finished: Sauce Login - 30 Concurrent Users 1-11
-2026-09-21 17:31:58,852 INFO o.a.j.t.JMeterThread: Thread finished: Sauce Login - 30 Concurrent Users 1-6
-2026-09-21 17:31:58,855 INFO o.a.j.t.JMeterThread: Thread is done: Sauce Login - 30 Concurrent Users 1-13
-2026-09-21 17:31:58,855 INFO o.a.j.t.JMeterThread: Thread finished: Sauce Login - 30 Concurrent Users 1-13
-2026-09-21 17:31:58,856 INFO o.a.j.t.JMeterThread: Thread is done: Sauce Login - 30 Concurrent Users 1-10
-2026-09-21 17:31:58,856 INFO o.a.j.t.JMeterThread: Thread finished: Sauce Login - 30 Concurrent Users 1-10
-2026-09-21 17:31:58,897 INFO o.a.j.t.JMeterThread: Thread is done: Sauce Login - 30 Concurrent Users 1-5
-2026-09-21 17:31:58,898 INFO o.a.j.t.JMeterThread: Thread finished: Sauce Login - 30 Concurrent Users 1-5
-2026-09-21 17:31:58,958 INFO o.a.j.t.JMeterThread: Thread is done: Sauce Login - 30 Concurrent Users 1-9
-2026-09-21 17:31:58,959 INFO o.a.j.t.JMeterThread: Thread finished: Sauce Login - 30 Concurrent Users 1-9
-2026-09-21 17:31:58,962 INFO o.a.j.t.JMeterThread: Thread is done: Sauce Login - 30 Concurrent Users 1-7
-2026-09-21 17:31:58,962 INFO o.a.j.t.JMeterThread: Thread finished: Sauce Login - 30 Concurrent Users 1-7
-2026-09-21 17:31:59,009 INFO o.a.j.t.JMeterThread: Thread started: Sauce Login - 30 Concurrent Users 1-30
-2026-09-21 17:31:59,070 INFO o.a.j.t.JMeterThread: Thread is done: Sauce Login - 30 Concurrent Users 1-4
-2026-09-21 17:31:59,070 INFO o.a.j.t.JMeterThread: Thread finished: Sauce Login - 30 Concurrent Users 1-4
-2026-09-21 17:31:59,070 INFO o.a.j.t.JMeterThread: Thread is done: Sauce Login - 30 Concurrent Users 1-1
-2026-09-21 17:31:59,071 INFO o.a.j.t.JMeterThread: Thread finished: Sauce Login - 30 Concurrent Users 1-1
-2026-09-21 17:31:59,073 INFO o.a.j.t.JMeterThread: Thread is done: Sauce Login - 30 Concurrent Users 1-8
-2026-09-21 17:31:59,073 INFO o.a.j.t.JMeterThread: Thread finished: Sauce Login - 30 Concurrent Users 1-8
-2026-09-21 17:31:59,071 INFO o.a.j.t.JMeterThread: Thread is done: Sauce Login - 30 Concurrent Users 1-3
-2026-09-21 17:31:59,073 INFO o.a.j.t.JMeterThread: Thread finished: Sauce Login - 30 Concurrent Users 1-3
-2026-09-21 17:31:59,074 INFO o.a.j.t.JMeterThread: Thread is done: Sauce Login - 30 Concurrent Users 1-12
-2026-09-21 17:31:59,075 INFO o.a.j.t.JMeterThread: Thread finished: Sauce Login - 30 Concurrent Users 1-12
-2026-09-21 17:31:59,105 INFO o.a.j.t.JMeterThread: Thread is done: Sauce Login - 30 Concurrent Users 1-14
-2026-09-21 17:31:59,105 INFO o.a.j.t.JMeterThread: Thread finished: Sauce Login - 30 Concurrent Users 1-14
-2026-09-21 17:31:59,247 INFO o.a.j.t.JMeterThread: Thread is done: Sauce Login - 30 Concurrent Users 1-15
-2026-09-21 17:31:59,247 INFO o.a.j.t.JMeterThread: Thread finished: Sauce Login - 30 Concurrent Users 1-15
-2026-09-21 17:31:59,263 INFO o.a.j.t.JMeterThread: Thread is done: Sauce Login - 30 Concurrent Users 1-16
-2026-09-21 17:31:59,263 INFO o.a.j.t.JMeterThread: Thread finished: Sauce Login - 30 Concurrent Users 1-16
-2026-09-21 17:31:59,304 INFO o.a.j.t.JMeterThread: Thread is done: Sauce Login - 30 Concurrent Users 1-17
-2026-09-21 17:31:59,304 INFO o.a.j.t.JMeterThread: Thread finished: Sauce Login - 30 Concurrent Users 1-17
-2026-09-21 17:31:59,439 INFO o.a.j.t.JMeterThread: Thread is done: Sauce Login - 30 Concurrent Users 1-18
-2026-09-21 17:31:59,439 INFO o.a.j.t.JMeterThread: Thread finished: Sauce Login - 30 Concurrent Users 1-18
-2026-09-21 17:31:59,516 INFO o.a.j.t.JMeterThread: Thread is done: Sauce Login - 30 Concurrent Users 1-2
-2026-09-21 17:31:59,517 INFO o.a.j.t.JMeterThread: Thread finished: Sauce Login - 30 Concurrent Users 1-2
-2026-09-21 17:31:59,665 INFO o.a.j.t.JMeterThread: Thread is done: Sauce Login - 30 Concurrent Users 1-19
-2026-09-21 17:31:59,667 INFO o.a.j.t.JMeterThread: Thread finished: Sauce Login - 30 Concurrent Users 1-19
-2026-09-21 17:31:59,734 INFO o.a.j.t.JMeterThread: Thread is done: Sauce Login - 30 Concurrent Users 1-20
-2026-09-21 17:31:59,735 INFO o.a.j.t.JMeterThread: Thread finished: Sauce Login - 30 Concurrent Users 1-20
-2026-09-21 17:32:00,016 INFO o.a.j.r.Summariser: summary +    146 in 00:00:06 =   24.7/s Avg:   201 Min:    21 Max:  1765 Err:   146 (100.00%) Active: 10 Started: 30 Finished: 20
-2026-09-21 17:32:00,365 INFO o.a.j.t.JMeterThread: Thread is done: Sauce Login - 30 Concurrent Users 1-21
-2026-09-21 17:32:00,365 INFO o.a.j.t.JMeterThread: Thread finished: Sauce Login - 30 Concurrent Users 1-21
-2026-09-21 17:32:00,393 INFO o.a.j.t.JMeterThread: Thread is done: Sauce Login - 30 Concurrent Users 1-23
-2026-09-21 17:32:00,393 INFO o.a.j.t.JMeterThread: Thread finished: Sauce Login - 30 Concurrent Users 1-23
-2026-09-21 17:32:00,437 INFO o.a.j.t.JMeterThread: Thread is done: Sauce Login - 30 Concurrent Users 1-24
-2026-09-21 17:32:00,438 INFO o.a.j.t.JMeterThread: Thread finished: Sauce Login - 30 Concurrent Users 1-24
-2026-09-21 17:32:00,559 INFO o.a.j.t.JMeterThread: Thread is done: Sauce Login - 30 Concurrent Users 1-22
-2026-09-21 17:32:00,559 INFO o.a.j.t.JMeterThread: Thread finished: Sauce Login - 30 Concurrent Users 1-22
-2026-09-21 17:32:00,577 INFO o.a.j.t.JMeterThread: Thread is done: Sauce Login - 30 Concurrent Users 1-25
-2026-09-21 17:32:00,577 INFO o.a.j.t.JMeterThread: Thread finished: Sauce Login - 30 Concurrent Users 1-25
-2026-09-21 17:32:00,801 INFO o.a.j.t.JMeterThread: Thread is done: Sauce Login - 30 Concurrent Users 1-26
-2026-09-21 17:32:00,801 INFO o.a.j.t.JMeterThread: Thread finished: Sauce Login - 30 Concurrent Users 1-26
-2026-09-21 17:32:00,918 INFO o.a.j.t.JMeterThread: Thread is done: Sauce Login - 30 Concurrent Users 1-27
-2026-09-21 17:32:00,918 INFO o.a.j.t.JMeterThread: Thread finished: Sauce Login - 30 Concurrent Users 1-27
-2026-09-21 17:32:01,127 INFO o.a.j.t.JMeterThread: Thread is done: Sauce Login - 30 Concurrent Users 1-28
-2026-09-21 17:32:01,127 INFO o.a.j.t.JMeterThread: Thread finished: Sauce Login - 30 Concurrent Users 1-28
-2026-09-21 17:32:01,394 INFO o.a.j.t.JMeterThread: Thread is done: Sauce Login - 30 Concurrent Users 1-29
-2026-09-21 17:32:01,394 INFO o.a.j.t.JMeterThread: Thread finished: Sauce Login - 30 Concurrent Users 1-29
-2026-09-21 17:32:01,520 INFO o.a.j.t.JMeterThread: Thread is done: Sauce Login - 30 Concurrent Users 1-30
-2026-09-21 17:32:01,520 INFO o.a.j.t.JMeterThread: Thread finished: Sauce Login - 30 Concurrent Users 1-30
-2026-09-21 17:32:01,521 INFO o.a.j.e.StandardJMeterEngine: Notifying test listeners of end of test
-2026-09-21 17:32:01,523 INFO o.a.j.r.Summariser: summary +     34 in 00:00:02 =   22.5/s Avg:    86 Min:    22 Max:   333 Err:    34 (100.00%) Active: 0 Started: 30 Finished: 30
-2026-09-21 17:32:01,524 INFO o.a.j.r.Summariser: summary =    180 in 00:00:07 =   24.3/s Avg:   179 Min:    21 Max:  1765 Err:   180 (100.00%)
+2026-09-22 16:48:45,918 INFO o.a.j.u.JMeterUtils: Setting Locale to en_EN
+2026-09-22 16:48:46,029 INFO o.a.j.JMeter: Loading user properties from: D:\Program Files\apache-jmeter-5.6.3\bin\user.properties
+2026-09-22 16:48:46,062 INFO o.a.j.JMeter: Loading system properties from: D:\Program Files\apache-jmeter-5.6.3\bin\system.properties
+2026-09-22 16:48:46,082 INFO o.a.j.JMeter: Copyright (c) 1998-2024 The Apache Software Foundation
+2026-09-22 16:48:46,082 INFO o.a.j.JMeter: Version 5.6.3
+2026-09-22 16:48:46,083 INFO o.a.j.JMeter: java.version=17.0.17
+2026-09-22 16:48:46,083 INFO o.a.j.JMeter: java.vm.name=OpenJDK 64-Bit Server VM
+2026-09-22 16:48:46,083 INFO o.a.j.JMeter: os.name=Windows 11
+2026-09-22 16:48:46,083 INFO o.a.j.JMeter: os.arch=amd64
+2026-09-22 16:48:46,083 INFO o.a.j.JMeter: os.version=10.0
+2026-09-22 16:48:46,084 INFO o.a.j.JMeter: file.encoding=Cp1252
+2026-09-22 16:48:46,084 INFO o.a.j.JMeter: java.awt.headless=true
+2026-09-22 16:48:46,084 INFO o.a.j.JMeter: Max memory     =1073741824
+2026-09-22 16:48:46,084 INFO o.a.j.JMeter: Available Processors =8
+2026-09-22 16:48:46,130 INFO o.a.j.JMeter: Default Locale=English (EN)
+2026-09-22 16:48:46,131 INFO o.a.j.JMeter: JMeter  Locale=English (EN)
+2026-09-22 16:48:46,131 INFO o.a.j.JMeter: JMeterHome=D:\Program Files\apache-jmeter-5.6.3
+2026-09-22 16:48:46,132 INFO o.a.j.JMeter: user.dir  =D:\Workspace\vue\qa-track-test-management\automation\jmeter
+2026-09-22 16:48:46,132 INFO o.a.j.JMeter: PWD       =D:\Workspace\vue\qa-track-test-management\automation\jmeter
+2026-09-22 16:48:46,143 INFO o.a.j.JMeter: IP: 192.168.1.23 Name: Armstrong FullName: Armstrong
+2026-09-22 16:48:46,189 INFO o.a.j.s.FileServer: Default base='D:\Workspace\vue\qa-track-test-management\automation\jmeter'
+2026-09-22 16:48:46,196 INFO o.a.j.s.FileServer: Set new base='D:\Workspace\vue\qa-track-test-management\automation\jmeter\scripts'
+2026-09-22 16:48:46,764 INFO o.a.j.s.SaveService: Testplan (JMX) version: 2.2. Testlog (JTL) version: 2.2
+2026-09-22 16:48:46,842 INFO o.a.j.s.SaveService: Using SaveService properties version 5.0
+2026-09-22 16:48:46,847 INFO o.a.j.s.SaveService: Using SaveService properties file encoding UTF-8
+2026-09-22 16:48:46,854 INFO o.a.j.s.SaveService: Loading file: scripts\login-web-sauce.jmx
+2026-09-22 16:48:47,082 INFO o.a.j.JMeter: Creating summariser <summary>
+2026-09-22 16:48:47,104 INFO o.a.j.e.StandardJMeterEngine: Running the test!
+2026-09-22 16:48:47,105 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2026-09-22 16:48:47,105 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2026-09-22 16:48:47,111 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must contain the string: '.functions.'
+2026-09-22 16:48:47,112 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must not contain the string: '.gui.'
+2026-09-22 16:48:47,274 INFO o.a.j.JMeter: Running test (1790070527274)
+2026-09-22 16:48:47,306 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 1 : Thread Group - 10 Users
+2026-09-22 16:48:47,307 INFO o.a.j.e.StandardJMeterEngine: Starting 10 threads for group Thread Group - 10 Users.
+2026-09-22 16:48:47,307 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2026-09-22 16:48:47,307 INFO o.a.j.t.ThreadGroup: Starting thread group... number=1 threads=10 ramp-up=5 delayedStart=false
+2026-09-22 16:48:47,320 INFO o.a.j.t.JMeterThread: Thread started: Thread Group - 10 Users 1-1
+2026-09-22 16:48:47,323 INFO o.a.j.t.ThreadGroup: Started thread group number 1
+2026-09-22 16:48:47,323 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group - 10 Users 1-1
+2026-09-22 16:48:47,324 INFO o.a.j.e.StandardJMeterEngine: All thread groups have been started
+2026-09-22 16:48:47,324 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group - 10 Users 1-1
+2026-09-22 16:48:47,810 INFO o.a.j.t.JMeterThread: Thread started: Thread Group - 10 Users 1-2
+2026-09-22 16:48:47,811 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group - 10 Users 1-2
+2026-09-22 16:48:47,811 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group - 10 Users 1-2
+2026-09-22 16:48:48,309 INFO o.a.j.t.JMeterThread: Thread started: Thread Group - 10 Users 1-3
+2026-09-22 16:48:48,309 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group - 10 Users 1-3
+2026-09-22 16:48:48,311 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group - 10 Users 1-3
+2026-09-22 16:48:48,808 INFO o.a.j.t.JMeterThread: Thread started: Thread Group - 10 Users 1-4
+2026-09-22 16:48:48,808 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group - 10 Users 1-4
+2026-09-22 16:48:48,808 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group - 10 Users 1-4
+2026-09-22 16:48:49,320 INFO o.a.j.t.JMeterThread: Thread started: Thread Group - 10 Users 1-5
+2026-09-22 16:48:49,322 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group - 10 Users 1-5
+2026-09-22 16:48:49,322 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group - 10 Users 1-5
+2026-09-22 16:48:49,817 INFO o.a.j.t.JMeterThread: Thread started: Thread Group - 10 Users 1-6
+2026-09-22 16:48:49,818 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group - 10 Users 1-6
+2026-09-22 16:48:49,818 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group - 10 Users 1-6
+2026-09-22 16:48:50,315 INFO o.a.j.t.JMeterThread: Thread started: Thread Group - 10 Users 1-7
+2026-09-22 16:48:50,316 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group - 10 Users 1-7
+2026-09-22 16:48:50,316 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group - 10 Users 1-7
+2026-09-22 16:48:50,814 INFO o.a.j.t.JMeterThread: Thread started: Thread Group - 10 Users 1-8
+2026-09-22 16:48:50,815 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group - 10 Users 1-8
+2026-09-22 16:48:50,815 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group - 10 Users 1-8
+2026-09-22 16:48:51,309 INFO o.a.j.t.JMeterThread: Thread started: Thread Group - 10 Users 1-9
+2026-09-22 16:48:51,310 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group - 10 Users 1-9
+2026-09-22 16:48:51,310 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group - 10 Users 1-9
+2026-09-22 16:48:51,809 INFO o.a.j.t.JMeterThread: Thread started: Thread Group - 10 Users 1-10
+2026-09-22 16:48:51,809 INFO o.a.j.t.JMeterThread: Thread is done: Thread Group - 10 Users 1-10
+2026-09-22 16:48:51,809 INFO o.a.j.t.JMeterThread: Thread finished: Thread Group - 10 Users 1-10
+2026-09-22 16:48:51,810 INFO o.a.j.e.StandardJMeterEngine: Notifying test listeners of end of test
+2026-09-22 16:48:51,813 INFO o.a.j.r.Summariser: summary =      0 in 00:00:00 = ******/s Avg:     0 Min: 9223372036854775807 Max: -9223372036854775808 Err:     0 (0.00%)
