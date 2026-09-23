@@ -105,11 +105,22 @@ onMounted(() => {
 
       <!-- Detail View -->
       <div class="w-full md:w-3/4 bg-surface-container-lowest border-[3px] border-outline shadow-[4px_4px_0px_#000000] flex flex-col">
-        <div class="bg-surface-container border-b-[2px] border-outline p-3 flex justify-between items-center">
+        <div class="bg-surface-container border-b-[2px] border-outline p-3 flex justify-between items-center flex-wrap gap-2">
           <h2 class="font-headline text-headline uppercase flex items-center gap-2">
             <span class="material-symbols-outlined">speed</span> Report Detail
           </h2>
-          <span v-if="currentJmeterFile" class="font-mono text-[10px] bg-surface px-2 py-1 border-[2px] border-outline">{{ currentJmeterFile }}</span>
+          <div class="flex items-center gap-3">
+            <span v-if="currentJmeterFile" class="font-mono text-[10px] bg-surface px-2 py-1 border-[2px] border-outline">{{ currentJmeterFile }}</span>
+            <a v-if="currentJmeterFile"
+               :href="`http://127.0.0.1:3000/jmeter-download/${selectedProject || ''}${selectedProject ? '/' : ''}${currentJmeterFile}`"
+               target="_blank"
+               download
+               class="flex items-center gap-2 px-3 py-1 bg-primary text-on-primary border-[2px] border-outline shadow-[2px_2px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all font-label text-[10px] uppercase"
+            >
+              <span class="material-symbols-outlined text-[14px]">download</span>
+              Download JTL
+            </a>
+          </div>
         </div>
         
         <div class="relative overflow-x-auto min-h-[50vh] max-h-[70vh]">

@@ -44,6 +44,10 @@ import { AppConfigModule } from './app-config/app-config.module.js';
       rootPath: join(process.cwd(), '..', '..', 'automation', 'cypress', 'cypress-report'),
       serveRoot: '/cypress-report',
     }),
+    ServeStaticModule.forRoot({
+      rootPath: join(process.cwd(), '..', '..', 'automation', 'jmeter', 'results'),
+      serveRoot: '/jmeter-download',
+    }),
     ProjectsModule,
     RequirementsModule,
     TestExecutionsModule,

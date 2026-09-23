@@ -2,6 +2,8 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 
+const emit = defineEmits(['toggle-sidebar'])
+
 const router = useRouter()
 const showDropdown = ref(false)
 const showProjectDropdown = ref(false)
@@ -157,16 +159,23 @@ const navigateToItem = (type: string) => {
 </script>
 
 <template>
-  <header class="fixed top-0 left-[250px] right-0 h-16 bg-surface border-b-[3px] border-outline z-40 flex items-center justify-between px-gutter">
-    <div class="flex items-center gap-4">
+  <header class="fixed top-0 left-0 lg:left-[250px] right-0 h-16 bg-surface border-b-[3px] border-outline z-40 flex items-center justify-between px-gutter gap-2">
+    <!-- Hamburger on mobile -->
+    <button
+      class="lg:hidden p-1 border-[2px] border-outline bg-surface-container hover:bg-surface-container-highest transition-colors mr-1 flex-shrink-0"
+      @click="emit('toggle-sidebar')"
+    >
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+    <div class="flex items-center gap-2 md:gap-4 flex-1 min-w-0">
       <div class="relative">
-        <button 
+        <button
           @click="showProjectDropdown = !showProjectDropdown"
-          class="flex items-center gap-2 px-3 py-1 bg-surface-container border-[2px] border-outline shadow-[2px_2px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all"
+          class="flex items-center gap-2 px-2 md:px-3 py-1 bg-surface-container border-[2px] border-outline shadow-[2px_2px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all max-w-[140px] md:max-w-none"
         >
-          <span class="material-symbols-outlined text-[18px]">folder_open</span>
-          <span class="font-bold text-body">{{ selectedProject }}</span>
-          <span class="material-symbols-outlined text-[18px]">expand_more</span>
+          <span class="material-symbols-outlined text-[18px] flex-shrink-0">folder_open</span>
+          <span class="font-bold text-body truncate">{{ selectedProject }}</span>
+          <span class="material-symbols-outlined text-[18px] flex-shrink-0">expand_more</span>
         </button>
 
         <div 
@@ -210,7 +219,7 @@ const navigateToItem = (type: string) => {
             ref="searchInput"
             v-model="searchQuery"
             @focus="isSearchFocused = true"
-            @blur="setTimeout(() => isSearchFocused = false, 200)"
+            @blur="() => window.setTimeout(() => isSearchFocused = false, 200)"
             type="text" 
             placeholder="Search..." 
             class="text-body flex-1 bg-transparent outline-none text-on-surface" 

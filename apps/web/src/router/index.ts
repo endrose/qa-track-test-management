@@ -16,6 +16,7 @@ import Settings from '../pages/Settings.vue'
 import AllureReport from '../pages/AllureReport.vue'
 import HtmlReport from '../pages/HtmlReport.vue'
 import JMeterReport from '../pages/JMeterReport.vue'
+import Documentation from '../pages/Documentation.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -105,6 +106,11 @@ const router = createRouter({
           path: 'jmeter-report',
           name: 'JMeterReport',
           component: JMeterReport
+        },
+        {
+          path: 'docs',
+          name: 'Documentation',
+          component: Documentation
         }
       ]
     }

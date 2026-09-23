@@ -117,14 +117,28 @@ export class AutomationService {
         ALLURE_RESULTS_DIR: allureResultsDir,
         HTML_REPORT_DIR: htmlReportDir
       };
+      // Cleanup old Cypress results
+      if (framework.toLowerCase() === 'cypress') {
+        try { await fs.rm(path.join(cwd, 'cypress-results'), { recursive: true, force: true }); } catch (e) {}
+        try { await fs.unlink(path.join(cwd, 'cypress-merged.json')); } catch (e) {}
+      }
+
       const { stdout, stderr } = await execAsync(command, { cwd, env, timeout: EXEC_TIMEOUT });
       logOutput = stdout + '\n' + stderr;
       status = 'Passed';
-      
+      // Merge Mochawesome results before parsing
+      if (framework === 'Cypress') {
+        try {
+          await execAsync('npx mochawesome-merge cypress-results/*.json -o cypress-merged.json', { cwd });
+        } catch (e) {
+          console.error('Failed to merge cypress results', e);
+        }
+      }
+
       // Try to parse JSON report
       try {
         const resultsFile = framework === 'Cypress' 
-          ? path.join(cwd, 'test-results.json')
+          ? path.join(cwd, 'cypress-merged.json')
           : path.join(cwd, 'test-results.json');
           
         const resultsData = await fs.readFile(resultsFile, 'utf-8');
@@ -156,6 +170,22 @@ export class AutomationService {
         await execAsync(`npx allure generate ${allureResultsDir} -o ${allureReportDir} --clean`, { cwd });
       } catch (err) {
         console.error('Failed to generate allure report', err);
+      }
+    }
+
+    // Generate Mochawesome HTML Report (Cypress)
+    if (framework === 'Cypress') {
+      try {
+        const cypressCwd = path.resolve(process.cwd(), '../../automation/cypress');
+        const cypressHtmlReportDir = run.project?.id ? `./cypress-report/${run.project.id}` : './cypress-report';
+        await fs.mkdir(path.resolve(cypressCwd, cypressHtmlReportDir), { recursive: true });
+        await execAsync(
+          `npx marge cypress-merged.json --reportDir "${cypressHtmlReportDir}" --inline --charts`,
+          { cwd: cypressCwd }
+        );
+        console.log('Cypress HTML report generated at', cypressHtmlReportDir);
+      } catch (err) {
+        console.error('Failed to generate Cypress HTML report', err);
       }
     }
 
