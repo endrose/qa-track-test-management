@@ -15,6 +15,7 @@ const profileSaved = ref(false)
 const teamMembers = ref<any[]>([])
 const inviteEmail = ref('')
 const inviteRole = ref('Tester')
+const isInviting = ref(false)
 
 // Notification settings
 const notifications = ref({
@@ -98,8 +99,9 @@ const saveProfile = () => {
 }
 
 const inviteMember = async () => {
-  if (!inviteEmail.value) return
+  if (!inviteEmail.value || isInviting.value) return
   
+  isInviting.value = true
   try {
     const res = await fetch('http://127.0.0.1:3000/api/auth/users/invite', {
       method: 'POST',
@@ -108,14 +110,17 @@ const inviteMember = async () => {
     })
     
     if (res.ok) {
+      alert(`User invited successfully!\n\nDefault Password: password123\n\nPlease share this password with the user so they can login.`)
       inviteEmail.value = ''
       fetchUsers()
     } else {
       const error = await res.json()
-      alert(error.error || 'Failed to invite user')
+      alert(error.message || error.error || 'Failed to invite user')
     }
   } catch (error) {
     console.error('Failed to invite user', error)
+  } finally {
+    isInviting.value = false
   }
 }
 
@@ -210,8 +215,8 @@ const statusColor: Record<string, string> = {
             <select v-model="inviteRole" class="px-3 py-2 bg-surface border-[2px] border-outline outline-none shadow-[2px_2px_0px_#000000] font-label">
               <option v-for="r in roles" :key="r" :value="r">{{ r }}</option>
             </select>
-            <button @click="inviteMember" class="px-4 py-2 bg-primary text-on-primary font-label uppercase border-[2px] border-outline shadow-[2px_2px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all flex items-center gap-2">
-              <span class="material-symbols-outlined text-[18px]">send</span> Invite
+            <button @click="inviteMember" :disabled="isInviting" :class="['px-4 py-2 font-label uppercase border-[2px] border-outline transition-all flex items-center gap-2', isInviting ? 'bg-gray-300 text-gray-500 cursor-not-allowed shadow-none translate-x-[2px] translate-y-[2px]' : 'bg-primary text-on-primary shadow-[2px_2px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none']">
+              <span class="material-symbols-outlined text-[18px]">{{ isInviting ? 'hourglass_empty' : 'send' }}</span> {{ isInviting ? 'Sending...' : 'Invite' }}
             </button>
           </div>
         </div>

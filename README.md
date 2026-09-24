@@ -186,6 +186,18 @@ Aplikasi mendukung pengiriman notifikasi saat Automation Run gagal atau sukses.
 Data akan otomatis tersimpan di database dan langsung berlaku (tanpa merestart server).
 ```
 
+### Setup Integrasi Email Invite (Resend)
+
+```
+Aplikasi mendukung pengiriman email selamat datang berisi kredensial (password) kepada pengguna yang di-invite.
+1. Buat akun di https://resend.com/
+2. Dapatkan API Key di dashboard (berawalan re_...)
+3. Buka file apps/api/.env dan tambahkan kredensial berikut:
+   MAIL_RESEND_KEY="re_KODE_API_KEY_ANDA"
+4. Restart backend server.
+5. Ketika Anda meng-invite member di Settings -> Team, email otomatis akan dikirim ke alamat yang didaftarkan.
+```
+
 ---
 
 ## 📁 Struktur Workspace
