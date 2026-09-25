@@ -17,6 +17,7 @@ const testingItems = [
   { name: 'Test Scenarios', icon: 'account_tree', path: '/test-scenarios' },
   { name: 'Test Cases', icon: 'checklist', path: '/test-cases' },
   { name: 'Test Executions', icon: 'play_arrow', path: '/test-executions' },
+  { name: 'API Testing', icon: 'api', path: '/api-testing' },
   { name: 'Automation', icon: 'smart_toy', path: '/automation' },
 ]
 

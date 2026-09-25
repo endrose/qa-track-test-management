@@ -17,6 +17,7 @@ import AllureReport from '../pages/AllureReport.vue'
 import HtmlReport from '../pages/HtmlReport.vue'
 import JMeterReport from '../pages/JMeterReport.vue'
 import Documentation from '../pages/Documentation.vue'
+import ApiTesting from '../pages/ApiTesting.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -111,6 +112,11 @@ const router = createRouter({
           path: 'docs',
           name: 'Documentation',
           component: Documentation
+        },
+        {
+          path: 'api-testing',
+          name: 'ApiTesting',
+          component: ApiTesting
         }
       ]
     }

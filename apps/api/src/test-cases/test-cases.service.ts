@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource } from 'typeorm';
 import { TestCase } from 'database';
@@ -21,7 +21,11 @@ export class TestCasesService {
     return testCase;
   }
 
-  create(data: Partial<TestCase>) {
+  async create(data: Partial<TestCase>) {
+    const existing = await this.testCasesRepository.findOne({ where: { title: data.title } });
+    if (existing) {
+      throw new ConflictException(`Test case with title "${data.title}" already exists.`);
+    }
     const testCase = this.testCasesRepository.create(data);
     return this.testCasesRepository.save(testCase);
   }

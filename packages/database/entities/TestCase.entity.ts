@@ -36,6 +36,25 @@ export class TestCase {
   @Column({ type: 'json', nullable: true })
   automationConfig: any; // JSON payload for data-driven tests
 
+  // --- API Testing Fields ---
+  @Column({ nullable: true })
+  endpointUrl: string;
+
+  @Column({ nullable: true })
+  httpMethod: string;
+
+  @Column({ type: 'json', nullable: true })
+  headers: any;
+
+  @Column({ type: 'text', nullable: true })
+  requestBody: string;
+
+  @Column({ type: 'int', nullable: true })
+  expectedStatus: number;
+
+  @Column({ type: 'json', nullable: true })
+  expectedSchema: any;
+
   @CreateDateColumn()
   createdAt: Date;
 

@@ -25,6 +25,15 @@ export class Bug {
   @ManyToOne(() => TestCase, { nullable: true, onDelete: 'CASCADE' })
   testCase: TestCase;
 
+  @Column({ nullable: true })
+  rootCauseCategory: string;
+
+  @Column({ type: 'text', nullable: true })
+  rootCauseDescription: string;
+
+  @Column({ type: 'json', nullable: true })
+  logAttachments: any;
+
   @CreateDateColumn()
   createdAt: Date;
 

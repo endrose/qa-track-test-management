@@ -20,6 +20,8 @@
 | **Allure & HTML Reports** | Generate dan serve Allure & Native Playwright HTML Report terisolasi per-project setelah eksekusi test |
 | **Telegram & In-App Notifications** | Notifikasi *real-time* via Telegram Bot & Web UI Socket.io setiap kali Automation Run selesai/gagal |
 | **Auth & User Management** | Login dengan bcrypt-encrypted password, invite user, atur role, dan kelola integrasi pihak ketiga |
+| **API Testing & OpenAPI/Postman Importer** | Impor koleksi Postman (.json) atau file OpenAPI/Swagger (.json/.yaml) untuk membuat API Test Case otomatis, menguji endpoint, dan memvalidasi response code/schema |
+| **Root Cause Analysis (RCA) & Log Viewer** | Klasifikasikan kategori penyebab bug (Backend, DB, UI, Network, Env) dan lampirkan berkas log server (.log, .har) langsung di detail bug |
 
 ---
 
@@ -161,6 +163,30 @@ Saat backend pertama kali dijalankan, akun admin otomatis dibuat:
 5. Klik "Export PDF" untuk mengunduh laporan lengkap dalam format PDF
 ```
 
+### Alur Kerja API Testing & Import
+
+```
+1. Buka Project → Menu Test Cases atau API Testing
+2. Klik "Import API Spec" → Pilih Postman Collection (.json) atau OpenAPI/Swagger (.yaml/.json)
+3. Sistem otomatis melakukan parsing & generate daftar API Test Case per Endpoint
+4. Atur Environment Variables (misal: {{baseUrl}}, Auth Token)
+5. Eksekusi API Test Case → Sistem memvalidasi Status Code, Response Body, & Response Time
+6. Jika terjadi kesalahan/mismatch schema, bug otomatis terbuat
+```
+
+### Alur Kerja Root Cause Analysis (RCA) pada Bug
+
+```
+1. Saat Test Case gagal (UI, API, atau Performance), Bug otomatis dibuat (atau buat manual via "+ New Bug")
+2. Pada Form Bug Detail, isi bidang RCA:
+   - Root Cause Category (misal: Backend API / Database Issue / UI Regression / Environment)
+   - Root Cause Details (penjelasan teknis penyebab utama masalah)
+3. Attach/Upload file pendukung tambahan:
+   - File Log Server (.log, .txt)
+   - Network Log (.har) atau Screenshot
+4. Tim Developer dapat langsung mengisolasi masalah berdasarkan kategori RCA dan file log yang tersedia
+```
+
 ### Memantau Test Automation Report (Per Project)
 
 ```
@@ -236,6 +262,25 @@ qa-track-test-management/
 │       └── entities/           # TypeORM entities (User, TestCase, Bug, dll.)
 └── docs/                       # Dokumentasi (tidak diupload ke GitHub)
 ```
+
+---
+
+## 🗄️ Penyesuaian Struktur Database / Entity (Overview)
+
+Untuk mendukung fitur API Testing & RCA, berikut adalah ekstensi struktur database:
+
+**Entity Bug / Defect (Tambahan Field):**
+- `rootCauseCategory`: Enum (BACKEND_API, DATABASE, FRONTEND_UI, NETWORK_INFRA, ENVIRONMENT_CONFIG, THIRD_PARTY)
+- `rootCauseDescription`: text (penjelasan akar masalah)
+- `logAttachments`: Array of file metadata/paths (penyimpanan log .log / .har)
+
+**Entity ApiTestCase / ApiCollection (Modul Baru/Ekstensi):**
+- `endpointUrl`: String
+- `httpMethod`: Enum (GET, POST, PUT, DELETE, dll)
+- `headers`: JSON
+- `requestBody`: JSON / Text
+- `expectedStatus`: Number
+- `expectedSchema`: JSON
 
 ---
 
