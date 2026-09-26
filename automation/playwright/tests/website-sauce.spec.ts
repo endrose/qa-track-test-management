@@ -17,6 +17,9 @@ test.describe("Test Suite", () => {
     // Navigate to URL
     await page.goto("https://www.saucedemo.com/inventory.html");
 
+    // Waiting to page 
+    await page.waitForTimeout(3000)
+
     // Assert text is visible on page
     await expect(page.getByText("Swag Labs")).toBeVisible();
 

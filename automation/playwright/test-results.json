@@ -3,7 +3,8 @@
     "argv": [
       "C:\\Program Files\\nodejs\\node.exe",
       "D:\\Workspace\\vue\\qa-track-test-management\\node_modules\\@playwright\\test\\cli.js",
-      "test"
+      "test",
+      "cypress-sauce.spec.ts"
     ],
     "configFile": "D:\\Workspace\\vue\\qa-track-test-management\\automation\\playwright\\playwright.config.ts",
     "rootDir": "D:/Workspace/vue/qa-track-test-management/automation/playwright/tests",
@@ -108,12 +109,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 21568,
+                      "duration": 8312,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-09-19T08:48:01.190Z",
+                      "startTime": "2026-09-26T10:23:55.498Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -129,129 +130,13 @@
           ]
         }
       ]
-    },
-    {
-      "title": "sauce-login.spec.ts",
-      "file": "sauce-login.spec.ts",
-      "column": 0,
-      "line": 0,
-      "specs": [],
-      "suites": [
-        {
-          "title": "Website Sauce",
-          "file": "sauce-login.spec.ts",
-          "line": 3,
-          "column": 6,
-          "specs": [
-            {
-              "title": "Sauce Login",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 248,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "steps": [
-                        {
-                          "title": "Given  I navigate to the login page https://www.saucedemo.com/",
-                          "duration": 1
-                        },
-                        {
-                          "title": "When I enter valid credentials username : standard_user password : secret_sauce",
-                          "duration": 0
-                        },
-                        {
-                          "title": "Then I should see dashboard https://www.saucedemo.com/inventory.html and title Swag Labs",
-                          "duration": 1
-                        }
-                      ],
-                      "startTime": "2026-09-19T08:48:28.345Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "0bb8a239395307ceccbc-9cb49318bdd79416d253",
-              "file": "sauce-login.spec.ts",
-              "line": 4,
-              "column": 7
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "title": "website-sauce.spec.ts",
-      "file": "website-sauce.spec.ts",
-      "column": 0,
-      "line": 0,
-      "specs": [],
-      "suites": [
-        {
-          "title": "Test Suite",
-          "file": "website-sauce.spec.ts",
-          "line": 3,
-          "column": 6,
-          "specs": [
-            {
-              "title": "Website Sauce",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 3593,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-09-19T08:48:28.656Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "1d855b5855b193a7bf03-6b307e2d89ebcc773325",
-              "file": "website-sauce.spec.ts",
-              "line": 4,
-              "column": 7
-            }
-          ]
-        }
-      ]
     }
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-09-19T08:47:59.963Z",
-    "duration": 33177.534,
-    "expected": 3,
+    "startTime": "2026-09-26T10:23:54.223Z",
+    "duration": 15419.314,
+    "expected": 1,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0
