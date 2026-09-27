@@ -34,6 +34,9 @@ export class Bug {
   @Column({ type: 'json', nullable: true })
   logAttachments: any;
 
+  @Column({ nullable: true })
+  githubIssueUrl: string;
+
   @CreateDateColumn()
   createdAt: Date;
 

@@ -18,11 +18,11 @@
 | **Test Reports & Viewer** | Lihat live status, export PDF, dan parse JMeter `.jtl` reports langsung ke dalam tabel UI |
 | **Bug Tracker** | Bug otomatis dibuat saat test gagal, lengkap dengan log dan screenshot |
 | **Allure & HTML Reports** | Generate dan serve Allure & Native Playwright HTML Report terisolasi per-project setelah eksekusi test |
-| **Telegram & In-App Notifications** | Notifikasi *real-time* via Telegram Bot & Web UI Socket.io setiap kali Automation Run selesai/gagal |
+| **Telegram & In-App Notifications** | Notifikasi *real-time* via Telegram Bot & Web UI mencakup: Automation Start, Success, Failed, Skip, dan push Bug ke GitHub |
 | **Auth & User Management** | Login dengan bcrypt-encrypted password, invite user, atur role, dan kelola integrasi pihak ketiga |
 | **API Testing & OpenAPI/Postman Importer** | Impor koleksi Postman (.json) atau file OpenAPI/Swagger (.json/.yaml) untuk membuat API Test Case otomatis, menguji endpoint, dan memvalidasi response code/schema |
 | **Root Cause Analysis (RCA) & Log Viewer** | Klasifikasikan kategori penyebab bug (Backend, DB, UI, Network, Env) dan lampirkan berkas log server (.log, .har) langsung di detail bug |
-| **GitHub Issues Integration** | Teruskan temuan Bug langsung ke repository GitHub dengan satu klik tombol "Push to GitHub" via integrasi Personal Access Token |
+| **GitHub Issues Integration** | Teruskan temuan Bug langsung ke repository GitHub dengan satu klik. URL Issue tersimpan di database dan tombol berubah menjadi "View on GitHub" |
 
 ---
 
@@ -200,7 +200,16 @@ Aplikasi kini menyediakan halaman laporan khusus yang terisolasi secara otomatis
 ### Setup Integrasi Notifikasi (Telegram)
 
 ```
-Aplikasi mendukung pengiriman notifikasi saat Automation Run gagal atau sukses.
+Aplikasi mengirimkan notifikasi Telegram secara komprehensif untuk semua kejadian penting:
+
+Cakupan Notifikasi:
+  [START]   — Saat automation run baru dimulai (Framework, Suite, Project)
+  [SUCCESS] — Automation selesai dan semua test lulus (Passed/Failed count + Timestamp WIB)
+  [FAILED]  — Automation selesai namun ada test yang gagal (Passed/Failed count + Timestamp WIB)
+  [SKIP]    — Tidak ada script yang cocok, run dibatalkan
+  [BUG → GITHUB] — Bug berhasil atau gagal di-push ke GitHub Issues
+
+Cara Setup:
 1. Buka halaman Settings -> Tab Integrations
 2. Nyalakan Toggle Telegram Bot Integration
 3. Isi Bot Token (dari @BotFather, contoh: 1234567890:AAHfRK...)
@@ -235,6 +244,7 @@ Memungkinkan penerusan Bug langsung menjadi tiket Issue di GitHub secara instan.
 4. Masukkan Target Repository (format: `owner/repo`, contoh: `octocat/Hello-World`).
 5. Klik "Save GitHub Config".
 6. Buka halaman Bugs, klik salah satu bug, lalu gunakan opsi "Push to GitHub".
+7. Setelah berhasil, UI akan menyimpan URL tiket dan tombol berubah menjadi "View on GitHub" untuk kemudahan akses di masa depan.
 ```
 
 ---

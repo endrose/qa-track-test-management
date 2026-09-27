@@ -18,7 +18,8 @@ This application features a **Neo-Brutalist** design aesthetic characterized by:
 - **Smart Element Scanner**: Integrated UI for fetching DOM locators from external URLs.
 - **In-Browser IDE**: Monaco-like lightweight script editor with Playwright/Cypress autocomplete and dictionaries.
 - **Test Execution Runner**: Trigger runs and view real-time log outputs directly in the UI.
-- **GitHub Integration**: Push tracked bugs directly to GitHub Issues with an interactive integration UI.
+- **Telegram Notifications**: Comprehensive real-time notifications covering Automation Start, Success, Failed, Skip, and GitHub Issue pushes (success & failure).
+- **GitHub Integration**: Push tracked bugs directly to GitHub Issues. The UI dynamically transforms into a "View on GitHub" shortcut once the URL is saved.
 
 ## 🛠 Tech Stack
 

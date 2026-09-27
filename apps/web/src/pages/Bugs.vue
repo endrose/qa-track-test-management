@@ -117,6 +117,8 @@ const updateBug = async () => {
         if (res.ok) {
           const data = await res.json()
           alert('Successfully pushed to GitHub!\n' + data.url)
+          if (detailBug.value) detailBug.value.githubIssueUrl = data.url
+          fetchBugs()
         } else {
           const err = await res.json()
           alert('Failed to push to GitHub: ' + err.message)
@@ -488,7 +490,10 @@ onMounted(() => { fetchBugs(); fetchProjects() })
       </div>
 
       <div class="flex flex-col gap-3 sm:flex-row">
-        <button @click="pushToGithub(detailBug.id)" class="flex-1 px-4 py-2 bg-[#1e293b] text-white font-label uppercase border-[2px] border-outline shadow-[2px_2px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all flex items-center justify-center gap-2">
+        <a v-if="detailBug.githubIssueUrl" :href="detailBug.githubIssueUrl" target="_blank" class="flex-1 px-4 py-2 bg-[#86efac] text-[#1e293b] font-label uppercase border-[2px] border-outline shadow-[2px_2px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined text-[18px]">open_in_new</span> View on GitHub
+        </a>
+        <button v-else @click="pushToGithub(detailBug.id)" class="flex-1 px-4 py-2 bg-[#1e293b] text-white font-label uppercase border-[2px] border-outline shadow-[2px_2px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all flex items-center justify-center gap-2">
           <span class="material-symbols-outlined text-[18px]">code</span> Push to GitHub
         </button>
         <button @click="openEdit(detailBug); isDetailOpen = false" class="flex-1 px-4 py-2 bg-primary text-on-primary font-label uppercase border-[2px] border-outline shadow-[2px_2px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">

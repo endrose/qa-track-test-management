@@ -75,10 +75,32 @@ export class BugsService {
       }
 
       const data = await res.json();
+      bug.githubIssueUrl = data.html_url;
+      await this.bugsRepository.save(bug);
+      
+      await this.sendTelegramNotif(`🐛 *[BUG → GITHUB]* Issue Berhasil Dibuat\n\n*Bug:* ${bug.title}\n*Severity:* ${bug.severity}\n*Status:* ${bug.status}\n*GitHub:* ${data.html_url}`);
+      
       return { success: true, url: data.html_url };
     } catch (e: any) {
       console.error(e);
+      await this.sendTelegramNotif(`❌ *[BUG → GITHUB]* Gagal Push Issue\n\n*Bug:* ${bug.title}\n*Error:* ${e.message}`);
       throw new HttpException(e.message || 'Failed to push to GitHub', HttpStatus.INTERNAL_SERVER_ERROR);
     }
+  }
+
+  private async sendTelegramNotif(message: string) {
+    try {
+      const enabled = await this.configService.get('telegram_enabled');
+      const token = await this.configService.get('telegram_token') || process.env.QA_NOTIF_TOKEN;
+      const chatId = await this.configService.get('telegram_chat_id') || process.env.QA_CHAT_ID || process.env.QA_NOTIF_CHAT_ID;
+      
+      if (!enabled || enabled === 'false' || !token || !chatId) return;
+      
+      await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: chatId, text: message, parse_mode: 'Markdown' })
+      });
+    } catch (e) { console.error('Telegram notif failed:', e); }
   }
 }

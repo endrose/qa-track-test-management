@@ -104,6 +104,9 @@ export class AutomationService {
               .join(' && ');
           }
         } else {
+          const msg = `⚠️ *[SKIP]* Automation Run Dibatalkan\n\n*Framework:* ${framework}\n*Suite:* ${run.suiteName}\n*Project:* ${run.project?.name || '-'}\n*Alasan:* Tidak ada script yang cocok untuk framework ini`;
+          await this.sendTelegramNotif(msg);
+          await this.notificationsService.create('Automation Skipped', `No scripts found for ${framework} in project ${run.project?.name || '-'}.`, 'info');
           await this.update(id, { status: 'Failed', log: 'No automated test scripts found for this project matching the selected framework.', passed: 0, failed: 0 });
           return;
         }
@@ -191,16 +194,18 @@ export class AutomationService {
 
     await this.update(id, { status, log: logOutput, passed, failed });
     
+    const timestamp = new Date().toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' });
+    
     // Send Telegram Notification (End)
     if (status === 'Passed') {
-      await this.sendTelegramNotif(`✅ *[SUCCESS]* Automation Run Selesai\n\n*Framework:* ${framework}\n*Suite:* ${run.suiteName}\n*Passed:* ${passed}\n*Failed:* ${failed}\n*Project:* ${run.project?.name || '-'}`);
+      await this.sendTelegramNotif(`✅ *[SUCCESS]* Automation Run Selesai\n\n*Framework:* ${framework}\n*Suite:* ${run.suiteName}\n*Project:* ${run.project?.name || '-'}\n*Passed:* ${passed} ✔️\n*Failed:* ${failed} ❌\n*Waktu:* ${timestamp}`);
       await this.notificationsService.create(
         'Automation Success',
         `Run for ${framework} suite ${run.suiteName} completed successfully. Passed: ${passed}, Failed: ${failed}.`,
         'success'
       );
     } else {
-      await this.sendTelegramNotif(`❌ *[ERROR]* Automation Run Gagal\n\n*Framework:* ${framework}\n*Suite:* ${run.suiteName}\n*Passed:* ${passed}\n*Failed:* ${failed}\n*Project:* ${run.project?.name || '-'}`);
+      await this.sendTelegramNotif(`❌ *[FAILED]* Automation Run Gagal\n\n*Framework:* ${framework}\n*Suite:* ${run.suiteName}\n*Project:* ${run.project?.name || '-'}\n*Passed:* ${passed} ✔️\n*Failed:* ${failed} ❌\n*Waktu:* ${timestamp}`);
       await this.notificationsService.create(
         'Automation Failed',
         `Run for ${framework} suite ${run.suiteName} failed. Passed: ${passed}, Failed: ${failed}.`,
