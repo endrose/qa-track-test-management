@@ -72,6 +72,42 @@ const saveTelegramConfig = async () => {
   }
 }
 
+// GitHub integration
+const github = ref({
+  enabled: false,
+  token: '',
+  repo: '',
+})
+const githubSaving = ref(false)
+const githubSaved = ref(false)
+
+const fetchGithubConfig = async () => {
+  try {
+    const res = await fetch('http://127.0.0.1:3000/api/app-config')
+    if (res.ok) {
+      const cfg = await res.json()
+      github.value.enabled = cfg.github_enabled === 'true'
+      github.value.token = cfg.github_token || ''
+      github.value.repo = cfg.github_repo || ''
+    }
+  } catch (e) { console.error('Failed to fetch github config', e) }
+}
+
+const saveGithubConfig = async () => {
+  githubSaving.value = true
+  try {
+    await fetch('http://127.0.0.1:3000/api/app-config/github', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ enabled: github.value.enabled, token: github.value.token, repo: github.value.repo })
+    })
+    githubSaved.value = true
+    setTimeout(() => githubSaved.value = false, 3000)
+  } catch (e) { console.error('Failed to save github config', e) } finally {
+    githubSaving.value = false
+  }
+}
+
 const roles = ['Admin', 'QA Lead', 'Tester', 'Developer', 'Viewer']
 
 const fetchUsers = async () => {
@@ -91,6 +127,7 @@ onMounted(() => {
   profileForm.value.role = user.value.role || ''
   fetchUsers()
   fetchTelegramConfig()
+  fetchGithubConfig()
 })
 
 const saveProfile = () => {
@@ -322,22 +359,47 @@ const statusColor: Record<string, string> = {
           </div>
         </div>
 
-        <!-- Jira & GitHub -->
-        <div v-for="(section, name) in { Jira: { url: integrations.jiraUrl, token: integrations.jiraToken, icon: 'link', color: 'bg-[#93c5fd]' }, GitHub: { url: integrations.githubRepo, token: integrations.githubToken, icon: 'code', color: 'bg-surface-container-highest' } }" :key="name" class="bg-surface-container-lowest border-[3px] border-outline p-gutter shadow-[4px_4px_0px_#000000]">
+        <!-- GitHub Integration -->
+        <div class="bg-surface-container-lowest border-[3px] border-outline p-gutter shadow-[4px_4px_0px_#000000]">
           <h2 class="font-headline text-headline uppercase border-b-[2px] border-outline pb-3 mb-4 flex items-center gap-3">
-            <span :class="section.color" class="p-1 border-[2px] border-outline"><span class="material-symbols-outlined">{{ section.icon }}</span></span>
-            {{ name }} Integration
+            <span class="p-1 border-[2px] border-outline bg-[#1e293b] text-white">
+              <span class="material-symbols-outlined">code</span>
+            </span>
+            GitHub Issues Integration
+            <span class="ml-auto flex items-center gap-2">
+              <span class="font-label text-[10px] uppercase">{{ github.enabled ? 'Enabled' : 'Disabled' }}</span>
+              <button
+                @click="github.enabled = !github.enabled"
+                class="w-12 h-6 border-[2px] border-outline relative transition-all"
+                :class="github.enabled ? 'bg-primary' : 'bg-surface-container'"
+              >
+                <span class="absolute top-0.5 w-4 h-4 border-[1px] border-outline transition-all" :class="github.enabled ? 'left-6 bg-surface' : 'left-0.5 bg-on-surface'"></span>
+              </button>
+            </span>
           </h2>
-          <div class="space-y-3">
+
+          <div v-if="githubSaved" class="bg-[#86efac] border-[2px] border-outline p-3 font-label uppercase mb-4">
+            ✓ GitHub settings saved successfully!
+          </div>
+
+          <div class="space-y-3" :class="{ 'opacity-50 pointer-events-none': !github.enabled }">
             <div>
-              <label class="font-label uppercase text-label block mb-1">{{ name === 'Jira' ? 'Jira URL' : 'Repository (owner/repo)' }}</label>
-              <input :value="section.url" class="w-full px-3 py-2 bg-surface border-[2px] border-outline outline-none shadow-[2px_2px_0px_#000000]" :placeholder="name === 'Jira' ? 'https://yourorg.atlassian.net' : 'owner/repository'" />
+              <label class="font-label uppercase text-label block mb-1">Personal Access Token (PAT)</label>
+              <input v-model="github.token" type="password" placeholder="ghp_..." class="w-full px-3 py-2 bg-surface border-[2px] border-outline outline-none shadow-[2px_2px_0px_#000000] font-mono" />
+              <p class="text-[10px] text-on-surface-variant mt-1">Requires 'repo' scope</p>
             </div>
             <div>
-              <label class="font-label uppercase text-label block mb-1">API Token</label>
-              <input type="password" :value="section.token" class="w-full px-3 py-2 bg-surface border-[2px] border-outline outline-none shadow-[2px_2px_0px_#000000]" placeholder="••••••••••••" />
+              <label class="font-label uppercase text-label block mb-1">Target Repository</label>
+              <input v-model="github.repo" type="text" placeholder="owner/repo" class="w-full px-3 py-2 bg-surface border-[2px] border-outline outline-none shadow-[2px_2px_0px_#000000] font-mono" />
+              <p class="text-[10px] text-on-surface-variant mt-1">e.g. facebook/react</p>
             </div>
-            <button class="px-6 py-2 bg-primary text-on-primary font-label uppercase border-[2px] border-outline shadow-[2px_2px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">Connect {{ name }}</button>
+          </div>
+          
+          <div class="flex items-center gap-3 mt-4 pt-4 border-t-[2px] border-outline">
+            <button @click="saveGithubConfig" :disabled="githubSaving" class="px-6 py-2 bg-primary text-on-primary font-label uppercase border-[2px] border-outline shadow-[2px_2px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all flex items-center gap-2 disabled:opacity-50">
+              <span class="material-symbols-outlined text-[18px]">{{ githubSaving ? 'hourglass_empty' : 'save' }}</span>
+              {{ githubSaving ? 'Saving...' : 'Save GitHub Config' }}
+            </button>
           </div>
         </div>
       </div>

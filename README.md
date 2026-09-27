@@ -22,6 +22,7 @@
 | **Auth & User Management** | Login dengan bcrypt-encrypted password, invite user, atur role, dan kelola integrasi pihak ketiga |
 | **API Testing & OpenAPI/Postman Importer** | Impor koleksi Postman (.json) atau file OpenAPI/Swagger (.json/.yaml) untuk membuat API Test Case otomatis, menguji endpoint, dan memvalidasi response code/schema |
 | **Root Cause Analysis (RCA) & Log Viewer** | Klasifikasikan kategori penyebab bug (Backend, DB, UI, Network, Env) dan lampirkan berkas log server (.log, .har) langsung di detail bug |
+| **GitHub Issues Integration** | Teruskan temuan Bug langsung ke repository GitHub dengan satu klik tombol "Push to GitHub" via integrasi Personal Access Token |
 
 ---
 
@@ -222,6 +223,18 @@ Aplikasi mendukung pengiriman email selamat datang berisi kredensial (password) 
    MAIL_RESEND_KEY="re_KODE_API_KEY_ANDA"
 4. Restart backend server.
 5. Ketika Anda meng-invite member di Settings -> Team, email otomatis akan dikirim ke alamat yang didaftarkan.
+```
+
+### Setup Integrasi GitHub Issues
+
+```
+Memungkinkan penerusan Bug langsung menjadi tiket Issue di GitHub secara instan.
+1. Buka halaman Settings -> Tab Integrations.
+2. Nyalakan Toggle GitHub Issues Integration.
+3. Masukkan GitHub Personal Access Token (PAT) Anda (pastikan memiliki scope `repo` atau izin `Issues: Read & Write`).
+4. Masukkan Target Repository (format: `owner/repo`, contoh: `octocat/Hello-World`).
+5. Klik "Save GitHub Config".
+6. Buka halaman Bugs, klik salah satu bug, lalu gunakan opsi "Push to GitHub".
 ```
 
 ---

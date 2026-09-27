@@ -108,10 +108,25 @@ const updateBug = async () => {
       editBug.value = null
       fetchBugs()
     }
-  } catch (err) { console.error('Failed to update bug', err) }
-}
+      } catch (err) { console.error('Failed to update bug', err) }
+    }
 
-const deleteBug = async (id: string) => {
+    const pushToGithub = async (id: string) => {
+      try {
+        const res = await fetch(`http://127.0.0.1:3000/api/bugs/${id}/github`, { method: 'POST' })
+        if (res.ok) {
+          const data = await res.json()
+          alert('Successfully pushed to GitHub!\n' + data.url)
+        } else {
+          const err = await res.json()
+          alert('Failed to push to GitHub: ' + err.message)
+        }
+      } catch (e: any) {
+        alert('Error: ' + e.message)
+      }
+    }
+
+    const deleteBug = async (id: string) => {
   if (!confirm('Delete this bug?')) return
   await fetch(`http://127.0.0.1:3000/api/bugs/${id}`, { method: 'DELETE' })
   fetchBugs()
@@ -472,7 +487,10 @@ onMounted(() => { fetchBugs(); fetchProjects() })
         </div>
       </div>
 
-      <div class="flex gap-3">
+      <div class="flex flex-col gap-3 sm:flex-row">
+        <button @click="pushToGithub(detailBug.id)" class="flex-1 px-4 py-2 bg-[#1e293b] text-white font-label uppercase border-[2px] border-outline shadow-[2px_2px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined text-[18px]">code</span> Push to GitHub
+        </button>
         <button @click="openEdit(detailBug); isDetailOpen = false" class="flex-1 px-4 py-2 bg-primary text-on-primary font-label uppercase border-[2px] border-outline shadow-[2px_2px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">
           Edit / Add RCA
         </button>

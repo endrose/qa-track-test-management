@@ -29,4 +29,9 @@ export class BugsController {
   remove(@Param('id') id: string) {
     return this.bugsService.remove(id);
   }
+
+  @Post(':id/github')
+  pushToGithub(@Param('id') id: string) {
+    return this.bugsService.pushToGithub(id);
+  }
 }

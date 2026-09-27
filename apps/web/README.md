@@ -18,6 +18,7 @@ This application features a **Neo-Brutalist** design aesthetic characterized by:
 - **Smart Element Scanner**: Integrated UI for fetching DOM locators from external URLs.
 - **In-Browser IDE**: Monaco-like lightweight script editor with Playwright/Cypress autocomplete and dictionaries.
 - **Test Execution Runner**: Trigger runs and view real-time log outputs directly in the UI.
+- **GitHub Integration**: Push tracked bugs directly to GitHub Issues with an interactive integration UI.
 
 ## 🛠 Tech Stack
 
